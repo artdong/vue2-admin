@@ -5,27 +5,30 @@
 			<el-row>
 				<el-col :span="12">
 					<el-form-item label="设备编号">
-						<el-select v-model="form.region" placeholder="全部">
-							<el-option label="全部" value="all"></el-option>
-							<el-option label="蓄电池一" value="1"></el-option>
-							<el-option label="蓄电池二" value="2"></el-option>
+						<el-select v-model="form.deviceNo" placeholder="全部">
+							<!--<el-option label="全部" value="all"></el-option>-->
+							<!--<el-option label="蓄电池一" value="1"></el-option>-->
+							<!--<el-option label="蓄电池二" value="2"></el-option>-->
+							<el-option v-for="item in form.deviceNoItems" v-bind:value="item.value">{{item.text}}</el-option>
 						</el-select>
+						<p>已选:{{form.deviceNo}}</p>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
 					<el-form-item label-width="80px" label="开始时间">
-						<el-date-picker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间">
+						<el-date-picker v-model="form.startTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间">
 						</el-date-picker>
 					</el-form-item>
 				</el-col>
 			</el-row>
 			<el-form-item label="重复设置">
-				<el-checkbox-group v-model="form.type">
-					<el-checkbox label="一次" name="type"></el-checkbox>
-					<el-checkbox label="每天" name="type"></el-checkbox>
-					<el-checkbox label="每周" name="type"></el-checkbox>
-					<el-checkbox label="每季" name="type"></el-checkbox>
-					<el-checkbox label="每年" name="type"></el-checkbox>
+				<el-checkbox-group v-model="form.repeat">
+					<el-checkbox label="一次" name="repeat"></el-checkbox>
+					<el-checkbox label="每天" name="repeat"></el-checkbox>
+					<el-checkbox label="每周" name="repeat"></el-checkbox>
+					<el-checkbox label="每季" name="repeat"></el-checkbox>
+					<el-checkbox label="每年" name="repeat"></el-checkbox>
+					<p>已选：{{form.repeat.join('|')}}</p>
 				</el-checkbox-group>
 			</el-form-item>
 			<el-row>
@@ -36,14 +39,16 @@
 							<el-checkbox label="放电" name="type"></el-checkbox>
 							<el-checkbox label="内阻" name="type"></el-checkbox>
 						</el-checkbox-group>
+						<p>已选：{{form.type.join('|')}}</p>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
 					<el-form-item label="启用状态">
-						<el-checkbox-group v-model="form.type">
+						<el-checkbox-group v-model="form.state">
 							<el-checkbox label="已启用" name="type"></el-checkbox>
 							<el-checkbox label="未启用" name="type"></el-checkbox>
 						</el-checkbox-group>
+						<p>已选：{{form.state.join('|')}}</p>
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -130,9 +135,9 @@
 		<!--新增界面-->
 		<el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
 			<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-				<!-- <el-form-item label="站点名称" prop="siteName">
-					<el-input v-model="addFornm.siteName" auto-complete="off"></el-input>
-				</el-form-item> -->
+				<el-form-item label="站点名称" prop="siteName">
+					<el-input v-model="addForm.siteName" auto-complete="off"></el-input>
+				</el-form-item>
 				<el-form-item label="设备号">
 					<el-input-number v-model="addForm.deviceNo" :min="0" :max="200"></el-input-number>
 				</el-form-item>
@@ -159,19 +164,6 @@
     //import NProgress from 'nprogress'
     import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
-    const calendarTypeOptions = [
-        { key: 'CN', display_name: '中国' },
-        { key: 'US', display_name: '美国' },
-        { key: 'JP', display_name: '日本' },
-        { key: 'EU', display_name: '欧元区' }
-    ];
-
-    // arr to obj
-    const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-        acc[cur.key] = cur.display_name;
-        return acc
-    }, {});
-
     export default {
         data() {
             return {
@@ -180,17 +172,19 @@
                 },
                 users: [],
                 total: 0,
+                hello: true,
                 page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
 
                 form: {
                     siteName: '',
-                    deviceNo: -1,
+                    deviceNo: '',
+                    deviceNoItems: [{text:'全部',value:'all'},{text:'设备一',value:'1'},{text:'设备二',value:'2'}],
                     startTime: '',
-                    repeat: '',
-                    state: '',
-                    type: [],
+					repeat: [],
+                    state: ['已启用'],
+                    type: ['放电','充电'],
                     desc: ''
                 },
 
@@ -294,11 +288,12 @@
             handleAdd: function () {
                 this.addFormVisible = true;
                 this.addForm = {
-                    name: '',
-                    sex: -1,
-                    age: 0,
-                    birth: '',
-                    addr: ''
+                    siteName: '',
+                    deviceNo: -1,
+                    startTime: '',
+                    repeat: '',
+                    state: '',
+                    type: ''
                 };
             },
             //编辑
