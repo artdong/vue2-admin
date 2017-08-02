@@ -180,7 +180,7 @@
                 form: {
                     siteName: '',
                     deviceNo: '',
-                    deviceNoItems: [{text:'全部',value:'all'},{text:'设备一',value:'1'},{text:'设备二',value:'2'}],
+                    deviceNoItems: [{text:'全部',value:'全部'},{text:'设备一',value:'设备一'},{text:'设备二',value:'设备二'}],
                     startTime: '',
 					repeat: [],
                     state: ['已启用'],
