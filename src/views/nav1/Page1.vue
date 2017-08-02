@@ -55,7 +55,7 @@
 			<el-form :model="filters">
 				<el-col :span="6">
 				<el-form-item style="margin-left: 10px;">
-					<el-input v-model="filters.deviceName" placeholder="设备名称"></el-input>
+					<el-input v-model="filters.siteName" placeholder="设备名称"></el-input>
 				</el-form-item>
 				</el-col>
 				<el-col :span="4">
@@ -168,7 +168,7 @@
         data() {
             return {
                 filters: {
-                    deviceName: ''
+                    siteName: ''
                 },
                 users: [],
                 total: 0,
