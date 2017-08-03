@@ -85,7 +85,7 @@
 			</el-table-column>
 			<el-table-column prop="repeat" label="重复设置" min-width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="state" label="启用状态" min-width="120" sortable>
+			<el-table-column prop="state" label="启用状态" min-width="120" :formatter="formatState" sortable>
 			</el-table-column>
 			<el-table-column prop="type" label="类型" min-width="100" sortable>
 			</el-table-column>
@@ -116,15 +116,43 @@
 				<el-form-item label="开始时间">
 					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.startTime"></el-date-picker>
 				</el-form-item>
-                <el-form-item label="重复设置">
-                    <el-input type="textarea" v-model="editForm.repeat"></el-input>
-                </el-form-item>
-				<el-form-item label="启用状态">
-					<el-input type="textarea" v-model="editForm.state"></el-input>
+                <!--<el-form-item label="重复设置">-->
+                    <!--<el-input type="textarea" v-model="editForm.repeat"></el-input>-->
+                <!--</el-form-item>-->
+				<el-form-item label="重复设置">
+					<el-checkbox-group v-model="editForm.repeat">
+						<el-checkbox label="一次" name="repeat" v-model="onetime"></el-checkbox>
+						<el-checkbox label="每天" name="repeat"></el-checkbox>
+						<el-checkbox label="每周" name="repeat"></el-checkbox>
+						<el-checkbox label="每季" name="repeat"></el-checkbox>
+						<el-checkbox label="每年" name="repeat"></el-checkbox>
+					</el-checkbox-group>
 				</el-form-item>
-                <el-form-item label="类型">
-                    <el-input type="textarea" v-model="editForm.type"></el-input>
-                </el-form-item>
+				<el-row>
+					<el-col :span="12">
+						<el-form-item label="类型选择">
+							<el-checkbox-group v-model="editForm.type">
+								<el-checkbox label="充电" name="type"></el-checkbox>
+								<el-checkbox label="放电" name="type"></el-checkbox>
+								<el-checkbox label="内阻" name="type"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<!--<el-form-item label="启用状态">-->
+							<!--<el-checkbox-group v-model="editForm.state">-->
+								<!--<el-checkbox label="已启用" name="type"></el-checkbox>-->
+								<!--<el-checkbox label="未启用" name="type"></el-checkbox>-->
+							<!--</el-checkbox-group>-->
+						<!--</el-form-item>-->
+						<el-form-item label="启用状态">
+							<el-radio-group v-model="editForm.state">
+								<el-radio class="radio" :label="1">已启用</el-radio>
+								<el-radio class="radio" :label="0">未启用</el-radio>
+							</el-radio-group>
+						</el-form-item>
+					</el-col>
+				</el-row>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click.native="editFormVisible = false">取消</el-button>
@@ -144,12 +172,40 @@
 				<el-form-item label="开始时间">
 					<el-date-picker type="date" placeholder="选择日期" v-model="addForm.startTime"></el-date-picker>
 				</el-form-item>
-				<el-form-item label="启用状态">
-					<el-input type="textarea" v-model="addForm.state"></el-input>
+				<el-form-item label="重复设置">
+					<el-checkbox-group v-model="addForm.repeat">
+						<el-checkbox label="一次" name="repeat"></el-checkbox>
+						<el-checkbox label="每天" name="repeat"></el-checkbox>
+						<el-checkbox label="每周" name="repeat"></el-checkbox>
+						<el-checkbox label="每季" name="repeat"></el-checkbox>
+						<el-checkbox label="每年" name="repeat"></el-checkbox>
+					</el-checkbox-group>
 				</el-form-item>
-                <el-form-item label="类型">
-                    <el-input type="textarea" v-model="addForm.type"></el-input>
-                </el-form-item>
+				<el-row>
+					<el-col :span="12">
+						<el-form-item label="类型选择">
+							<el-checkbox-group v-model="addForm.type">
+								<el-checkbox label="充电" name="type"></el-checkbox>
+								<el-checkbox label="放电" name="type"></el-checkbox>
+								<el-checkbox label="内阻" name="type"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<!--<el-form-item label="启用状态">-->
+							<!--<el-checkbox-group v-model="addForm.state">-->
+								<!--<el-checkbox label="已启用" name="type"></el-checkbox>-->
+								<!--<el-checkbox label="未启用" name="type"></el-checkbox>-->
+							<!--</el-checkbox-group>-->
+						<!--</el-form-item>-->
+						<el-form-item label="启用状态">
+							<el-radio-group v-model="editForm.state">
+								<el-radio class="radio" :label="已启用">已启用</el-radio>
+								<el-radio class="radio" :label="未启用">未启用</el-radio>
+							</el-radio-group>
+						</el-form-item>
+					</el-col>
+				</el-row>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click.native="addFormVisible = false">取消</el-button>
@@ -208,10 +264,10 @@
                 editForm: {
                     id: 0,
                     siteName: '',
-                    deviceNo: -1,
+                    deviceNo: '',
                     startTime: '',
-                    repeat: '',
-                    state: '',
+                    repeat: [],
+                    state: ['已启用'],
                     type: ''
                 },
 
@@ -225,7 +281,7 @@
                 //新增界面数据
                 addForm: {
                     siteName: '',
-                    deviceNo: -1,
+                    deviceNo: '',
                     startTime: '',
                     repeat: '',
                     state: '',
@@ -235,9 +291,9 @@
             }
         },
         methods: {
-            //性别显示转换
-            formatSex: function (row, column) {
-                return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+            //状态显示转换
+            formatState: function (row, column) {
+                return row.state == 1 ? '已启用' : row.state == 0 ? '未启用' : '未知';
             },
             handleCurrentChange(val) {
                 this.page = val;
@@ -283,6 +339,7 @@
             handleEdit: function (index, row) {
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
+                this.editForm.repeat.push(row.repeat);
             },
             //显示新增界面
             handleAdd: function () {
@@ -304,7 +361,7 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
-                            para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+                            para.startTime = (!para.startTime || para.startTime == '') ? '' : util.formatDate.format(new Date(para.startTime), 'yyyy-MM-dd');
                             editUser(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();

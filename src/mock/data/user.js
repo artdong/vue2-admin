@@ -17,9 +17,9 @@ for (let i = 0; i < 86; i++) {
     siteName: Mock.Random.cname(),
     deviceNo: Mock.Random.integer(0, 50),
     startTime: Mock.Random.date(),
-    repeat: Mock.Random.integer(0, 1),
-    state: Mock.Random.integer(0, 1),
-    type: Mock.Random.integer(0, 1)
+    'repeat|1': ['一次', '每天', '每周', '每季', '每年'],
+    'type|1': ['充电', '放电', '内阻'],
+    state: Mock.Random.integer(0, 1)
   }));
 }
 
