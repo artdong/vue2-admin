@@ -24,7 +24,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '',
-        iconCls: 'el-icon-message',//图标样式class
+        iconCls: 'el-icon-date',//图标样式class
         leaf: true,//只有一个节点
         children: [
             // { path: '/main', component: Main, name: '主页', hidden: true },
@@ -35,7 +35,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '',
-        iconCls: 'fa fa-id-card-o',
+        iconCls: 'el-icon-setting',
         leaf: true,//只有一个节点
         children: [
             { path: '/page2', component: Page2, name: '维护类别' },
@@ -45,7 +45,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '',
-        iconCls: 'fa fa-address-card',
+        iconCls: 'el-icon-search',
         leaf: true,//只有一个节点
         children: [
             { path: '/page3', component: Page3, name: '维护历史' }
