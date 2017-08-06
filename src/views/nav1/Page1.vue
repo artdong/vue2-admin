@@ -43,12 +43,18 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
+					<!--<el-form-item label="启用状态">-->
+						<!--<el-checkbox-group v-model="form.state">-->
+							<!--<el-checkbox label="已启用" name="type"></el-checkbox>-->
+							<!--<el-checkbox label="未启用" name="type"></el-checkbox>-->
+						<!--</el-checkbox-group>-->
+						<!--<p>已选：{{form.state.join('|')}}</p>-->
+					<!--</el-form-item>-->
 					<el-form-item label="启用状态">
-						<el-checkbox-group v-model="form.state">
-							<el-checkbox label="已启用" name="type"></el-checkbox>
-							<el-checkbox label="未启用" name="type"></el-checkbox>
-						</el-checkbox-group>
-						<p>已选：{{form.state.join('|')}}</p>
+						<el-radio-group v-model="form.state">
+							<el-radio class="radio" :label="1">已启用</el-radio>
+							<el-radio class="radio" :label="0">未启用</el-radio>
+						</el-radio-group>
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -121,7 +127,7 @@
                 <!--</el-form-item>-->
 				<el-form-item label="重复设置">
 					<el-checkbox-group v-model="editForm.repeat">
-						<el-checkbox label="一次" name="repeat" v-model="onetime"></el-checkbox>
+						<el-checkbox label="一次" name="repeat"></el-checkbox>
 						<el-checkbox label="每天" name="repeat"></el-checkbox>
 						<el-checkbox label="每周" name="repeat"></el-checkbox>
 						<el-checkbox label="每季" name="repeat"></el-checkbox>
@@ -131,7 +137,7 @@
 				<el-row>
 					<el-col :span="12">
 						<el-form-item label="类型选择">
-							<el-checkbox-group v-model="editForm.type">
+							<el-checkbox-group v-model="editForm.type" :formate="formatType">
 								<el-checkbox label="充电" name="type"></el-checkbox>
 								<el-checkbox label="放电" name="type"></el-checkbox>
 								<el-checkbox label="内阻" name="type"></el-checkbox>
@@ -162,7 +168,7 @@
 
 		<!--新增界面-->
 		<el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
-			<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
+			<el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
 				<el-form-item label="站点名称" prop="siteName">
 					<el-input v-model="addForm.siteName" auto-complete="off"></el-input>
 				</el-form-item>
@@ -200,8 +206,8 @@
 						<!--</el-form-item>-->
 						<el-form-item label="启用状态">
 							<el-radio-group v-model="editForm.state">
-								<el-radio class="radio" :label="已启用">已启用</el-radio>
-								<el-radio class="radio" :label="未启用">未启用</el-radio>
+								<el-radio class="radio" :label="1">已启用</el-radio>
+								<el-radio class="radio" :label="0">未启用</el-radio>
 							</el-radio-group>
 						</el-form-item>
 					</el-col>
@@ -239,7 +245,7 @@
                     deviceNoItems: [{text:'全部',value:'全部'},{text:'设备一',value:'设备一'},{text:'设备二',value:'设备二'}],
                     startTime: '',
 					repeat: [],
-                    state: ['已启用'],
+                    state: 0,
                     type: ['放电','充电'],
                     desc: ''
                 },
@@ -267,8 +273,8 @@
                     deviceNo: '',
                     startTime: '',
                     repeat: [],
-                    state: ['已启用'],
-                    type: ''
+                    state: 0,
+                    type: []
                 },
 
                 addFormVisible: false,//新增界面是否显示
@@ -283,9 +289,9 @@
                     siteName: '',
                     deviceNo: '',
                     startTime: '',
-                    repeat: '',
-                    state: '',
-                    type: ''
+                    repeat: [],
+                    state: [],
+                    type: ['放电','充电']
                 }
 
             }
@@ -293,7 +299,14 @@
         methods: {
             //状态显示转换
             formatState: function (row, column) {
-                return row.state == 1 ? '已启用' : row.state == 0 ? '未启用' : '未知';
+                return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
+            },
+            //状态显示转换
+            formatType: function (row, column) {
+                if(row.type){
+                    this.editForm.repeat.push(row.type);
+				}
+                return this.editForm.repeat;
             },
             handleCurrentChange(val) {
                 this.page = val;
@@ -310,6 +323,17 @@
                 getUserListPage(para).then((res) => {
                     this.total = res.data.total;
                     this.users = res.data.users;
+                    for (var i = 0;  i < this.users.length; i++) {
+                        if(this.users[i].type.length > 1){
+                            var arr = [];
+                            for (var j = 0;  j < this.users[i].type.length-1; j++) {
+                                this.users[i].type[j] = this.users[i].type[j] + "|";
+								arr.push(this.users[i].type[j]);
+                            }
+                            arr.push(this.users[i].type[this.users[i].type.length-1]);
+                            this.users[i].type = arr;
+						}
+                    }
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -339,7 +363,13 @@
             handleEdit: function (index, row) {
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
-                this.editForm.repeat.push(row.repeat);
+                let strs = []; //定义一数组
+				strs = this.editForm.type;
+                this.editForm.type = [];
+                for (let i = 0;  i < strs.length-1; i++) {
+                    const str = strs[i];
+                    this.editForm.type.push(str.substring(0,2));
+                }
             },
             //显示新增界面
             handleAdd: function () {
@@ -348,9 +378,9 @@
                     siteName: '',
                     deviceNo: -1,
                     startTime: '',
-                    repeat: '',
-                    state: '',
-                    type: ''
+                    repeat: ["每天"],
+                    state: [],
+                    type: ["放电", "内阻"]
                 };
             },
             //编辑
@@ -385,7 +415,7 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-                            para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+                            para.startTime = (!para.startTime || para.startTime == '') ? '' : util.formatDate.format(new Date(para.startTime), 'yyyy-MM-dd');
                             addUser(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
@@ -395,6 +425,7 @@
                                 });
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
+                                console.log("type " + para.type);
                                 this.getUsers();
                             });
                         });
