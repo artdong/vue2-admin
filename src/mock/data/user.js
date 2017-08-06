@@ -10,6 +10,7 @@ const LoginUsers = [
 ];
 
 const Users = [];
+const Categories = [];
 
 for (let i = 0; i < 86; i++) {
   Users.push(Mock.mock({
@@ -23,4 +24,12 @@ for (let i = 0; i < 86; i++) {
   }));
 }
 
-export { LoginUsers, Users };
+for (let i = 0; i < 5; i++) {
+    Categories.push(Mock.mock({
+        id: Mock.Random.guid(),
+        name: Mock.Random.cname(),
+        option: [],
+    }));
+}
+
+export { LoginUsers, Users, Categories };
