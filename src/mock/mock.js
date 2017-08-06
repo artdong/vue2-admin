@@ -109,7 +109,7 @@ export default {
 
     //编辑用户
     mock.onGet('/user/edit').reply(config => {
-      let { id, name, addr, age, birth, sex } = config.params;
+      let { id, siteName, deviceNo, startTime, repeat, state, type } = config.params;
       _Users.some(u => {
         if (u.id === id) {
           u.siteName = siteName;

@@ -83,11 +83,11 @@
 			</el-table-column>
 			<el-table-column type="index" width="60">
 			</el-table-column>
-			<el-table-column prop="siteName" label="站点名称" width="120" sortable>
+			<el-table-column prop="siteName" label="站点名称" width="120" style="text-align: center" sortable>
 			</el-table-column>
-			<el-table-column prop="deviceNo" label="设备号" width="100" sortable>
+			<el-table-column prop="deviceNo" label="设备号" width="100" center sortable>
 			</el-table-column>
-			<el-table-column prop="startTime" label="开始时间" width="120" sortable>
+			<el-table-column prop="startTime" label="开始时间" width="120" center sortable>
 			</el-table-column>
 			<el-table-column prop="repeat" label="重复设置" min-width="120" sortable>
 			</el-table-column>
@@ -137,7 +137,7 @@
 				<el-row>
 					<el-col :span="12">
 						<el-form-item label="类型选择">
-							<el-checkbox-group v-model="editForm.type" :formate="formatType">
+							<el-checkbox-group v-model="editForm.type">
 								<el-checkbox label="充电" name="type"></el-checkbox>
 								<el-checkbox label="放电" name="type"></el-checkbox>
 								<el-checkbox label="内阻" name="type"></el-checkbox>
@@ -301,13 +301,6 @@
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
             },
-            //状态显示转换
-            formatType: function (row, column) {
-                if(row.type){
-                    this.editForm.repeat.push(row.type);
-				}
-                return this.editForm.repeat;
-            },
             handleCurrentChange(val) {
                 this.page = val;
                 this.getUsers();
@@ -366,7 +359,7 @@
                 let strs = []; //定义一数组
 				strs = this.editForm.type;
                 this.editForm.type = [];
-                for (let i = 0;  i < strs.length-1; i++) {
+                for (let i = 0;  i < strs.length; i++) {
                     const str = strs[i];
                     this.editForm.type.push(str.substring(0,2));
                 }
