@@ -1,8 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import {LoginUsers, Users, Categories} from './data/user';
+import { LoginUsers, Users, Categories, Maintains, Plans } from './data/db';
 let _Users = Users;
 let _Categories = Categories;
+let _Maintains = Maintains;
+let _Plans = Plans;
 
 export default {
     /**
@@ -158,8 +160,8 @@ export default {
         //获取类别列表
         mock.onGet('/category/list').reply(config => {
             let {name} = config.params;
-            let categories = _Categories.filter(user => {
-                if (name && user.name.indexOf(name) == -1) return false;
+            let categories = _Categories.filter(category => {
+                if (name && category.name.indexOf(name) == -1) return false;
                 return true;
             });
             return new Promise((resolve, reject) => {
@@ -245,6 +247,117 @@ export default {
             _Categories.push({
                 name: name,
                 option: option
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '新增成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //================= 维护项 ===================
+
+        //获取维护项列表
+        mock.onGet('/maintain/list').reply(config => {
+            let {strTitle} = config.params;
+            let maintains = _Maintains.filter(maintain => {
+                if (name && maintain.strTitle.indexOf(strTitle) == -1) return false;
+                return true;
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        maintains: maintains
+                    }]);
+                }, 1000);
+            });
+        });
+
+        //获取维护项列表（分页）
+        mock.onGet('/maintain/listpage').reply(config => {
+            let {page, strTitle} = config.params;
+            let maintains = _Maintains.filter(maintain => {
+                if (strTitle && maintain.strTitle.indexOf(strTitle) == -1) return false;
+                return true;
+            });
+            let total = strTitle.length;
+            strTitle = maintains.filter((ma, index) => index < 20 * page && index >= 20 * (page - 1));
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        total: total,
+                        maintains: maintains
+                    }]);
+                }, 1000);
+            });
+        });
+
+        //删除维护项
+        mock.onGet('/maintain/remove').reply(config => {
+            let { strMaintainId } = config.params;
+            _Maintains = _Maintains.filter(maintain => maintain.strMaintainId !== strMaintainId);
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '删除成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //批量删除维护项
+        mock.onGet('/maintain/batchremove').reply(config => {
+            let {ids} = config.params;
+            ids = ids.split(',');
+            _Maintains = _Maintains.filter(maintain => !ids.includes(maintain.strMaintainId));
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '删除成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //编辑维护项
+        mock.onGet('/maintain/edit').reply(config => {
+            let { strMaintainId, strTitle, strContent, cStartTime, cEndTime, uStartTime, uEndTime } = config.params;
+            _Maintains.some(maintain => {
+                if (maintain.strMaintainId === strMaintainId) {
+                    maintain.strTitle = strTitle;
+                    maintain.strContent = strContent;
+                    maintain.cStartTime = cStartTime;
+                    maintain.cEndTime = cEndTime;
+                    maintain.uStartTime = uStartTime;
+                    maintain.uEndTime = uEndTime;
+                    return true;
+                }
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '编辑成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //新增维护项
+        mock.onGet('/maintain/add').reply(config => {
+            let {strTitle, strContent, cStartTime, cEndTime, uStartTime, uEndTime} = config.params;
+            _Maintains.push({
+                strTitle: strTitle,
+                strContent: strContent,
+                cStartTime: cStartTime,
+                cEndTime: cEndTime,
+                uStartTime: uStartTime,
+                uEndTime: uEndTime
             });
             return new Promise((resolve, reject) => {
                 setTimeout(() => {

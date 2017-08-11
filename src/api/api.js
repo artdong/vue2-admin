@@ -28,3 +28,16 @@ export const batchRemoveCategory = params => { return axios.get(url.categoryBatc
 export const editCategory = params => { return axios.get(url.categoryEdit, { params: params }); };
 
 export const addCategory = params => { return axios.get(url.categoryAdd, { params: params }); };
+
+//maintain
+export const getMaintainList = params => { return axios.get(url.maintainList, { params: params }); };
+
+export const getMaintainListPage = params => { return axios.get(url.maintainListpage, { params: params }); };
+
+export const removeMaintain = params => { return axios.get(url.maintainRemove, { params: params }); };
+
+export const batchRemoveMaintain = params => { return axios.get(url.maintainBatchremove, { params: params }); };
+
+export const editMaintain = params => { return axios.get(url.maintainEdit, { params: params }); };
+
+export const addMaintain = params => { return axios.get(url.maintainAdd, { params: params }); };

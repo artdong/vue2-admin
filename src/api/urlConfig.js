@@ -30,3 +30,16 @@ export const categoryBatchremove = base + '/category/batchremove';
 export const categoryEdit = base + '/category/edit';
 
 export const categoryAdd = base + '/category/add';
+
+//maintain
+export const maintainList = base + '/maintain/list';
+
+export const maintainListpage = base + '/maintain/listpage';
+
+export const maintainRemove = base + '/maintain/remove';
+
+export const maintainBatchremove = base + '/maintain/batchremove';
+
+export const maintainEdit = base + '/maintain/edit';
+
+export const maintainAdd = base + '/maintain/add';
