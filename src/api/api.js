@@ -32,7 +32,7 @@ export const addCategory = params => { return axios.get(url.categoryAdd, { param
 //maintain
 export const getMaintainList = params => { return axios.get(url.maintainList, { params: params }); };
 
-export const getMaintainListPage = params => { return axios.get(url.maintainListpage, { params: params }); };
+export const getMaintainListPage = params => { return axios.get(url.maintainListPage, { params: params }); };
 
 export const removeMaintain = params => { return axios.get(url.maintainRemove, { params: params }); };
 
@@ -41,3 +41,16 @@ export const batchRemoveMaintain = params => { return axios.get(url.maintainBatc
 export const editMaintain = params => { return axios.get(url.maintainEdit, { params: params }); };
 
 export const addMaintain = params => { return axios.get(url.maintainAdd, { params: params }); };
+
+//plan
+export const getPlanList = params => { return axios.get(url.planList, { params: params }); };
+
+export const getPlanListPage = params => { return axios.get(url.planListpage, { params: params }); };
+
+export const removePlan = params => { return axios.get(url.planRemove, { params: params }); };
+
+export const batchRemovePlan = params => { return axios.get(url.planBatchremove, { params: params }); };
+
+export const editPlan = params => { return axios.get(url.planEdit, { params: params }); };
+
+export const addPlan = params => { return axios.get(url.planAdd, { params: params }); };

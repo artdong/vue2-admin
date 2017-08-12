@@ -212,8 +212,8 @@
 			bottom: 0px;
 			overflow: hidden;
 			aside {
-				flex:0 0 230px;
-				width: 230px;
+				flex:0 0 150px;
+				width: 150px;
 				// position: absolute;
 				// top: 0px;
 				// bottom: 0px;
@@ -241,8 +241,8 @@
 				width: 60px;
 			}
 			.menu-expanded{
-				flex:0 0 230px;
-				width: 230px;
+				flex:0 0 150px;
+				width: 150px;
 				height: 100%;
 			}
 			.content-container {
@@ -252,7 +252,7 @@
 				// right: 0px;
 				// top: 0px;
 				// bottom: 0px;
-				// left: 230px;
+				// left: 150px;
 				overflow-y: scroll;
 				padding: 20px;
 				.breadcrumb-container {

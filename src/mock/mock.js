@@ -69,7 +69,7 @@ export default {
                 if (siteName && user.siteName.indexOf(siteName) == -1) return false;
                 return true;
             });
-            let total = siteName.length;
+            let total = users.length;
             siteName = users.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -180,7 +180,7 @@ export default {
                 if (name && category.name.indexOf(name) == -1) return false;
                 return true;
             });
-            let total = name.length;
+            let total = categories.length;
             name = categories.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -283,8 +283,8 @@ export default {
                 if (strTitle && maintain.strTitle.indexOf(strTitle) == -1) return false;
                 return true;
             });
-            let total = strTitle.length;
-            strTitle = maintains.filter((ma, index) => index < 20 * page && index >= 20 * (page - 1));
+            let total = maintains.length;
+            strTitle = maintains.filter((ma, index) => index < 10 * page && index >= 10 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -352,6 +352,135 @@ export default {
         mock.onGet('/maintain/add').reply(config => {
             let {strTitle, strContent, cStartTime, cEndTime, uStartTime, uEndTime} = config.params;
             _Maintains.push({
+                strTitle: strTitle,
+                strContent: strContent,
+                cStartTime: cStartTime,
+                cEndTime: cEndTime,
+                uStartTime: uStartTime,
+                uEndTime: uEndTime
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '新增成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //================= 维护计划 ===================
+
+        //获取维护计划列表
+        mock.onGet('/plan/list').reply(config => {
+            let {maintainId} = config.params;
+            let plans = _Plans.filter(plan => {
+                if (name && plan.maintainId.indexOf(maintainId) == -1) return false;
+                return true;
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        plans: plans
+                    }]);
+                }, 1000);
+            });
+        });
+
+        //获取维护计划列表（分页）
+        mock.onGet('/plan/listpage').reply(config => {
+            let {page, maintainId} = config.params;
+            let plans = _Plans.filter(plan => {
+                if (maintainId && plan.maintainId.indexOf(maintainId) == -1) return false;
+                return true;
+            });
+            let total = plans.length;
+            maintainId = plans.filter((ma, index) => index < 20 * page && index >= 20 * (page - 1));
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        total: total,
+                        plans: plans
+                    }]);
+                }, 1000);
+            });
+        });
+
+        //删除维护计划
+        mock.onGet('/plan/remove').reply(config => {
+            let { strPlanId } = config.params;
+            _Plans = _Plans.filter(plan => plan.strPlanId !== strPlanId);
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '删除成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //批量删除维护计划
+        mock.onGet('/plan/batchremove').reply(config => {
+            let {ids} = config.params;
+            ids = ids.split(',');
+            _Plans = _Plans.filter(plan => !ids.includes(plan.strPlanId));
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '删除成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //编辑维护计划
+        mock.onGet('/plan/edit').reply(config => {
+            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId, cStartTime, cEndTime, uStartTime, uEndTime } = config.params;
+            _Plans.some(plan => {
+                if (plan.strPlanId === strPlanId) {
+                    plan.strMaintainId = strMaintainId;
+                    plan.executeTime = executeTime;
+                    plan.isCycle = isCycle;
+                    plan.cycleDay = cycleDay;
+                    plan.executeHour = executeHour;
+                    plan.executeMinute = executeMinute;
+                    plan.description = description;
+                    plan.equipmentCategory = equipmentCategory;
+                    plan.equipmentId = equipmentId;
+                    plan.strTitle = strTitle;
+                    plan.strContent = strContent;
+                    plan.cStartTime = cStartTime;
+                    plan.cEndTime = cEndTime;
+                    plan.uStartTime = uStartTime;
+                    plan.uEndTime = uEndTime;
+                    return true;
+                }
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([200, {
+                        code: 200,
+                        msg: '编辑成功'
+                    }]);
+                }, 500);
+            });
+        });
+
+        //新增维护计划
+        mock.onGet('/plan/add').reply(config => {
+            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId, cStartTime, cEndTime, uStartTime, uEndTime } = config.params;
+            _Plans.push({
+                strMaintainId: strMaintainId,
+                executeTime: executeTime,
+                isCycle: isCycle,
+                cycleDay: cycleDay,
+                executeHour: executeHour,
+                executeMinute: executeMinute,
+                description: description,
+                equipmentCategory: equipmentCategory,
+                equipmentId: equipmentId,
                 strTitle: strTitle,
                 strContent: strContent,
                 cStartTime: cStartTime,

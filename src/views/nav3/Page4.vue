@@ -1,105 +1,97 @@
 <template>
-	<section>
-		<!--工具条-->
-		<el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;width:60%;min-width:600px;">
-			<el-form :model="filters">
-				<el-col :span="6">
-					<el-form-item style="margin-left: 10px;">
-						<el-input v-model="filters.strTitle" placeholder="维护项"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="3">
-					<el-form-item style="margin-left: 30px;">
-						<el-button type="primary" v-on:click="getMaintains">查询</el-button>
-					</el-form-item>
-				</el-col>
-				<el-col :span="2">
-					<el-form-item>
-						<el-button type="primary" @click="handleAdd">新增</el-button>
-					</el-form-item>
-				</el-col>
-			</el-form>
-		</el-form>
+  <section>
+    <!--工具条-->
+    <el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;">
+      <el-form :model="filters">
+        <el-col :span="6">
+          <el-form-item style="margin-left: 10px;">
+            <el-input v-model="filters.name" placeholder="类别名称"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item style="margin-left: 30px;">
+            <el-button type="primary" v-on:click="getCategories">查询</el-button>
+          </el-form-item>
+        </el-col>
+        <el-col :span="2">
+          <el-form-item>
+            <el-button type="primary" @click="handleAdd">新增</el-button>
+          </el-form-item>
+        </el-col>
+      </el-form>
+    </el-form>
 
-		<!--列表-->
-		<el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
-			<el-table-column type="selection" width="55">
-			</el-table-column>
-			<el-table-column type="index" width="60">
-			</el-table-column>
-			<el-table-column prop="strTitle" label="维护项" width="120" style="text-align: center" sortable>
-			</el-table-column>
-			<el-table-column prop="strContent" label="维护内容" width="120" style="text-align: center" sortable>
-			</el-table-column>
-			<el-table-column prop="cStartTime" label="创建开始时间" sortable>
-			</el-table-column>
-			<el-table-column prop="cEndTime" label="创建截止时间" sortable>
-			</el-table-column>
-			<el-table-column prop="uStartTime" label="更新开始时间" sortable>
-			</el-table-column>
-			<el-table-column prop="uEndTime" label="更新截止时间" sortable>
-			</el-table-column>
-			<el-table-column label="操作" width="150">
-				<template scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-				</template>
-			</el-table-column>
-		</el-table>
+    <!--列表-->
+    <el-table :data="categories" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+      <el-table-column type="selection" width="55">
+      </el-table-column>
+      <el-table-column type="index" width="60">
+      </el-table-column>
+      <el-table-column prop="name" label="类别名称" width="200" style="text-align: center" sortable>
+      </el-table-column>
+      <el-table-column prop="option" label="类别选项" width="200" style="text-align: center" sortable>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template scope="scope">
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
-		<!--工具条-->
-		<el-col :span="24" class="toolbar">
-			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-			<el-pagination layout="total, prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
-			</el-pagination>
-		</el-col>
+    <!--工具条-->
+    <el-col :span="24" class="toolbar">
+      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
+      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+      </el-pagination>
+    </el-col>
 
-		<!--编辑界面-->
-		<el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
-			<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="名称" prop="strTitle">
-					<el-input v-model="editForm.strTitle" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="维护内容" prop="strContent">
-					<el-input v-model="editForm.strContent" auto-complete="off"></el-input>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="editFormVisible = false">取消</el-button>
-				<el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
-			</div>
-		</el-dialog>
+    <!--编辑界面-->
+    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+        <el-form-item label="类别名称" prop="name">
+          <el-input v-model="editForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="类别选项" prop="option">
+          <el-input v-model="editForm.option" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="editFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+      </div>
+    </el-dialog>
 
-		<!--新增界面-->
-		<el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false">
-			<el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
-				<el-form-item label="名称" prop="strTitle">
-					<el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="维护内容" prop="strContent">
-					<el-input v-model="addForm.strContent" auto-complete="off"></el-input>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="addFormVisible = false">取消</el-button>
-				<el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
-			</div>
-		</el-dialog>
-	</section>
+    <!--新增界面-->
+    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
+      <el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
+        <el-form-item label="类别名称" prop="name">
+          <el-input v-model="addForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="类别选项" prop="option">
+          <el-input v-model="addForm.option" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="addFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+      </div>
+    </el-dialog>
+  </section>
 </template>
 
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import { getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain } from '../../api/api';
+    import { getCategoryListPage, removeCategory, batchRemoveCategory, editCategory, addCategory } from '../../api/api';
 
     export default {
         data() {
             return {
                 filters: {
-                    strTitle: ''
+                    name: ''
                 },
-                maintains: [],
+                categories: [],
                 total: 0,
                 hello: true,
                 page: 1,
@@ -107,12 +99,9 @@
                 sels: [],//列表选中列
 
                 form: {
-                    strTitle: '',
-                    strContent: '',
-                    cStartTime: '',
-                    cEndTime: '',
-                    uStartTime: '',
-                    uEndTime: ''
+                    name: '',
+                    option: [],
+                    desc: ''
                 },
 
                 listQuery: {
@@ -127,28 +116,28 @@
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
-                    strTitle: [
-                        { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    name: [
+                        { required: true, message: '请输入类别名称', trigger: 'blur' }
                     ]
                 },
                 //编辑界面数据
                 editForm: {
-                    strMaintainId: 0,
-                    strTitle: '',
-                    strContent: ''
+                    id: 0,
+                    name: '',
+                    option: []
                 },
 
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    strTitle: [
-                        { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    name: [
+                        { required: true, message: '请输入类别姓名', trigger: 'blur' }
                     ]
                 },
                 //新增界面数据
                 addForm: {
-                    strTitle: '',
-                    strContent: ''
+                    name: '',
+                    option: []
                 }
 
             }
@@ -160,19 +149,19 @@
             },
             handleCurrentChange(val) {
                 this.page = val;
-                this.getMaintais();
+                this.getCategories();
             },
             //获取用户列表
-            getMaintains() {
+            getCategories() {
                 let para = {
                     page: this.page,
-                    strTitle: this.filters.strTitle
+                    name: this.filters.name
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getMaintainListPage(para).then((res) => {
+                getCategoryListPage(para).then((res) => {
                     this.total = res.data.total;
-                    this.maintains = res.data.maintains;
+                    this.categories = res.data.categories;
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -184,15 +173,15 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { strMaintainId: row.strMaintainId };
-                    removeMaintain(para).then((res) => {
+                    let para = { id: row.id };
+                    removeCategory(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
-                        this.getMaintains();
+                        this.getCategories();
                     });
                 }).catch(() => {
 
@@ -207,8 +196,8 @@
             handleAdd: function () {
                 this.addFormVisible = true;
                 this.addForm = {
-                    strTitle: '',
-                    strContent: ''
+                    name: '',
+                    option: []
                 };
             },
             //编辑
@@ -219,7 +208,7 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
-                            editMaintain(para).then((res) => {
+                            editCategory(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -228,7 +217,7 @@
                                 });
                                 this.$refs['editForm'].resetFields();
                                 this.editFormVisible = false;
-                                this.getMaintains();
+                                this.getCategories();
                             });
                         });
                     }
@@ -242,7 +231,7 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-                            addMaintain(para).then((res) => {
+                            addCategory(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -251,7 +240,7 @@
                                 });
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
-                                this.getMaintains();
+                                this.getCategories();
                             });
                         });
                     }
@@ -262,21 +251,21 @@
             },
             //批量删除
             batchRemove: function () {
-                var ids = this.sels.map(item => item.strMaintainId).toString();
+                var ids = this.sels.map(item => item.id).toString();
                 this.$confirm('确认删除选中记录吗？', '提示', {
                     type: 'warning'
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
                     let para = { ids: ids };
-                    batchRemoveMaintain(para).then((res) => {
+                    batchRemoveCategory(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
-                        this.getMaintains();
+                        this.getCategories();
                     });
                 }).catch(() => {
 
@@ -284,7 +273,7 @@
             }
         },
         mounted() {
-            this.getMaintains();
+            this.getCategories();
         }
     }
 

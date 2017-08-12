@@ -28,7 +28,7 @@ let routes = [
         leaf: true,//只有一个节点
         children: [
             // { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/page1', component: Page1, name: '维护项目' },
+            { path: '/page1', component: Page1, name: '维护计划' },
         ]
     },
     {
@@ -38,7 +38,7 @@ let routes = [
         iconCls: 'el-icon-setting',
         leaf: true,//只有一个节点
         children: [
-            { path: '/page2', component: Page2, name: '维护类别' },
+            { path: '/page2', component: Page2, name: '维护项' },
         ]
     },
     {
