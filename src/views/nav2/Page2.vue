@@ -1,21 +1,37 @@
 <template>
     <section>
         <!--工具条-->
-        <el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;width:60%;min-width:600px;">
+        <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
             <el-form :model="filters">
-                <el-col :span="6">
+                <el-col :span="5">
                     <el-form-item style="margin-left: 10px;">
-                        <el-input v-model="filters.strTitle" placeholder="维护项"></el-input>
+                        <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
-                    <el-form-item style="margin-left: 30px;">
-                        <el-button type="primary" v-on:click="getMaintains">查询</el-button>
+                <el-col :span="5">
+                    <el-form-item style="margin-left: 10px;">
+                        <el-input v-model="filters.strContent" placeholder="维护内容" style="width: 180px;"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
+                        <el-date-picker
+                                v-model="filters.cStartTime"
+                                align="right"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions1">
+                        </el-date-picker>
                     </el-form-item>
                 </el-col>
                 <el-col :span="2">
+                    <el-form-item style="margin-left: 30px;">
+                        <el-button type="primary" v-on:click="getMaintains" icon="search">查询</el-button>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="2" style="margin-left: 30px;">
                     <el-form-item>
-                        <el-button type="primary" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" @click="handleAdd" icon="edit">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-form>
@@ -27,17 +43,17 @@
             </el-table-column>
             <el-table-column type="index" width="60">
             </el-table-column>
-            <el-table-column prop="strTitle" label="维护项" width="120" style="text-align: center" sortable>
+            <el-table-column prop="strTitle" label="维护项" width="120">
             </el-table-column>
-            <el-table-column prop="strContent" label="维护内容" style="text-align: center" sortable>
+            <el-table-column prop="strContent" label="维护内容">
             </el-table-column>
-            <el-table-column prop="cStartTime" label="创建开始时间" sortable>
+            <el-table-column prop="cStartTime" label="创建开始时间" width="150" sortable>
             </el-table-column>
-            <el-table-column prop="cEndTime" label="创建截止时间" sortable>
+            <el-table-column prop="cEndTime" label="创建截止时间">
             </el-table-column>
-            <el-table-column prop="uStartTime" label="更新开始时间" sortable>
+            <el-table-column prop="uStartTime" label="更新开始时间">
             </el-table-column>
-            <el-table-column prop="uEndTime" label="更新截止时间" sortable>
+            <el-table-column prop="uEndTime" label="更新截止时间">
             </el-table-column>
             <el-table-column label="操作" width="150">
                 <template scope="scope">
@@ -97,7 +113,31 @@
         data() {
             return {
                 filters: {
-                    strTitle: ''
+                    strTitle: '',
+                    strContent: '',
+                    cStartTime: ''
+                },
+                pickerOptions1: {
+                    shortcuts: [{
+                        text: '今天',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date());
+                        }
+                    }, {
+                        text: '昨天',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周前',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', date);
+                        }
+                    }]
                 },
                 maintains: [],
                 total: 0,
@@ -158,20 +198,23 @@
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
             },
+            handleIconClick(ev) {
+                console.log(ev);
+            },
             handleCurrentChange(val) {
                 this.page = val;
-                this.getMaintais();
+                this.getMaintains();
             },
             //获取用户列表
             getMaintains() {
-                let params = {
-                    strTitle: "电池放电"
+                let para = {
+                    page: this.page,
+                    strTitle: this.filters.strTitle,
+                    strContent: this.filters.strContent
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getMaintainList(params).then((res) => {
-                    var data1 = JSON.stringify(eval(res));
-                    console.log("data1: " + data1);
+                getMaintainListPage(para).then((res) => {
                     this.total = res.data.total;
                     this.maintains = res.data.maintains;
                     this.listLoading = false;

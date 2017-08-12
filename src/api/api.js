@@ -32,7 +32,7 @@ export const addCategory = params => { return axios.get(url.categoryAdd, { param
 //maintain
 export const getMaintainList = params => { return axios.get(url.maintainList, { params: params }); };
 
-export const getMaintainListPage = params => { return axios.get(url.maintainListPage, { params: params }); };
+export const getMaintainListPage = params => { return axios.get(url.maintainListpage, { params: params }); };
 
 export const removeMaintain = params => { return axios.get(url.maintainRemove, { params: params }); };
 

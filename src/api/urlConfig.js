@@ -2,7 +2,7 @@
  * Created by dongxingbin on 17/7/28.
  */
 
-const base = '/api'
+const base = ''
 
 export const login = base + '/login';
 
@@ -32,7 +32,7 @@ export const categoryEdit = base + '/category/edit';
 export const categoryAdd = base + '/category/add';
 
 //maintain
-export const maintainList = base + '/MaintainService.svc/GetMaintainItems';
+export const maintainList = base + '/maintain/list';
 
 export const maintainListpage = base + '/maintain/listpage';
 

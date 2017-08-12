@@ -1,7 +1,7 @@
 {
-  "name": "vue-admin-grace",
+  "name": "vue2-admin-grace",
   "version": "1.0.5",
-  "description": "vue admin project",
+  "description": "vue2 admin project",
   "author": "alex <1029278668@qq.com>",
   "license": "MIT",
   "scripts": {

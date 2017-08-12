@@ -70,7 +70,7 @@ export default {
                 return true;
             });
             let total = users.length;
-            siteName = users.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
+            users = users.filter((u, index) => index < 10 * page && index >= 10 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -181,7 +181,7 @@ export default {
                 return true;
             });
             let total = categories.length;
-            name = categories.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
+            categories = categories.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -262,9 +262,9 @@ export default {
 
         //获取维护项列表
         mock.onGet('/maintain/list').reply(config => {
-            let {strTitle} = config.params;
+            let {strTitle, strContent} = config.params;
             let maintains = _Maintains.filter(maintain => {
-                if (name && maintain.strTitle.indexOf(strTitle) == -1) return false;
+                if (strTitle && maintain.strTitle.indexOf(strTitle) == -1 && strContent && maintain.strContent.indexOf(strContent) == -1) return false;
                 return true;
             });
             return new Promise((resolve, reject) => {
@@ -278,13 +278,13 @@ export default {
 
         //获取维护项列表（分页）
         mock.onGet('/maintain/listpage').reply(config => {
-            let {page, strTitle} = config.params;
+            let {page, strTitle, strContent} = config.params;
             let maintains = _Maintains.filter(maintain => {
-                if (strTitle && maintain.strTitle.indexOf(strTitle) == -1) return false;
+                if ((strTitle && maintain.strTitle.indexOf(strTitle) == -1) || (strContent && maintain.strContent.indexOf(strContent) == -1)) return false;
                 return true;
             });
             let total = maintains.length;
-            strTitle = maintains.filter((ma, index) => index < 10 * page && index >= 10 * (page - 1));
+            maintains = maintains.filter((ma, index) => index < 10 * page && index >= 10 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -395,7 +395,7 @@ export default {
                 return true;
             });
             let total = plans.length;
-            maintainId = plans.filter((ma, index) => index < 20 * page && index >= 20 * (page - 1));
+            plans = plans.filter((ma, index) => index < 10 * page && index >= 10 * (page - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {

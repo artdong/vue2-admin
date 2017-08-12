@@ -13,7 +13,7 @@
 						<el-button type="primary" v-on:click="getMaintains">查询</el-button>
 					</el-form-item>
 				</el-col>
-				<el-col :span="2">
+				<el-col :span="2" style="margin-left: 20px;">
 					<el-form-item>
 						<el-button type="primary" @click="handleAdd">新增</el-button>
 					</el-form-item>
@@ -31,13 +31,13 @@
 			</el-table-column>
 			<el-table-column prop="strContent" label="维护内容" width="120" style="text-align: center" sortable>
 			</el-table-column>
-			<el-table-column prop="cStartTime" label="创建开始时间" sortable>
+			<el-table-column prop="cStartTime" label="创建开始时间">
 			</el-table-column>
-			<el-table-column prop="cEndTime" label="创建截止时间" sortable>
+			<el-table-column prop="cEndTime" label="创建截止时间">
 			</el-table-column>
-			<el-table-column prop="uStartTime" label="更新开始时间" sortable>
+			<el-table-column prop="uStartTime" label="更新开始时间">
 			</el-table-column>
-			<el-table-column prop="uEndTime" label="更新截止时间" sortable>
+			<el-table-column prop="uEndTime" label="更新截止时间">
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template scope="scope">
@@ -160,9 +160,9 @@
             },
             handleCurrentChange(val) {
                 this.page = val;
-                this.getMaintais();
+                this.getMaintains();
             },
-            //获取用户列表
+            //获取维护项列表
             getMaintains() {
                 let para = {
                     page: this.page,
