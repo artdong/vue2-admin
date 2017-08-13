@@ -4,7 +4,7 @@
         <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
             <el-form :model="filters">
                 <el-row>
-                    <el-col :span="7">
+                    <el-col :span="8">
                         <el-form-item label-width="80px" label="执行时间" class="postInfo-container-item">
                             <el-date-picker
                                     v-model="filters.executeTime"
@@ -35,8 +35,8 @@
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="3">
-                        <el-form-item style="margin-left: 30px;">
+                    <el-col :span="4">
+                        <el-form-item style="margin-left: 10px;">
                             <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
                         </el-form-item>
                     </el-col>
