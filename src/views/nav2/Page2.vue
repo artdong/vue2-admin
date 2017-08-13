@@ -3,72 +3,82 @@
         <!--工具条-->
         <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
             <el-form :model="filters">
-                <el-col :span="5">
-                    <el-form-item style="margin-left: 10px;">
-                        <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="5">
-                    <el-form-item style="margin-left: 10px;">
-                        <el-input v-model="filters.strContent" placeholder="维护内容" style="width: 180px;"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                    <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
-                        <el-date-picker
-                                v-model="filters.cStartTime"
-                                align="right"
-                                type="date"
-                                placeholder="选择日期"
-                                :picker-options="pickerOptions1">
-                        </el-date-picker>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="2">
-                    <el-form-item style="margin-left: 30px;">
-                        <el-button type="primary" v-on:click="getMaintains" icon="search">查询</el-button>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="2" style="margin-left: 30px;">
-                    <el-form-item>
-                        <el-button type="primary" @click="handleAdd" icon="edit">新增</el-button>
-                    </el-form-item>
-                </el-col>
+                <el-row>
+                    <el-col :span="5">
+                        <el-form-item style="margin-left: 10px;">
+                            <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="5">
+                        <el-form-item style="margin-left: 10px;">
+                            <el-input v-model="filters.strContent" placeholder="维护内容" style="width: 180px;"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7">
+                        <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
+                            <el-date-picker
+                                    v-model="filters.cStartTime"
+                                    align="right"
+                                    type="date"
+                                    placeholder="选择日期"
+                                    :picker-options="pickerOptions1">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="3">
+                        <el-form-item style="margin-left: 30px;">
+                            <el-button type="primary" v-on:click="getMaintains" icon="search">查询</el-button>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
         </el-form>
 
-        <!--列表-->
-        <el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
-            <el-table-column type="selection" width="55">
-            </el-table-column>
-            <el-table-column type="index" width="60">
-            </el-table-column>
-            <el-table-column prop="strTitle" label="维护项" width="120">
-            </el-table-column>
-            <el-table-column prop="strContent" label="维护内容">
-            </el-table-column>
-            <el-table-column prop="cStartTime" label="创建开始时间" width="150" sortable>
-            </el-table-column>
-            <el-table-column prop="cEndTime" label="创建截止时间">
-            </el-table-column>
-            <el-table-column prop="uStartTime" label="更新开始时间">
-            </el-table-column>
-            <el-table-column prop="uEndTime" label="更新截止时间">
-            </el-table-column>
-            <el-table-column label="操作" width="150">
-                <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <div class="panel">
+            <div class="panel-title">
+                <span v-text="panelTitle"></span>
+                <div class="fr">
+                    <el-button @click.stop="on_refresh" size="small">
+                        <i class="fa fa-refresh"></i>
+                    </el-button>
+                    <el-button type="primary" @click="handleAdd" icon="plus" size="small">新增</el-button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <!--列表-->
+                <el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+                    <el-table-column type="selection" width="55">
+                    </el-table-column>
+                    <el-table-column type="index" width="60">
+                    </el-table-column>
+                    <el-table-column prop="strTitle" label="维护项" width="120" style="text-align: center">
+                    </el-table-column>
+                    <el-table-column prop="strContent" label="维护内容" width="120" style="text-align: center">
+                    </el-table-column>
+                    <el-table-column prop="cStartTime" label="创建开始时间" width="150" sortable>
+                    </el-table-column>
+                    <el-table-column prop="cEndTime" label="创建截止时间" width="120">
+                    </el-table-column>
+                    <el-table-column prop="uStartTime" label="更新开始时间" width="120">
+                    </el-table-column>
+                    <el-table-column prop="uEndTime" label="更新截止时间" width="120">
+                    </el-table-column>
+                    <el-table-column label="操作" width="150">
+                        <template scope="scope">
+                            <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
 
-        <!--工具条-->
-        <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="total, prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
-            </el-pagination>
-        </el-col>
+                <!--工具条-->
+                <el-col :span="24" class="toolbar">
+                    <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+                    </el-pagination>
+                </el-col>
+            </div>
+        </div>
 
         <!--编辑界面-->
         <el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
@@ -107,7 +117,7 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import { getMaintainList, getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain } from '../../api/api';
+    import { getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain } from '../../api/api';
 
     export default {
         data() {
@@ -117,6 +127,7 @@
                     strContent: '',
                     cStartTime: ''
                 },
+                panelTitle: '维护项列表',
                 pickerOptions1: {
                     shortcuts: [{
                         text: '今天',
@@ -142,7 +153,6 @@
                 maintains: [],
                 total: 0,
                 hello: true,
-                page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
 
@@ -156,8 +166,9 @@
                 },
 
                 listQuery: {
-                    page: 1,
-                    limit: 10,
+                    currPage: 1,
+                    limit: 20,
+                    pageSize: 10,
                     importance: undefined,
                     title: undefined,
                     type: undefined,
@@ -198,17 +209,24 @@
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
             },
-            handleIconClick(ev) {
-                console.log(ev);
-            },
-            handleCurrentChange(val) {
-                this.page = val;
+            //操作分页
+            handleSizeChange(val) {
+                this.listQuery.pageSize = val;
                 this.getMaintains();
             },
-            //获取用户列表
+            handleCurrentChange(val) {
+                this.listQuery.currPage = val;
+                this.getMaintains();
+            },
+            //刷新
+            on_refresh(){
+                this.getMaintains();
+            },
+            //获取维护项列表
             getMaintains() {
                 let para = {
-                    page: this.page,
+                    currPage: this.listQuery.currPage,
+                    pageSize: this.listQuery.pageSize,
                     strTitle: this.filters.strTitle,
                     strContent: this.filters.strContent
                 };

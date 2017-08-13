@@ -5,6 +5,8 @@ import Main from './views/Main.vue'
 import Page1 from './views/nav1/Page1.vue'
 import Page2 from './views/nav2/Page2.vue'
 import Page3 from './views/nav3/Page3.vue'
+import Page4 from './views/nav4/Page4.vue'
+import Page5 from './views/nav4/Page5.vue'
 
 let routes = [
     {
@@ -48,7 +50,39 @@ let routes = [
         iconCls: 'el-icon-search',
         leaf: true,//只有一个节点
         children: [
-            { path: '/page3', component: Page3, name: '维护历史' }
+            {
+                path: '/page3',
+                component: Page3,
+                name: '维护历史',
+                meta: {
+                    title: "维护历史"
+                }
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '综合实例',
+        iconCls: 'el-icon-star-on',
+        leaf: false,//不只一个节点
+        children: [
+            {
+                path: '/page4',
+                component: Page4,
+                name: 'seed',
+                meta: {
+                    title: "列表"
+                }
+            },
+            {
+                path: '/page5',
+                component: Page5,
+                name: 'table',
+                meta: {
+                    title: "列表"
+                }
+            }
         ]
     },
     {

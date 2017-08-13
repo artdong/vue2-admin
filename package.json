@@ -13,6 +13,7 @@
     "axios": "^0.15.3",
     "echarts": "^3.3.2",
     "element-ui": "^1.2.8",
+    "normalize.css": "^5.0.0",
     "font-awesome": "^4.7.0",
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
