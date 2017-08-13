@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<!--工具条-->
-		<el-collapse v-model="activeNames" @change="handleChange">
+		<el-collapse v-model="activeNames">
 			<el-collapse-item title="查询条件" name="1">
                 <el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;width:60%;min-width:600px;">
                     <el-row>

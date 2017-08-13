@@ -31,9 +31,9 @@
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+							<el-menu-item class="menu-list" style="padding-left: 45px;" v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
 						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+						<el-menu-item class="menu-list" v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template>
 				</el-menu>
 				<!--导航菜单-折叠后-->
@@ -244,6 +244,21 @@
                 flex:0 0 230px;
                 width: 230px;
                 height: 100%;
+            }
+            .menu-list {
+                height: 45px;
+                line-height: 45px;
+                .icon {
+                    width: 16px;
+                    font-size: 14px;
+                }
+                .text {
+                    margin-left: 10px;
+                }
+                &.is-active {
+                    background-color: #353f4f !important;
+                    color: #65cea7;
+                }
             }
             .content-container {
                 // background: #f1f2f7;
