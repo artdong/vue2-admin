@@ -26,21 +26,21 @@ let routes = [
         path: '/',
         component: Home,
         name: '',
-        iconCls: 'el-icon-date',//图标样式class
+        iconCls: 'el-icon-setting',//图标样式class
         leaf: true,//只有一个节点
         children: [
             // { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/page1', component: Page1, name: '维护计划' },
+            { path: '/page1', component: Page1, name: '维护项' },
         ]
     },
     {
         path: '/',
         component: Home,
         name: '',
-        iconCls: 'el-icon-setting',
+        iconCls: 'el-icon-date',
         leaf: true,//只有一个节点
         children: [
-            { path: '/page2', component: Page2, name: '维护项' },
+            { path: '/page2', component: Page2, name: '维护计划' },
         ]
     },
     {

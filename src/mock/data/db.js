@@ -39,6 +39,8 @@ for (let i = 0; i < 20; i++) {
         strMaintainId: Mock.Random.guid(),
         strTitle: Mock.Random.cname(),
         strContent: Mock.Random.cname(),
+        createTime: Mock.Random.date(),
+        updateTime: Mock.Random.date(),
         cStartTime: Mock.Random.date(),
         cEndTime: Mock.Random.date(),
         uStartTime: Mock.Random.date(),
@@ -50,7 +52,7 @@ for (let i = 0; i < 21; i++) {
     Plans.push(Mock.mock({
         strPlanId: Mock.Random.guid(),
         strMaintainId: Mock.Random.guid(),
-        executeTime: Mock.Random.date(),
+        executeTime: Mock.Random.datetime(),
         isCycle: Mock.Random.integer(0, 1),
         'cycleDay|1': ['1', '2', '3', '4', '5'],
         'executeHour|1': ['2', '4', '6', '8', '10'],

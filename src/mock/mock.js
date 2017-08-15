@@ -48,7 +48,7 @@ export default {
 
         //获取用户列表
         mock.onGet('/user/list').reply(config => {
-            let {currPage, pageSize, siteName} = config.params;
+            let {curPage, pageSize, siteName} = config.params;
             let users = _Users.filter(user => {
                 if (siteName && user.siteName.indexOf(siteName) == -1) return false;
                 return true;
@@ -64,13 +64,13 @@ export default {
 
         //获取用户列表（分页）
         mock.onGet('/user/listpage').reply(config => {
-            let {currPage, pageSize,  siteName} = config.params;
+            let {curPage, pageSize,  siteName} = config.params;
             let users = _Users.filter(user => {
                 if (siteName && user.siteName.indexOf(siteName) == -1) return false;
                 return true;
             });
             let total = users.length;
-            users = users.filter((u, index) => index < pageSize * currPage && index >= pageSize * (currPage - 1));
+            users = users.filter((u, index) => index < pageSize * curPage && index >= pageSize * (curPage - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -278,13 +278,13 @@ export default {
 
         //获取维护项列表（分页）
         mock.onGet('/maintain/listpage').reply(config => {
-            let {currPage, pageSize, strTitle, strContent} = config.params;
+            let {curPage, pageSize, strTitle, strContent} = config.params;
             let maintains = _Maintains.filter(maintain => {
                 if ((strTitle && maintain.strTitle.indexOf(strTitle) == -1) || (strContent && maintain.strContent.indexOf(strContent) == -1)) return false;
                 return true;
             });
             let total = maintains.length;
-            maintains = maintains.filter((ma, index) => index < pageSize * currPage && index >= pageSize * (currPage - 1));
+            maintains = maintains.filter((ma, index) => index < pageSize * curPage && index >= pageSize * (curPage - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {
@@ -373,7 +373,7 @@ export default {
 
         //获取维护计划列表
         mock.onGet('/plan/list').reply(config => {
-            let {currPage, pageSize, executeTime, isCycle} = config.params;
+            let {curPage, pageSize, executeTime, isCycle} = config.params;
             let plans = _Plans.filter(plan => {
                 // if (executeTime && plan.executeTime.indexOf(executeTime) == -1) return false;
                 return true;
@@ -389,13 +389,13 @@ export default {
 
         //获取维护计划列表（分页）
         mock.onGet('/plan/listpage').reply(config => {
-            let {currPage, pageSize, executeTime, isCycle} = config.params;
+            let {curPage, pageSize, executeTime, isCycle} = config.params;
             let plans = _Plans.filter(plan => {
                 // if (executeTime && plan.executeTime != executeTime) return false;
                 return true;
             });
             let total = plans.length;
-            plans = plans.filter((ma, index) => index < pageSize * currPage && index >= pageSize * (currPage - 1));
+            plans = plans.filter((ma, index) => index < pageSize * curPage && index >= pageSize * (curPage - 1));
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([200, {

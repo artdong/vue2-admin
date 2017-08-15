@@ -102,7 +102,7 @@
 				<!--工具条-->
 				<el-col :span="24" class="toolbar">
 					<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
 					</el-pagination>
 				</el-col>
 			</div>
@@ -202,7 +202,7 @@
                 },
 
                 listQuery: {
-                    currPage: 1,
+                    curPage: 1,
                     limit: 20,
                     pageSize: 10,
                     importance: undefined,
@@ -251,7 +251,7 @@
                 this.getPlans();
             },
             handleCurrentChange(val) {
-                this.listQuery.currPage = val;
+                this.listQuery.curPage = val;
                 this.getPlans();
             },
             //刷新
@@ -261,7 +261,7 @@
             //获取维护计划列表
             getPlans() {
                 let params = {
-                    currPage: this.listQuery.currPage,
+                    curPage: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
                     executeTime: this.filters.executeTime,
                     isCycle: this.filters.isCycle

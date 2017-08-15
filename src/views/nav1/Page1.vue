@@ -4,40 +4,41 @@
         <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
             <el-form :model="filters">
                 <el-row>
-                    <el-col :span="8">
-                        <el-form-item label-width="80px" label="执行时间" class="postInfo-container-item">
+                    <el-col :span="5" style="margin-left: 12px;">
+                        <el-form-item>
+                            <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="5">
+                        <el-form-item>
+                            <el-input v-model="filters.strContent" placeholder="维护内容" style="width: 180px;"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
                             <el-date-picker
-                                    v-model="filters.executeTime"
-                                    align="right"
-                                    type="date"
-                                    placeholder="选择日期"
-                                    :picker-options="pickerOptions1">
+                                    v-model="filters.createTime"
+                                    type="datetimerange"
+                                    :picker-options="pickerOptions2"
+                                    placeholder="选择时间范围"
+                                    align="right">
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="7">
-                        <el-form-item label="天数">
-                            <el-select v-model="filters.cycleDay" multiple placeholder="请选择">
-                                <el-option
-                                        v-for="item in cycleDays"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
+                    <el-col :span="12">
+                        <el-form-item label-width="80px" label="更新时间" class="postInfo-container-item">
+                            <el-date-picker
+                                    v-model="filters.updateTime"
+                                    type="datetimerange"
+                                    :picker-options="pickerOptions2"
+                                    placeholder="选择时间范围"
+                                    align="right">
+                            </el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6" style="margin-left: 20px;">
-                        <el-form-item label="是否周期性:">
-                            <el-radio-group v-model="filters.isCycle">
-                                <el-radio class="radio" :label="1">是</el-radio>
-                                <el-radio class="radio" :label="0">否</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item style="margin-left: 10px;">
-                            <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
+                    <el-col :span="3">
+                        <el-form-item>
+                            <el-button type="primary" v-on:click="getMaintains" icon="search">查询</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -56,41 +57,19 @@
             </div>
             <div class="panel-body">
                 <!--列表-->
-                <el-table :data="plans" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+                <el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column type="index" label="维护项ID" width="120" sortable>
+                    <el-table-column prop="strTitle" label="维护项" width="120" style="text-align: center">
                     </el-table-column>
-                    <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
+                    <el-table-column prop="strContent" label="维护内容" width="120" style="text-align: center">
                     </el-table-column>
-                    <el-table-column prop="isCycle" label="是否周期性" width="130" align: center :formatter="formatCycle">
+                    <el-table-column prop="createTime" label="创建时间" width="150" sortable>
                     </el-table-column>
-                    <el-table-column prop="cycleDay" label="天">
+                    <el-table-column prop="updateTime" label="更新时间" width="120">
                     </el-table-column>
-                    <el-table-column prop="executeHour" label="时">
-                    </el-table-column>
-                    <el-table-column prop="executeMinute" label="分">
-                    </el-table-column>
-                    <el-table-column prop="description" label="描述">
-                    </el-table-column>
-                    <!-- <el-table-column type="index" label="设备类型ID" style="text-align: center" sortable>
-                    </el-table-column>
-                    <el-table-column type="index" label="设备ID" style="text-align: center" sortable>
-                    </el-table-column> -->
-                    <el-table-column prop="strTitle" label="维护项" width="120">
-                    </el-table-column>
-                    <el-table-column prop="strContent" label="维护内容" width="120">
-                    </el-table-column>
-                    <el-table-column prop="cStartTime" label="创建时间" width="120">
-                    </el-table-column>
-                    <!-- <el-table-column prop="cEndTime" label="创建截止时间" sortable>
-                    </el-table-column> -->
-                    <el-table-column prop="uStartTime" label="更新时间" width="120">
-                    </el-table-column>
-                    <!-- <el-table-column prop="uEndTime" label="更新截止时间" sortable>
-                    </el-table-column> -->
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -102,14 +81,14 @@
                 <!--工具条-->
                 <el-col :span="24" class="toolbar">
                     <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
-                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
                     </el-pagination>
                 </el-col>
             </div>
         </div>
 
         <!--编辑界面-->
-        <el-dialog title="编辑维护计划" v-model="editFormVisible" :close-on-click-modal="false">
+        <el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="名称" prop="strTitle">
                     <el-input v-model="editForm.strTitle" auto-complete="off"></el-input>
@@ -125,7 +104,7 @@
         </el-dialog>
 
         <!--新增界面-->
-        <el-dialog title="新增维护计划" v-model="addFormVisible" :close-on-click-modal="false">
+        <el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false">
             <el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
                 <el-form-item label="名称" prop="strTitle">
                     <el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
@@ -145,17 +124,19 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import { getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan } from '../../api/api';
+    import { getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain } from '../../api/api';
 
     export default {
         data() {
             return {
                 filters: {
-                    executeTime: '',
-                    isCycle: 1,
-                    cycleDay: []
+                    strTitle: '',
+                    strContent: '',
+                    createTime: '',
+                    updateTime: '',
+                    cStartTime: ''
                 },
-                panelTitle: '维护计划列表',
+                panelTitle: '维护项列表',
                 pickerOptions1: {
                     shortcuts: [{
                         text: '今天',
@@ -178,17 +159,36 @@
                         }
                     }]
                 },
-                cycleDays: [{
-                    value: '1',
-                    label: '1天'
-                }, {
-                    value: '2',
-                    label: '2天'
-                },],
-                plans: [],
+                pickerOptions2: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+                maintains: [],
                 total: 0,
                 hello: true,
-                page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
 
@@ -202,7 +202,7 @@
                 },
 
                 listQuery: {
-                    currPage: 1,
+                    curPage: 1,
                     limit: 20,
                     pageSize: 10,
                     importance: undefined,
@@ -216,11 +216,14 @@
                 editFormRules: {
                     strTitle: [
                         { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    ],
+                    strContent: [
+                        { required: true, message: '请输入维护内容', trigger: 'blur' }
                     ]
                 },
                 //编辑界面数据
                 editForm: {
-                    strPlanId: 0,
+                    strMaintainId: 0,
                     strTitle: '',
                     strContent: ''
                 },
@@ -230,6 +233,9 @@
                 addFormRules: {
                     strTitle: [
                         { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    ],
+                    strContent: [
+                        { required: true, message: '请输入维护内容', trigger: 'blur' }
                     ]
                 },
                 //新增界面数据
@@ -242,35 +248,35 @@
         },
         methods: {
             //状态显示转换
-            formatCycle: function (row, column) {
-                return row.isCycle == 0 ? '否' : row.isCycle == 1 ? '是' : '未知';
+            formatState: function (row, column) {
+                return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
             },
             //操作分页
             handleSizeChange(val) {
                 this.listQuery.pageSize = val;
-                this.getPlans();
+                this.getMaintains();
             },
             handleCurrentChange(val) {
-                this.listQuery.currPage = val;
-                this.getPlans();
+                this.listQuery.curPage = val;
+                this.getMaintains();
             },
             //刷新
             on_refresh(){
-                this.getPlans();
+                this.getMaintains();
             },
-            //获取维护计划列表
-            getPlans() {
-                let params = {
-                    currPage: this.listQuery.currPage,
+            //获取维护项列表
+            getMaintains() {
+                let para = {
+                    curPage: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
-                    executeTime: this.filters.executeTime,
-                    isCycle: this.filters.isCycle
+                    strTitle: this.filters.strTitle,
+                    strContent: this.filters.strContent
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getPlanListPage(params).then((res) => {
+                getMaintainListPage(para).then((res) => {
                     this.total = res.data.total;
-                    this.plans = res.data.plans;
+                    this.maintains = res.data.maintains;
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -282,15 +288,15 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { strPlanId: row.strPlanId };
-                    removePlan(para).then((res) => {
+                    let para = { strMaintainId: row.strMaintainId };
+                    removeMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
-                        this.getPlans();
+                        this.getMaintains();
                     });
                 }).catch(() => {
 
@@ -317,7 +323,7 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
-                            editPlan(para).then((res) => {
+                            editMaintain(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -326,7 +332,7 @@
                                 });
                                 this.$refs['editForm'].resetFields();
                                 this.editFormVisible = false;
-                                this.getPlans();
+                                this.getMaintains();
                             });
                         });
                     }
@@ -340,7 +346,7 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-                            addPlan(para).then((res) => {
+                            addMaintain(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -349,7 +355,7 @@
                                 });
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
-                                this.getPlans();
+                                this.getMaintains();
                             });
                         });
                     }
@@ -360,21 +366,21 @@
             },
             //批量删除
             batchRemove: function () {
-                var ids = this.sels.map(item => item.strPlanId).toString();
+                var ids = this.sels.map(item => item.strMaintainId).toString();
                 this.$confirm('确认删除选中记录吗？', '提示', {
                     type: 'warning'
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
                     let para = { ids: ids };
-                    batchRemovePlan(para).then((res) => {
+                    batchRemoveMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
-                        this.getPlans();
+                        this.getMaintains();
                     });
                 }).catch(() => {
 
@@ -382,7 +388,7 @@
             }
         },
         mounted() {
-            this.getPlans();
+            this.getMaintains();
         }
     }
 

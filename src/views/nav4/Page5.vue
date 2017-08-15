@@ -11,7 +11,7 @@
                                     <!--<el-option label="全部" value="all"></el-option>-->
                                     <!--<el-option label="蓄电池一" value="1"></el-option>-->
                                     <!--<el-option label="蓄电池二" value="2"></el-option>-->
-                                    <el-option v-for="item in form.deviceNoItems" v-bind:value="item.value">{{item.text}}</el-option>
+                                    <el-option v-for="item in form.deviceNoItems" :key="item" v-bind:value="item.value">{{item.text}}</el-option>
                                 </el-select>
                                 <p>已选:{{form.deviceNo}}</p>
                             </el-form-item>
@@ -116,7 +116,7 @@
                 <!--工具条-->
                 <el-col :span="24" class="toolbar">
                     <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
-                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
                     </el-pagination>
                 </el-col>
             </div>
@@ -265,7 +265,7 @@
                 },
 
                 listQuery: {
-                    currPage: 1,
+                    curPage: 1,
                     limit: 20,
                     pageSize: 10,
                     importance: undefined,
@@ -322,7 +322,7 @@
                 this.getUsers();
             },
             handleCurrentChange(val) {
-                this.listQuery.currPage = val;
+                this.listQuery.curPage = val;
                 this.getUsers();
             },
             //刷新
@@ -332,7 +332,7 @@
             //获取用户列表
             getUsers() {
                 let para = {
-                    currPage: this.listQuery.currPage,
+                    curPage: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
                     siteName: this.filters.siteName
                 };
