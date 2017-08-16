@@ -2,19 +2,19 @@
     <section>
         <!--工具条-->
         <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
-            <el-form :model="filters">
+            <el-form :inline="true" :model="filters" class="demo-form-inline">
                 <el-row>
-                    <el-col :span="5" style="margin-left: 12px;">
-                        <el-form-item>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12" style="margin-left: 12px;">
+                        <el-form-item label="维护项">
                             <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="5">
-                        <el-form-item>
+                    <el-col :xs="10" :sm="10" :md="10" :lg="10">
+                        <el-form-item label="维护内容">
                             <el-input v-model="filters.strContent" placeholder="维护内容" style="width: 180px;"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :xs="24" :sm="24" :md="24" :lg="12">
                         <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
                             <el-date-picker
                                     v-model="filters.createTime"
@@ -25,7 +25,7 @@
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :xs="24" :sm="24" :md="24" :lg="12">
                         <el-form-item label-width="80px" label="更新时间" class="postInfo-container-item">
                             <el-date-picker
                                     v-model="filters.updateTime"
@@ -36,7 +36,7 @@
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="3">
+                    <el-col :xs="24" :sm="24" :md="24" :lg="12" style="margin-left: 12px;">
                         <el-form-item>
                             <el-button type="primary" v-on:click="getMaintains" icon="search">查询</el-button>
                         </el-form-item>
@@ -62,13 +62,13 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="strTitle" label="维护项" width="120" style="text-align: center">
+                    <el-table-column prop="strTitle" label="维护项">
                     </el-table-column>
-                    <el-table-column prop="strContent" label="维护内容" width="120" style="text-align: center">
+                    <el-table-column prop="strContent" label="维护内容">
                     </el-table-column>
-                    <el-table-column prop="createTime" label="创建时间" width="150" sortable>
+                    <el-table-column prop="createTime" label="创建时间">
                     </el-table-column>
-                    <el-table-column prop="updateTime" label="更新时间" width="120">
+                    <el-table-column prop="updateTime" label="更新时间">
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
@@ -90,11 +90,16 @@
         <!--编辑界面-->
         <el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                <el-form-item label="名称" prop="strTitle">
+                <el-form-item label="名称" prop="strTitle" style="width: 450px;">
                     <el-input v-model="editForm.strTitle" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="维护内容" prop="strContent">
-                    <el-input v-model="editForm.strContent" auto-complete="off"></el-input>
+                <el-form-item label="维护内容" prop="strContent" style="width: 450px;">
+                    <el-input
+                            type="textarea"
+                            :rows="2"
+                            placeholder="请输入内容"
+                            v-model="editForm.strContent">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -104,13 +109,22 @@
         </el-dialog>
 
         <!--新增界面-->
-        <el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false">
+        <el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false" size="small">
             <el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
-                <el-form-item label="名称" prop="strTitle">
+                <!--<el-row :gutter="2">-->
+                <!--<el-col :xs="8" :sm="6" :md="5" :lg="5">-->
+                <el-form-item label="名称" prop="strTitle" style="width: 450px;">
                     <el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="维护内容" prop="strContent">
-                    <el-input v-model="addForm.strContent" auto-complete="off"></el-input>
+                 <!--</el-col>-->
+                 <!--</el-row>-->
+                <el-form-item label="维护内容" prop="strContent" style="width: 450px;">
+                    <el-input
+                            type="textarea"
+                            :rows="2"
+                            placeholder="请输入内容"
+                            v-model="addForm.strContent">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">

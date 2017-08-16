@@ -112,6 +112,9 @@
         <!--编辑界面-->
         <el-dialog title="编辑维护计划" v-model="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+                <el-form-item label="计划ID" prop="strPlanId" style="width: 292px;">
+                    <el-input v-model="editForm.strPlanId" auto-complete="off" disabled></el-input>
+                </el-form-item>
                 <el-form-item label="维护项ID" prop="maintainId" style="width: 292px;">
                     <el-input v-model="editForm.maintainId" auto-complete="off"></el-input>
                 </el-form-item>
@@ -131,7 +134,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="执行周期(天)" prop="cycleDay">
-                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" :min="1" :max="30"></el-input-number>
+                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" v-if="editForm.isCycle" :min="1" :max="30"></el-input-number>
                 </el-form-item>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
                     <el-input
@@ -175,7 +178,7 @@
                         <el-radio class="radio" :label="0">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="执行周期(天)" prop="cycleDay">
+                <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
                     <el-input-number v-model="addForm.cycleDay" @change="handleChange" :min="1" :max="90"></el-input-number>
                 </el-form-item>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
@@ -186,7 +189,7 @@
                             v-model="addForm.description">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="设备ID" prop="equipmentCategory" style="width: 292px;">
+                <el-form-item label="设备类型ID" prop="equipmentCategory" style="width: 292px;">
                     <el-input v-model="addForm.equipmentCategory" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="设备ID" prop="equipmentId" style="width: 292px;">
@@ -208,6 +211,17 @@
 
     export default {
         data() {
+            var checkExecuteTime = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('执行时间不能为空'));
+                }
+                setTimeout(() => {
+                    const now = new Date();
+                    if (now > value) {
+                        callback(new Error('执行时间必须大于当前时间'));
+                    }
+                }, 500);
+            };
             return {
                 filters: {
                     maintainId: '',
@@ -223,17 +237,17 @@
                             picker.$emit('pick', new Date());
                         }
                     }, {
-                        text: '昨天',
+                        text: '明天',
                         onClick(picker) {
                             const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            date.setTime(date.getTime() + 3600 * 1000 * 24);
                             picker.$emit('pick', date);
                         }
                     }, {
-                        text: '一周前',
+                        text: '一周后',
                         onClick(picker) {
                             const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
                             picker.$emit('pick', date);
                         }
                     }]
@@ -280,12 +294,14 @@
                 sels: [],//列表选中列
 
                 form: {
-                    strTitle: '',
-                    strContent: '',
-                    cStartTime: '',
-                    cEndTime: '',
-                    uStartTime: '',
-                    uEndTime: ''
+                    strPlanId: 0,
+                    maintainId: '',
+                    executeTime: '',
+                    isCycle: '',
+                    cycleDay: '',
+                    description: '',
+                    equipmentCategory: '',
+                    equipmentId: ''
                 },
 
                 listQuery: {
@@ -301,8 +317,17 @@
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
-                    strTitle: [
-                        { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    maintainId: [
+                        {required: true, message: '请输入维护项ID', trigger: 'blur'}
+                    ],
+                    executeTime: [
+                        {required: true, validator: checkExecuteTime, trigger: 'blur'}
+                    ],
+                    equipmentCategory: [
+                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
+                    ],
+                    equipmentId: [
+                        {required: true, message: '请输入设备ID', trigger: 'blur'}
                     ]
                 },
                 //编辑界面数据
@@ -321,7 +346,16 @@
                 addLoading: false,
                 addFormRules: {
                     maintainId: [
-                        { required: true, message: '请输入维护项ID', trigger: 'blur' }
+                        {required: true, message: '请输入维护项ID', trigger: 'blur'}
+                    ],
+                    executeTime: [
+                        {required: true, validator: checkExecuteTime, trigger: 'blur'}
+                    ],
+                    equipmentCategory: [
+                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
+                    ],
+                    equipmentId: [
+                        {required: true, message: '请输入设备ID', trigger: 'blur'}
                     ]
                 },
                 //新增界面数据
@@ -341,6 +375,9 @@
             //状态显示转换
             formatCycle: function (row, column) {
                 return row.isCycle == 0 ? '否' : row.isCycle == 1 ? '是' : '未知';
+            },
+            handleChange: function (value) {
+                console.log(value);
             },
             //操作分页
             handleSizeChange(val) {
