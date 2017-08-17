@@ -59,13 +59,13 @@ for (let i = 0; i < 21; i++) {
         'executeMinute|1': ['5', '10', '15', '20', '30'],
         description: Mock.Random.cname(),
         equipmentCategory: Mock.Random.guid(),
-        equipmentId: Mock.Random.guid(),
-        strTitle: Mock.Random.cname(),
-        strContent: Mock.Random.cname(),
-        cStartTime: Mock.Random.date(),
-        cEndTime: Mock.Random.date(),
-        uStartTime: Mock.Random.date(),
-        uEndTime: Mock.Random.date()
+        equipmentId: Mock.Random.guid()
+        // strTitle: Mock.Random.cname(),
+        // strContent: Mock.Random.cname(),
+        // cStartTime: Mock.Random.date(),
+        // cEndTime: Mock.Random.date(),
+        // uStartTime: Mock.Random.date(),
+        // uEndTime: Mock.Random.date()
     }));
 }
 

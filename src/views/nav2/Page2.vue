@@ -6,7 +6,7 @@
                 <el-row>
                     <el-col :span="5" style="margin-left: 12px;">
                         <el-form-item>
-                            <el-input v-model="filters.maintainId" placeholder="维护项" style="width: 160px;"></el-input>
+                            <el-input v-model="filters.strMaintainId" placeholder="维护项" style="width: 160px;"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -66,7 +66,7 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column type="index" label="维护项ID" width="120" sortable>
+                    <el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
                     </el-table-column>
@@ -80,16 +80,16 @@
                     </el-table-column>
                     <el-table-column type="index" label="设备ID" style="text-align: center" sortable>
                     </el-table-column> -->
-                    <el-table-column prop="strTitle" label="维护项" width="120">
-                    </el-table-column>
-                    <el-table-column prop="strContent" label="维护内容" width="120">
-                    </el-table-column>
-                    <el-table-column prop="cStartTime" label="创建时间" width="120">
-                    </el-table-column>
+                    <!--<el-table-column prop="strTitle" label="维护项" width="120">-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column prop="strContent" label="维护内容" width="120">-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column prop="cStartTime" label="创建时间" width="120">-->
+                    <!--</el-table-column>-->
                     <!-- <el-table-column prop="cEndTime" label="创建截止时间" sortable>
                     </el-table-column> -->
-                    <el-table-column prop="uStartTime" label="更新时间" width="120">
-                    </el-table-column>
+                    <!--<el-table-column prop="uStartTime" label="更新时间" width="120">-->
+                    <!--</el-table-column>-->
                     <!-- <el-table-column prop="uEndTime" label="更新截止时间" sortable>
                     </el-table-column> -->
                     <el-table-column label="操作" width="150">
@@ -115,8 +115,8 @@
                 <el-form-item label="计划ID" prop="strPlanId" style="width: 292px;">
                     <el-input v-model="editForm.strPlanId" auto-complete="off" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="维护项ID" prop="maintainId" style="width: 292px;">
-                    <el-input v-model="editForm.maintainId" auto-complete="off"></el-input>
+                <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
+                    <el-input v-model="editForm.strMaintainId" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="执行时间" prop="executeTime">
                     <el-date-picker
@@ -160,8 +160,8 @@
         <!--新增界面-->
         <el-dialog title="新增维护计划" v-model="addFormVisible" :close-on-click-modal="false">
             <el-form ref="addForm" :model="addForm" label-width="100px" :rules="addFormRules">
-                <el-form-item label="维护项ID" prop="maintainId" style="width: 292px;">
-                    <el-input v-model="addForm.maintainId" auto-complete="off"></el-input>
+                <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
+                    <el-input v-model="addForm.strMaintainId" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="执行时间" prop="executeTime">
                     <el-date-picker
@@ -211,20 +211,49 @@
 
     export default {
         data() {
+            var format = function(time, format)
+            {
+                var t = new Date(time);
+                var tf = function(i){return (i < 10 ? '0':'') + i};
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+                    switch(a){
+                        case 'yyyy':
+                            return tf(t.getFullYear());
+                            break;
+                        case 'MM':
+                            return tf(t.getMonth() + 1);
+                            break;
+                        case 'mm':
+                            return tf(t.getMinutes());
+                            break;
+                        case 'dd':
+                            return tf(t.getDate());
+                            break;
+                        case 'HH':
+                            return tf(t.getHours());
+                            break;
+                        case 'ss':
+                            return tf(t.getSeconds());
+                            break;
+                    }
+                })
+            };
             var checkExecuteTime = (rule, value, callback) => {
                 if (!value) {
                     return callback(new Error('执行时间不能为空'));
                 }
                 setTimeout(() => {
                     const now = new Date();
-                    if (now > value) {
+                    if (format(value,'yyyy-MM-dd HH:mm:ss') < format(now,'yyyy-MM-dd HH:mm:ss')) {
                         callback(new Error('执行时间必须大于当前时间'));
+                    }else {
+                        callback();
                     }
                 }, 500);
             };
             return {
                 filters: {
-                    maintainId: '',
+                    strMaintainId: '',
                     executeTime: '',
                     isCycle: 1,
                     cycleDay: []
@@ -295,7 +324,7 @@
 
                 form: {
                     strPlanId: 0,
-                    maintainId: '',
+                    strMaintainId: '',
                     executeTime: '',
                     isCycle: '',
                     cycleDay: '',
@@ -317,7 +346,7 @@
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
-                    maintainId: [
+                    strMaintainId: [
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
                     executeTime: [
@@ -333,7 +362,7 @@
                 //编辑界面数据
                 editForm: {
                     strPlanId: 0,
-                    maintainId: '',
+                    strMaintainId: '',
                     executeTime: '',
                     isCycle: '',
                     cycleDay: '',
@@ -345,7 +374,7 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    maintainId: [
+                    strMaintainId: [
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
                     executeTime: [
@@ -360,7 +389,7 @@
                 },
                 //新增界面数据
                 addForm: {
-                    maintainId: '',
+                    strMaintainId: '',
                     executeTime: '',
                     isCycle: '',
                     cycleDay: '',
@@ -439,7 +468,7 @@
             handleAdd: function () {
                 this.addFormVisible = true;
                 this.addForm = {
-                    maintainId: '',
+                    strMaintainId: '',
                     executeTime: '',
                     isCycle: 1,
                     cycleDay: '',

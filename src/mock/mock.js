@@ -437,7 +437,7 @@ export default {
 
         //编辑维护计划
         mock.onGet('/plan/edit').reply(config => {
-            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId, cStartTime, cEndTime, uStartTime, uEndTime } = config.params;
+            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId } = config.params;
             _Plans.some(plan => {
                 if (plan.strPlanId === strPlanId) {
                     plan.strMaintainId = strMaintainId;
@@ -449,12 +449,12 @@ export default {
                     plan.description = description;
                     plan.equipmentCategory = equipmentCategory;
                     plan.equipmentId = equipmentId;
-                    plan.strTitle = strTitle;
-                    plan.strContent = strContent;
-                    plan.cStartTime = cStartTime;
-                    plan.cEndTime = cEndTime;
-                    plan.uStartTime = uStartTime;
-                    plan.uEndTime = uEndTime;
+                    // plan.strTitle = strTitle;
+                    // plan.strContent = strContent;
+                    // plan.cStartTime = cStartTime;
+                    // plan.cEndTime = cEndTime;
+                    // plan.uStartTime = uStartTime;
+                    // plan.uEndTime = uEndTime;
                     return true;
                 }
             });
@@ -470,7 +470,7 @@ export default {
 
         //新增维护计划
         mock.onGet('/plan/add').reply(config => {
-            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId, cStartTime, cEndTime, uStartTime, uEndTime } = config.params;
+            let { strPlanId, strMaintainId, executeTime, isCycle, cycleDay, executeHour, executeMinute, description, equipmentCategory, equipmentId } = config.params;
             _Plans.push({
                 strMaintainId: strMaintainId,
                 executeTime: executeTime,
@@ -480,13 +480,13 @@ export default {
                 executeMinute: executeMinute,
                 description: description,
                 equipmentCategory: equipmentCategory,
-                equipmentId: equipmentId,
-                strTitle: strTitle,
-                strContent: strContent,
-                cStartTime: cStartTime,
-                cEndTime: cEndTime,
-                uStartTime: uStartTime,
-                uEndTime: uEndTime
+                equipmentId: equipmentId
+                // strTitle: strTitle,
+                // strContent: strContent,
+                // cStartTime: cStartTime,
+                // cEndTime: cEndTime,
+                // uStartTime: uStartTime,
+                // uEndTime: uEndTime
             });
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
