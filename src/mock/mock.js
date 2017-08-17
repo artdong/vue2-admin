@@ -389,7 +389,7 @@ export default {
 
         //获取维护计划列表（分页）
         mock.onGet('/plan/listpage').reply(config => {
-            let {curPage, pageSize, executeTime, isCycle} = config.params;
+            let {curPage, pageSize} = config.params;
             let plans = _Plans.filter(plan => {
                 // if (executeTime && plan.executeTime != executeTime) return false;
                 return true;

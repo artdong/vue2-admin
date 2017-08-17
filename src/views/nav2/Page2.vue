@@ -6,7 +6,8 @@
                 <el-row>
                     <el-col :span="5" style="margin-left: 12px;">
                         <el-form-item>
-                            <el-input v-model="filters.strMaintainId" placeholder="维护项" style="width: 160px;"></el-input>
+                            <el-input v-model="filters.strMaintainId" placeholder="维护项"
+                                      style="width: 160px;"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -66,8 +67,10 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>
+                    <el-table-column type="strPlanId" label="计划ID" width="120" sortable>
                     </el-table-column>
+                    <!--<el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>-->
+                    <!--</el-table-column>-->
                     <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="isCycle" label="是否周期性" width="130" align: center :formatter="formatCycle">
@@ -76,26 +79,16 @@
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <!-- <el-table-column type="index" label="设备类型ID" style="text-align: center" sortable>
+                    <
+                    <el-table-column prop="equipmentCategory" label="设备类型ID" style="text-align: center" sortable>
                     </el-table-column>
-                    <el-table-column type="index" label="设备ID" style="text-align: center" sortable>
-                    </el-table-column> -->
-                    <!--<el-table-column prop="strTitle" label="维护项" width="120">-->
-                    <!--</el-table-column>-->
-                    <!--<el-table-column prop="strContent" label="维护内容" width="120">-->
-                    <!--</el-table-column>-->
-                    <!--<el-table-column prop="cStartTime" label="创建时间" width="120">-->
-                    <!--</el-table-column>-->
-                    <!-- <el-table-column prop="cEndTime" label="创建截止时间" sortable>
-                    </el-table-column> -->
-                    <!--<el-table-column prop="uStartTime" label="更新时间" width="120">-->
-                    <!--</el-table-column>-->
-                    <!-- <el-table-column prop="uEndTime" label="更新截止时间" sortable>
-                    </el-table-column> -->
+                    <el-table-column prop="equipmentId" label="设备ID" style="text-align: center" sortable>
+                    </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除
+                            </el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -134,7 +127,8 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="执行周期(天)" prop="cycleDay">
-                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" v-if="editForm.isCycle" :min="1" :max="30"></el-input-number>
+                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" v-if="editForm.isCycle" :min="1"
+                                     :max="30"></el-input-number>
                 </el-form-item>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
                     <el-input
@@ -144,7 +138,7 @@
                             v-model="editForm.description">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="设备ID" prop="equipmentCategory" style="width: 292px;">
+                <el-form-item label="设备类型ID" prop="equipmentCategory" style="width: 292px;">
                     <el-input v-model="editForm.equipmentCategory" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="设备ID" prop="equipmentId" style="width: 292px;">
@@ -179,7 +173,8 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
-                    <el-input-number v-model="addForm.cycleDay" @change="handleChange" :min="1" :max="90"></el-input-number>
+                    <el-input-number v-model="addForm.cycleDay" @change="handleChange" :min="1"
+                                     :max="90"></el-input-number>
                 </el-form-item>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
                     <el-input
@@ -207,50 +202,10 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import { getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan } from '../../api/api';
+    import {getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan} from '../../api/api';
 
     export default {
         data() {
-            var format = function(time, format)
-            {
-                var t = new Date(time);
-                var tf = function(i){return (i < 10 ? '0':'') + i};
-                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
-                    switch(a){
-                        case 'yyyy':
-                            return tf(t.getFullYear());
-                            break;
-                        case 'MM':
-                            return tf(t.getMonth() + 1);
-                            break;
-                        case 'mm':
-                            return tf(t.getMinutes());
-                            break;
-                        case 'dd':
-                            return tf(t.getDate());
-                            break;
-                        case 'HH':
-                            return tf(t.getHours());
-                            break;
-                        case 'ss':
-                            return tf(t.getSeconds());
-                            break;
-                    }
-                })
-            };
-            var checkExecuteTime = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('执行时间不能为空'));
-                }
-                setTimeout(() => {
-                    const now = new Date();
-                    if (format(value,'yyyy-MM-dd HH:mm:ss') < format(now,'yyyy-MM-dd HH:mm:ss')) {
-                        callback(new Error('执行时间必须大于当前时间'));
-                    }else {
-                        callback();
-                    }
-                }, 500);
-            };
             return {
                 filters: {
                     strMaintainId: '',
@@ -401,6 +356,47 @@
             }
         },
         methods: {
+            format: function (time, format) {
+                var t = new Date(time);
+                var tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                };
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                        case 'yyyy':
+                            return tf(t.getFullYear());
+                            break;
+                        case 'MM':
+                            return tf(t.getMonth() + 1);
+                            break;
+                        case 'mm':
+                            return tf(t.getMinutes());
+                            break;
+                        case 'dd':
+                            return tf(t.getDate());
+                            break;
+                        case 'HH':
+                            return tf(t.getHours());
+                            break;
+                        case 'ss':
+                            return tf(t.getSeconds());
+                            break;
+                    }
+                })
+            },
+            checkExecuteTime: (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('执行时间不能为空'));
+                }
+                setTimeout(() => {
+                    const now = new Date();
+                    if (format(value, 'yyyy-MM-dd HH:mm:ss') < format(now, 'yyyy-MM-dd HH:mm:ss')) {
+                        callback(new Error('执行时间必须大于当前时间'));
+                    } else {
+                        callback();
+                    }
+                }, 500);
+            },
             //状态显示转换
             formatCycle: function (row, column) {
                 return row.isCycle == 0 ? '否' : row.isCycle == 1 ? '是' : '未知';
@@ -423,7 +419,7 @@
             },
             //获取维护计划列表
             getPlans() {
-                let params = {
+                let para = {
                     curPage: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
                     executeTime: this.filters.executeTime,
@@ -431,7 +427,7 @@
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getPlanListPage(params).then((res) => {
+                getPlanListPage(para).then((res) => {
                     this.total = res.data.total;
                     this.plans = res.data.plans;
                     this.listLoading = false;
@@ -445,7 +441,7 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { strPlanId: row.strPlanId };
+                    let para = {strPlanId: row.strPlanId};
                     removePlan(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
@@ -534,7 +530,7 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { ids: ids };
+                    let para = {ids: ids};
                     batchRemovePlan(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
