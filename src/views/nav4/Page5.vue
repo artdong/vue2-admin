@@ -268,9 +268,6 @@
                     curPage: 1,
                     limit: 20,
                     pageSize: 10,
-                    importance: undefined,
-                    title: undefined,
-                    type: undefined,
                     sort: '+id'
                 },
 

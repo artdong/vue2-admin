@@ -69,8 +69,8 @@
                     </el-table-column>
                     <el-table-column type="strPlanId" label="计划ID" width="120" sortable>
                     </el-table-column>
-                    <!--<el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>-->
-                    <!--</el-table-column>-->
+                    <el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>
+                    </el-table-column>
                     <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="isCycle" label="是否周期性" width="130" align: center :formatter="formatCycle">
@@ -305,7 +305,7 @@
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
                     executeTime: [
-                        {required: true, validator: checkExecuteTime, trigger: 'blur'}
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
                     ],
                     equipmentCategory: [
                         {required: true, message: '请输入设备类型ID', trigger: 'blur'}
@@ -333,7 +333,7 @@
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
                     executeTime: [
-                        {required: true, validator: checkExecuteTime, trigger: 'blur'}
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
                     ],
                     equipmentCategory: [
                         {required: true, message: '请输入设备类型ID', trigger: 'blur'}
