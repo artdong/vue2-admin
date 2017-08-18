@@ -93,17 +93,17 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="siteName" label="站点名称" width="120" style="text-align: center" sortable>
+                    <el-table-column prop="siteName" label="站点名称" width="120">
                     </el-table-column>
-                    <el-table-column prop="deviceNo" label="设备号" width="100" center sortable>
+                    <el-table-column prop="deviceNo" label="设备号" width="100" sortable>
                     </el-table-column>
-                    <el-table-column prop="startTime" label="开始时间" width="120" center sortable>
+                    <el-table-column prop="startTime" label="开始时间" width="120" sortable>
                     </el-table-column>
-                    <el-table-column prop="repeat" label="重复设置" min-width="120" sortable>
+                    <el-table-column prop="repeat" label="重复设置" min-width="120">
                     </el-table-column>
-                    <el-table-column prop="state" label="启用状态" min-width="120" :formatter="formatState" sortable>
+                    <el-table-column prop="state" label="启用状态" min-width="120" :formatter="formatState">
                     </el-table-column>
-                    <el-table-column prop="type" label="类型" min-width="100" sortable>
+                    <el-table-column prop="type" label="类型" min-width="100">
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
