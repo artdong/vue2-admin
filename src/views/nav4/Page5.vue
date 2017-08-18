@@ -248,7 +248,6 @@
                 users: [],
                 total: 0,
                 hello: true,
-                page: 1,
                 listLoading: false,
                 activeNames: ['1'],
                 sels: [],//列表选中列

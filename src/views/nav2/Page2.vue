@@ -1,54 +1,76 @@
 <template>
     <section>
         <!--工具条-->
-        <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
-            <el-form :model="filters">
-                <el-row>
-                    <el-col :span="5" style="margin-left: 12px;">
-                        <el-form-item>
-                            <el-input v-model="filters.strMaintainId" placeholder="维护项"
-                                      style="width: 160px;"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label-width="80px" label="执行时间" class="postInfo-container-item">
-                            <el-date-picker
-                                    v-model="filters.executeTime"
-                                    type="datetimerange"
-                                    :picker-options="pickerOptions2"
-                                    placeholder="选择时间范围"
-                                    align="right">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="是否周期性:">
-                            <el-radio-group v-model="filters.isCycle">
-                                <el-radio class="radio" :label="1">是</el-radio>
-                                <el-radio class="radio" :label="0">否</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12" style="margin-left: 10px;">
-                        <el-form-item label="执行周期(天)">
-                            <el-select v-model="filters.cycleDay" multiple placeholder="请选择">
-                                <el-option
-                                        v-for="item in cycleDays"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item style="margin-left: 10px;">
-                            <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
-        </el-form>
+        <el-collapse v-model="activeNames">
+            <el-collapse-item title="查询条件" name="1">
+                <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
+                    <el-form :model="filters">
+                        <el-row>
+                            <el-col :xs="12" :sm="12" :md="12" :lg="5" style="margin-left: 12px;">
+                                <el-form-item>
+                                    <el-input v-model="filters.strPlanId" placeholder="计划ID"
+                                              style="width: 160px;"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="10" :sm="10" :md="10" :lg="5">
+                                <el-form-item>
+                                    <el-input v-model="filters.strMaintainId" placeholder="设备类型ID"
+                                              style="width: 160px;"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="12" :sm="12" :md="12" :lg="5" style="margin-left: 12px;">
+                                <el-form-item>
+                                    <el-input v-model="filters.equipmentCategory" placeholder="设备ID"
+                                              style="width: 160px;"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="10" :sm="10" :md="10" :lg="5">
+                                <el-form-item>
+                                    <el-input v-model="filters.equipmentId" placeholder="维护项ID"
+                                              style="width: 160px;"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                                <el-form-item label-width="80px" label="执行时间" class="postInfo-container-item">
+                                    <el-date-picker
+                                            v-model="filters.executeTime"
+                                            type="datetimerange"
+                                            :picker-options="pickerOptions2"
+                                            placeholder="选择时间范围"
+                                            align="right">
+                                    </el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="10" :sm="10" :md="10" :lg="10" style="margin-left: 12px;">
+                                <el-form-item label="是否周期性:">
+                                    <el-radio-group v-model="filters.isCycle">
+                                        <el-radio class="radio" :label="1">是</el-radio>
+                                        <el-radio class="radio" :label="0">否</el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle" style="margin-left: 12px;">
+                                <el-form-item label="执行周期(天)">
+                                    <el-select v-model="filters.cycleDay" multiple placeholder="请选择">
+                                        <el-option
+                                                v-for="item in cycleDays"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="12" :sm="12" :md="12" :lg="6">
+                                <el-form-item style="margin-left: 10px;">
+                                    <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                </el-form>
+            </el-collapse-item>
+        </el-collapse>
 
         <div class="panel">
             <div class="panel-title">
@@ -207,12 +229,16 @@
         data() {
             return {
                 filters: {
+                    strPlanId: '',
                     strMaintainId: '',
+                    equipmentCategory: '',
+                    equipmentId: '',
                     executeTime: '',
-                    isCycle: 1,
+                    isCycle: 0,
                     cycleDay: []
                 },
                 panelTitle: '维护计划列表',
+                activeNames: ['1'],
                 pickerOptions1: {
                     shortcuts: [{
                         text: '今天',
