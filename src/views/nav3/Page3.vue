@@ -61,11 +61,13 @@
 					</el-table-column>
 					<el-table-column type="index" width="60">
 					</el-table-column>
-					<el-table-column type="index" label="维护项ID" width="120" sortable>
-					</el-table-column>
+					<el-table-column prop="strPlanId" label="计划ID" width="120" sortable>
+                    </el-table-column>
+                    <el-table-column prop="strMaintainId" label="维护项ID" width="120" sortable>
+                    </el-table-column>
 					<el-table-column prop="executeTime" label="执行时间" width="120" sortable>
 					</el-table-column>
-					<el-table-column prop="isCycle" label="是否周期性" width="130" align: center :formatter="formatCycle">
+					<el-table-column prop="isCycle" label="是否周期性" width="130" :formatter="formatCycle">
 					</el-table-column>
 					<el-table-column prop="cycleDay" label="天">
 					</el-table-column>
@@ -75,22 +77,18 @@
 					</el-table-column>
 					<el-table-column prop="description" label="描述">
 					</el-table-column>
-					<!-- <el-table-column type="index" label="设备类型ID" style="text-align: center" sortable>
+					<el-table-column prop="equipmentCategory" label="设备类型ID" sortable>
                     </el-table-column>
-                    <el-table-column type="index" label="设备ID" style="text-align: center" sortable>
-                    </el-table-column> -->
+                    <el-table-column prop="equipmentId" label="设备ID" sortable>
+                    </el-table-column>
 					<el-table-column prop="strTitle" label="维护项" width="120">
 					</el-table-column>
 					<el-table-column prop="strContent" label="维护内容" width="120">
 					</el-table-column>
 					<el-table-column prop="cStartTime" label="创建时间" width="120">
 					</el-table-column>
-					<!-- <el-table-column prop="cEndTime" label="创建截止时间" sortable>
-                    </el-table-column> -->
 					<el-table-column prop="uStartTime" label="更新时间" width="120">
 					</el-table-column>
-					<!-- <el-table-column prop="uEndTime" label="更新截止时间" sortable>
-                    </el-table-column> -->
 					<el-table-column label="操作" width="150">
 						<template scope="scope">
 							<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

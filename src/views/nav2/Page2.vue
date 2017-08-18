@@ -67,22 +67,21 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column type="strPlanId" label="计划ID" width="120" sortable>
+                    <el-table-column prop="strPlanId" label="计划ID" width="120" sortable>
                     </el-table-column>
-                    <el-table-column type="strMaintainId" label="维护项ID" width="120" sortable>
+                    <el-table-column prop="strMaintainId" label="维护项ID" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
                     </el-table-column>
-                    <el-table-column prop="isCycle" label="是否周期性" width="130" align: center :formatter="formatCycle">
+                    <el-table-column prop="isCycle" label="是否周期性" width="120" :formatter="formatCycle">
                     </el-table-column>
                     <el-table-column prop="cycleDay" label="天">
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <
-                    <el-table-column prop="equipmentCategory" label="设备类型ID" style="text-align: center" sortable>
+                    <el-table-column prop="equipmentCategory" label="设备类型ID" sortable>
                     </el-table-column>
-                    <el-table-column prop="equipmentId" label="设备ID" style="text-align: center" sortable>
+                    <el-table-column prop="equipmentId" label="设备ID" sortable>
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
@@ -269,11 +268,9 @@
                 }, {
                     value: '2',
                     label: '2天'
-                },],
+                }],
                 plans: [],
                 total: 0,
-                hello: true,
-                page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
 
@@ -281,7 +278,7 @@
                     strPlanId: 0,
                     strMaintainId: '',
                     executeTime: '',
-                    isCycle: '',
+                    isCycle: 0,
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
@@ -346,7 +343,7 @@
                 addForm: {
                     strMaintainId: '',
                     executeTime: '',
-                    isCycle: '',
+                    isCycle: 0,
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
@@ -399,7 +396,7 @@
             },
             //状态显示转换
             formatCycle: function (row, column) {
-                return row.isCycle == 0 ? '否' : row.isCycle == 1 ? '是' : '未知';
+                return row.isCycle === 0 ? '否' : row.isCycle === 1 ? '是' : '未知';
             },
             handleChange: function (value) {
                 console.log(value);

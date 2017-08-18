@@ -202,7 +202,6 @@
                 },
                 maintains: [],
                 total: 0,
-                hello: true,
                 listLoading: false,
                 sels: [],//列表选中列
 
