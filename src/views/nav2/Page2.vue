@@ -30,7 +30,7 @@
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
                             </el-col>
-                            <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                            <el-col :xs="12" :sm="12" :md="12" :lg="14">
                                 <el-form-item label-width="80px" label="执行时间" class="postInfo-container-item">
                                     <el-date-picker
                                             v-model="filters.executeTime"
@@ -41,7 +41,7 @@
                                     </el-date-picker>
                                 </el-form-item>
                             </el-col>
-                            <el-col :xs="10" :sm="10" :md="10" :lg="10" style="margin-left: 12px;">
+                            <el-col :xs="10" :sm="10" :md="10" :lg="6" style="margin-left: 20px;">
                                 <el-form-item label="是否周期性:">
                                     <el-radio-group v-model="filters.isCycle">
                                         <el-radio class="radio" :label="1">是</el-radio>
