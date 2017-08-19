@@ -3,6 +3,7 @@
  */
 
 const base = ''
+// const base = '/api'
 
 export const login = base + '/login';
 
@@ -35,6 +36,7 @@ export const categoryAdd = base + '/category/add';
 export const maintainList = base + '/maintain/list';
 
 export const maintainListpage = base + '/maintain/listpage';
+// export const maintainListpage = base + '/MaintainService.svc/GetMaintainItems';
 
 export const maintainRemove = base + '/maintain/remove';
 

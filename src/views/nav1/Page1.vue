@@ -282,6 +282,7 @@
                 let para = {
                     curPage: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
+                    strOrder: 'asc',
                     strTitle: this.filters.strTitle,
                     strContent: this.filters.strContent
                 };

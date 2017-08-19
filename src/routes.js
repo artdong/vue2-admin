@@ -30,7 +30,7 @@ let routes = [
         leaf: true,//只有一个节点
         children: [
             // { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/page1', component: Page1, name: '维护项' },
+            { path: '/', component: Page1, name: '维护项' },
         ]
     },
     {
@@ -66,6 +66,7 @@ let routes = [
         name: '综合实例',
         iconCls: 'el-icon-star-on',
         leaf: false,//不只一个节点
+        hidden: true,
         children: [
             {
                 path: '/page4',
