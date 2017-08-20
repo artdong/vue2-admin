@@ -7,6 +7,7 @@ import Page2 from './views/nav2/Page2.vue'
 import Page3 from './views/nav3/Page3.vue'
 import Page4 from './views/nav4/Page4.vue'
 import Page5 from './views/nav4/Page5.vue'
+import Page6 from './views/nav4/backToTop.vue'
 
 let routes = [
     {
@@ -66,7 +67,7 @@ let routes = [
         name: '综合实例',
         iconCls: 'el-icon-star-on',
         leaf: false,//不只一个节点
-        hidden: true,
+        hidden: false,
         children: [
             {
                 path: '/page4',
@@ -83,6 +84,11 @@ let routes = [
                 meta: {
                     title: "列表"
                 }
+            },
+            {
+                path: '/page6',
+                component: Page6,
+                name: 'backToTop'
             }
         ]
     },
