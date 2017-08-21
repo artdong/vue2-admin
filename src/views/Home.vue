@@ -32,18 +32,18 @@
             </aside>
 			<section class="content-container">
 				<el-col :span="24" class="header">
-					<el-col :span="2">
+					<el-col :xs="2" :sm="2" :md="2" :lg="2">
 						<div class="tools" @click.prevent="collapse" style="margin-bottom: 64px;">
 							<i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
 						</div>
 					</el-col>
-					<el-col :span="18" class="breadcrumb-container">
+					<el-col :xs="18" :sm="18" :md="18" :lg="19" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
 					</el-col>
-					<el-col :span="1">
+					<el-col :xs="1" :sm="1" :md="1" :lg="1">
 						<screenfull class="screenfull"></screenfull>
 					</el-col>
-					<el-col :span="3" class="userinfo">
+					<el-col :xs="3" :sm="3" :md="3" :lg="2" class="userinfo">
 						<el-dropdown trigger="hover">
 							<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
 							<el-dropdown-menu slot="dropdown">
@@ -215,6 +215,7 @@
 			}
 			.screenfull {
 				vertical-align: middle;
+				height: 60px;
 				color: red;
 			}
 		}
