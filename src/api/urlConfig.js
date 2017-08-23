@@ -2,8 +2,8 @@
  * Created by dongxingbin on 17/7/28.
  */
 
-const base = ''
-// const base = '/api'
+// const base = ''
+const base = '/api'
 
 export const login = base + '/login';
 
@@ -35,16 +35,16 @@ export const categoryAdd = base + '/category/add';
 //maintain
 export const maintainList = base + '/maintain/list';
 
-export const maintainListpage = base + '/maintain/listpage';
-// export const maintainListpage = base + '/MaintainService.svc/GetMaintainItems';
+// export const maintainListpage = base + '/maintain/listpage';
+export const maintainListpage = base + '/MaintainService.svc/GetMaintainItems';
 
-export const maintainRemove = base + '/maintain/remove';
+export const maintainRemove = base + '/MaintainService.svc/DelMaintainItem';
 
-export const maintainBatchremove = base + '/maintain/batchremove';
+export const maintainBatchremove = base + '/MaintainService.svc/DelMaintainItem';
 
-export const maintainEdit = base + '/maintain/edit';
+export const maintainEdit = base + '/MaintainService.svc/UpdMaintainItem';
 
-export const maintainAdd = base + '/maintain/add';
+export const maintainAdd = base + '/MaintainService.svc/AddMaintainItem';
 
 //plan
 export const planList = base + '/plan/list';

@@ -17,7 +17,7 @@
                     <el-col :xs="24" :sm="24" :md="24" :lg="12">
                         <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
                             <el-date-picker
-                                    v-model="filters.createTime"
+                                    v-model="filters.cTime"
                                     type="datetimerange"
                                     :picker-options="pickerOptions2"
                                     placeholder="选择时间范围"
@@ -28,7 +28,7 @@
                     <el-col :xs="24" :sm="24" :md="24" :lg="12">
                         <el-form-item label-width="80px" label="更新时间" class="postInfo-container-item">
                             <el-date-picker
-                                    v-model="filters.updateTime"
+                                    v-model="filters.uTime"
                                     type="datetimerange"
                                     :picker-options="pickerOptions2"
                                     placeholder="选择时间范围"
@@ -57,31 +57,39 @@
             </div>
             <div class="panel-body">
                 <!--列表-->
-                <el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+                <el-table :data="maintains" highlight-current-row v-loading="listLoading"
+                          @selection-change="selsChange">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
                     <el-table-column type="index" width="60">
+                    </el-table-column>
+                    <el-table-column prop="strMaintainId" label="维护项ID">
                     </el-table-column>
                     <el-table-column prop="strTitle" label="维护项">
                     </el-table-column>
                     <el-table-column prop="strContent" label="维护内容">
                     </el-table-column>
-                    <el-table-column prop="createTime" label="创建时间">
+                    <el-table-column prop="cTime" label="创建时间">
                     </el-table-column>
-                    <el-table-column prop="updateTime" label="更新时间">
+                    <el-table-column prop="uTime" label="更新时间">
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除
+                            </el-button>
                         </template>
                     </el-table-column>
                 </el-table>
 
                 <!--工具条-->
                 <el-col :span="24" class="toolbar">
-                    <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
-                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+                    <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除
+                    </el-button>
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                                   :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]"
+                                   :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper"
+                                   :total="total" class="fr">
                     </el-pagination>
                 </el-col>
             </div>
@@ -116,8 +124,8 @@
                 <el-form-item label="名称" prop="strTitle" style="width: 450px;">
                     <el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
                 </el-form-item>
-                 <!--</el-col>-->
-                 <!--</el-row>-->
+                <!--</el-col>-->
+                <!--</el-row>-->
                 <el-form-item label="维护内容" prop="strContent" style="width: 450px;">
                     <el-input
                             type="textarea"
@@ -138,7 +146,7 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import { getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain } from '../../api/api';
+    import {getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain} from '../../api/api';
 
     export default {
         data() {
@@ -155,9 +163,8 @@
                 filters: {
                     strTitle: '',
                     strContent: '',
-                    createTime: '',
-                    updateTime: '',
-                    cStartTime: ''
+                    cTime: '',
+                    uTime: '',
                 },
                 panelTitle: '维护项列表',
                 pickerOptions1: {
@@ -217,10 +224,8 @@
                 form: {
                     strTitle: '',
                     strContent: '',
-                    cStartTime: '',
-                    cEndTime: '',
-                    uStartTime: '',
-                    uEndTime: ''
+                    cTime: '',
+                    uTime: ''
                 },
 
                 listQuery: {
@@ -237,10 +242,10 @@
                 editLoading: false,
                 editFormRules: {
                     strTitle: [
-                        { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                        {required: true, message: '请输入维护项名称', trigger: 'blur'}
                     ],
                     strContent: [
-                        { required: true, message: '请输入维护内容', trigger: 'blur' }
+                        {required: true, message: '请输入维护内容', trigger: 'blur'}
                     ]
                 },
                 //编辑界面数据
@@ -253,11 +258,11 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    strTitle: [
-                        { required: true, message: '请输入维护项名称', trigger: 'blur' }
+                    MaintainTitle: [
+                        {required: true, message: '请输入维护项名称', trigger: 'blur'}
                     ],
-                    strContent: [
-                        { required: true, message: '请输入维护内容', trigger: 'blur' }
+                    MaintainContent: [
+                        {required: true, message: '请输入维护内容', trigger: 'blur'}
                     ]
                 },
                 //新增界面数据
@@ -269,6 +274,34 @@
             }
         },
         methods: {
+            format: function (time, format) {
+                var t = new Date(time);
+                var tf = function (i) {
+                    return ( i < 10 ? '0' : '') + i
+                };
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                        case 'yyyy':
+                            return tf(t.getFullYear());
+                            break;
+                        case 'MM':
+                            return tf(t.getMonth() + 1);
+                            break;
+                        case 'mm':
+                            return tf(t.getMinutes());
+                            break;
+                        case 'dd':
+                            return tf(t.getDate());
+                            break;
+                        case 'HH':
+                            return tf(t.getHours());
+                            break;
+                        case 'ss':
+                            return tf(t.getSeconds());
+                            break;
+                    }
+                })
+            },
             //状态显示转换
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
@@ -288,18 +321,54 @@
             },
             //获取维护项列表
             getMaintains() {
+//                let para = {
+//                    curPage: this.listQuery.curPage,
+//                    pageSize: this.listQuery.pageSize,
+//                    strOrder: 'asc',
+//                    strTitle: this.filters.strTitle,
+//                    strContent: this.filters.strContent
+//                };
+                console.log('this.filters.cTime: ' + this.filters.cTime);
+                console.log('this.filters.cTime format: ' + this.format(this.filters.cTime, 'yyyy-MM-dd HH:mm:ss'));
                 let para = {
-                    curPage: this.listQuery.curPage,
+                    pageNo: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
-                    strOrder: 'asc',
+//                    strOrder: 'MaintainTitle ASC',
                     strTitle: this.filters.strTitle,
-                    strContent: this.filters.strContent
+                    strContent: this.filters.strContent,
+                    cTime: this.filters.cTime,
+                    uTime: this.filters.uTime
                 };
                 this.listLoading = true;
                 //NProgress.start();
                 getMaintainListPage(para).then((res) => {
-                    this.total = res.data.total;
-                    this.maintains = res.data.maintains;
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let maintains = JSON.parse(data.substr(0, index1 + 1));
+
+                    let totalStr = data.substr(index1 + 2, data.length - 1);
+                    let index2 = totalStr.indexOf(":");
+                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                    this.total = parseInt(totalStr);
+
+                    if (maintains.length > 0) {
+                        this.maintains = [];
+                        for (let maintain of maintains) {
+                            let item = {
+                                strMaintainId: '',
+                                strTitle: '',
+                                strContent: '',
+                                cTime: '',
+                                uTime: ''
+                            };
+                            item.strMaintainId = maintain.MaintainId;
+                            item.strTitle = maintain.MaintainTitle;
+                            item.strContent = maintain.MaintainContent;
+                            item.cTime = maintain.CreateTime;
+                            item.uTime = maintain.UpdateTime;
+                            this.maintains.push(item);
+                        }
+                    }
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -311,7 +380,7 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { strMaintainId: row.strMaintainId };
+                    let para = {strMaintainId: row.strMaintainId};
                     removeMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
@@ -395,7 +464,7 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = { ids: ids };
+                    let para = {strMaintainId: ids};
                     batchRemoveMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
