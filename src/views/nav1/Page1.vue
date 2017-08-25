@@ -5,8 +5,8 @@
             <el-form :inline="true" :model="filters" class="demo-form-inline">
                 <el-row>
                     <el-col :xs="12" :sm="12" :md="12" :lg="12" style="margin-left: 12px;">
-                        <el-form-item label="维护项">
-                            <el-input v-model="filters.strTitle" placeholder="维护项" style="width: 160px;"></el-input>
+                        <el-form-item label="维护项名称">
+                            <el-input v-model="filters.strTitle" placeholder="维护项名称" style="width: 160px;"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :xs="10" :sm="10" :md="10" :lg="10">
@@ -65,7 +65,7 @@
                     </el-table-column>
                     <el-table-column prop="strMaintainId" label="维护项ID">
                     </el-table-column>
-                    <el-table-column prop="strTitle" label="维护项">
+                    <el-table-column prop="strTitle" label="维护项名称">
                     </el-table-column>
                     <el-table-column prop="strContent" label="维护内容">
                     </el-table-column>
@@ -97,9 +97,9 @@
 
         <!--编辑界面-->
         <el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                <el-form-item label="名称" prop="strTitle" style="width: 450px;">
-                    <el-input v-model="editForm.strTitle" auto-complete="off"></el-input>
+            <el-form :model="editForm" label-width="100px" :rules="editFormRules" ref="editForm">
+                <el-form-item label="维护项名称" prop="strTitle" style="width: 450px;">
+                    <el-input v-model="editForm.strTitle" placeholder="请输入名称" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="维护内容" prop="strContent" style="width: 450px;">
                     <el-input
@@ -118,11 +118,11 @@
 
         <!--新增界面-->
         <el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false" size="small">
-            <el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
+            <el-form ref="addForm" :model="addForm" label-width="100px" :rules="addFormRules">
                 <!--<el-row :gutter="2">-->
                 <!--<el-col :xs="8" :sm="6" :md="5" :lg="5">-->
-                <el-form-item label="名称" prop="strTitle" style="width: 450px;">
-                    <el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
+                <el-form-item label="维护项名称" prop="strTitle" style="width: 450px;">
+                    <el-input v-model="addForm.strTitle" placeholder="请输入名称" auto-complete="off"></el-input>
                 </el-form-item>
                 <!--</el-col>-->
                 <!--</el-row>-->
@@ -258,10 +258,10 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    MaintainTitle: [
+                    strTitle: [
                         {required: true, message: '请输入维护项名称', trigger: 'blur'}
                     ],
-                    MaintainContent: [
+                    strContent: [
                         {required: true, message: '请输入维护内容', trigger: 'blur'}
                     ]
                 },
@@ -328,8 +328,8 @@
 //                    strTitle: this.filters.strTitle,
 //                    strContent: this.filters.strContent
 //                };
-                console.log('this.filters.cTime: ' + this.filters.cTime);
-                console.log('this.filters.cTime format: ' + this.format(this.filters.cTime, 'yyyy-MM-dd HH:mm:ss'));
+//                console.log('this.filters.cTime: ' + this.filters.cTime);
+//                console.log('this.filters.cTime format: ' + this.format(this.filters.cTime, 'yyyy-MM-dd HH:mm:ss'));
                 let para = {
                     pageNo: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
@@ -384,10 +384,20 @@
                     removeMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
+                        let data = res.data.d;
+                        let index = data.indexOf(":");
+                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (result === 'true') {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        }else {
+                            this.$message({
+                                message: '删除失败',
+                                type: 'success'
+                            });
+                        }
                         this.getMaintains();
                     });
                 }).catch(() => {
@@ -418,10 +428,20 @@
                             editMaintain(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
-                                this.$message({
-                                    message: '提交成功',
-                                    type: 'success'
-                                });
+                                let data = res.data.d;
+                                let index = data.indexOf(":");
+                                let result = data.substr(index + 2, data.length - index - 3);
+                                if (result === 'true') {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
                                 this.$refs['editForm'].resetFields();
                                 this.editFormVisible = false;
                                 this.getMaintains();
@@ -441,10 +461,20 @@
                             addMaintain(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
-                                this.$message({
-                                    message: '提交成功',
-                                    type: 'success'
-                                });
+                                let data = res.data.d;
+                                let index = data.indexOf(":");
+                                let result = data.substr(index + 2, data.length - index - 3);
+                                if (result === 'true') {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
                                 this.getMaintains();
@@ -468,10 +498,20 @@
                     batchRemoveMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
+                        let data = res.data.d;
+                        let index = data.indexOf(":");
+                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (result === 'true') {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        }else {
+                            this.$message({
+                                message: '删除失败',
+                                type: 'success'
+                            });
+                        }
                         this.getMaintains();
                     });
                 }).catch(() => {

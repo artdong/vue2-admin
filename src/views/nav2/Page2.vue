@@ -8,13 +8,13 @@
                         <el-row>
                             <el-col :xs="12" :sm="12" :md="12" :lg="5" style="margin-left: 12px;">
                                 <el-form-item>
-                                    <el-input v-model="filters.strPlanId" placeholder="计划ID"
+                                    <el-input v-model="filters.planId" placeholder="计划ID"
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :xs="10" :sm="10" :md="10" :lg="5">
                                 <el-form-item>
-                                    <el-input v-model="filters.strMaintainId" placeholder="设备类型ID"
+                                    <el-input v-model="filters.maintainId" placeholder="设备类型ID"
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
                             </el-col>
@@ -44,8 +44,8 @@
                             <el-col :xs="10" :sm="10" :md="10" :lg="6" style="margin-left: 20px;">
                                 <el-form-item label="是否周期性:">
                                     <el-radio-group v-model="filters.isCycle">
-                                        <el-radio class="radio" :label="1">是</el-radio>
-                                        <el-radio class="radio" :label="0">否</el-radio>
+                                        <el-radio class="radio" :label="true">是</el-radio>
+                                        <el-radio class="radio" :label="false">否</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                             </el-col>
@@ -89,22 +89,22 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="strPlanId" label="计划ID" width="120" sortable>
+                    <el-table-column prop="planId" label="计划ID" width="120" sortable>
                     </el-table-column>
-                    <el-table-column prop="strMaintainId" label="维护项ID" width="120" sortable>
+                    <el-table-column prop="maintainId" label="维护项ID" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="executeTime" label="执行时间" width="120" sortable>
                     </el-table-column>
                     <el-table-column prop="isCycle" label="是否周期性" width="120" :formatter="formatCycle">
                     </el-table-column>
-                    <el-table-column prop="cycleDay" label="天">
+                    <el-table-column prop="cycleDay" label="天" width="100">
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <el-table-column prop="equipmentCategory" label="设备类型ID" sortable>
-                    </el-table-column>
-                    <el-table-column prop="equipmentId" label="设备ID" sortable>
-                    </el-table-column>
+                    <!--<el-table-column prop="equipmentCategory" label="设备类型ID" sortable>-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column prop="equipmentId" label="设备ID" sortable>-->
+                    <!--</el-table-column>-->
                     <el-table-column label="操作" width="150">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -126,11 +126,11 @@
         <!--编辑界面-->
         <el-dialog title="编辑维护计划" v-model="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                <el-form-item label="计划ID" prop="strPlanId" style="width: 292px;">
-                    <el-input v-model="editForm.strPlanId" auto-complete="off" disabled></el-input>
+                <el-form-item label="计划ID" prop="planId" style="width: 292px;">
+                    <el-input v-model="editForm.planId" placeholder="请输入计划ID" auto-complete="off" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
-                    <el-input v-model="editForm.strMaintainId" auto-complete="off"></el-input>
+                <el-form-item label="维护项ID" prop="maintainId" style="width: 292px;">
+                    <el-input v-model="editForm.maintainId" placeholder="请输入维护项ID" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="执行时间" prop="executeTime">
                     <el-date-picker
@@ -143,12 +143,12 @@
                 </el-form-item>
                 <el-form-item label="是否周期性" prop="isCycle">
                     <el-radio-group v-model="editForm.isCycle">
-                        <el-radio class="radio" :label="1">是</el-radio>
-                        <el-radio class="radio" :label="0">否</el-radio>
+                        <el-radio class="radio" :label="true">是</el-radio>
+                        <el-radio class="radio" :label="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="执行周期(天)" prop="cycleDay">
-                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" v-if="editForm.isCycle" :min="1"
+                <el-form-item label="执行周期(天)" prop="cycleDay"  v-if="editForm.isCycle">
+                    <el-input-number v-model="editForm.cycleDay" @change="handleChange" :min="1"
                                      :max="30"></el-input-number>
                 </el-form-item>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
@@ -159,11 +159,11 @@
                             v-model="editForm.description">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="设备类型ID" prop="equipmentCategory" style="width: 292px;">
-                    <el-input v-model="editForm.equipmentCategory" auto-complete="off"></el-input>
+                <el-form-item label="设备类型" prop="equipmentCategory">
+                    <el-transfer v-model="editForm.equipmentCategory" :data="categorySource" :titles="categoryTitles"></el-transfer>
                 </el-form-item>
-                <el-form-item label="设备ID" prop="equipmentId" style="width: 292px;">
-                    <el-input v-model="editForm.equipmentId" auto-complete="off"></el-input>
+                <el-form-item label="设备" prop="equipmentId">
+                    <el-transfer v-model="editForm.equipmentId" :data="equipmentSource" :titles="equipmentTitles"></el-transfer>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -175,8 +175,14 @@
         <!--新增界面-->
         <el-dialog title="新增维护计划" v-model="addFormVisible" :close-on-click-modal="false">
             <el-form ref="addForm" :model="addForm" label-width="100px" :rules="addFormRules">
-                <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
-                    <el-input v-model="addForm.strMaintainId" auto-complete="off"></el-input>
+                <!--<el-form-item label="维护项ID" prop="maintainId" style="width: 292px;">-->
+                    <!--<el-input v-model="addForm.maintainId" placeholder="请输入维护项ID" auto-complete="off"></el-input>-->
+                <!--</el-form-item>-->
+                <el-form-item label="维护项" prop="maintainId">
+                    <el-select v-model="addForm.maintainId" placeholder="请选择维护项">
+                        <el-option v-for="item in maintains" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="执行时间" prop="executeTime">
                     <el-date-picker
@@ -189,8 +195,8 @@
                 </el-form-item>
                 <el-form-item label="是否周期性" prop="isCycle">
                     <el-radio-group v-model="addForm.isCycle">
-                        <el-radio class="radio" :label="1">是</el-radio>
-                        <el-radio class="radio" :label="0">否</el-radio>
+                        <el-radio class="radio" :label="true">是</el-radio>
+                        <el-radio class="radio" :label="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
@@ -205,11 +211,14 @@
                             v-model="addForm.description">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="设备类型ID" prop="equipmentCategory" style="width: 292px;">
-                    <el-input v-model="addForm.equipmentCategory" auto-complete="off"></el-input>
+                <!--<el-form-item label="设备类型ID" prop="equipmentCategory" style="width: 292px;">-->
+                    <!--<el-input v-model="addForm.equipmentCategory" placeholder="请输入设备类型ID" auto-complete="off"></el-input>-->
+                <!--</el-form-item>-->
+                <el-form-item label="设备类型" prop="equipmentCategory">
+                    <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles" @change="getEquipments(addForm.equipmentCategory)"></el-transfer>
                 </el-form-item>
-                <el-form-item label="设备ID" prop="equipmentId" style="width: 292px;">
-                    <el-input v-model="addForm.equipmentId" auto-complete="off"></el-input>
+                <el-form-item label="设备" prop="equipmentId">
+                    <el-transfer v-model="addForm.equipmentId" :data="equipmentSource" :titles="equipmentTitles"></el-transfer>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -223,18 +232,18 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import {getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan} from '../../api/api';
+    import {getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan, getMaintainListPage, getEquipmentCategoryList, getEquipmentList, getMaintainEquipmentList} from '../../api/api';
 
     export default {
         data() {
             return {
                 filters: {
-                    strPlanId: '',
-                    strMaintainId: '',
+                    planId: '',
+                    maintainId: '',
                     equipmentCategory: '',
                     equipmentId: '',
                     executeTime: '',
-                    isCycle: 0,
+                    isCycle: false,
                     cycleDay: []
                 },
                 panelTitle: '维护计划列表',
@@ -295,16 +304,24 @@
                     value: '2',
                     label: '2天'
                 }],
+                maintains: [],
+                categorySource: [],
+                equipmentSource: [],
+                categoryTitles: ['设备类型','已选设备类型'],
+                equipmentTitles: ['设备','已选设备'],
                 plans: [],
+                equipmentCategories: [],
+                equipments: [],
                 total: 0,
                 listLoading: false,
                 sels: [],//列表选中列
 
                 form: {
-                    strPlanId: 0,
-                    strMaintainId: '',
+                    planId: '',
+                    maintainId: '',
+                    createTime: '',
                     executeTime: '',
-                    isCycle: 0,
+                    isCycle: '',
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
@@ -324,12 +341,12 @@
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
-                    strMaintainId: [
+                    maintainId: [
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
-                    executeTime: [
-                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-                    ],
+//                    executeTime: [
+//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+//                    ],
                     equipmentCategory: [
                         {required: true, message: '请输入设备类型ID', trigger: 'blur'}
                     ],
@@ -339,10 +356,11 @@
                 },
                 //编辑界面数据
                 editForm: {
-                    strPlanId: 0,
-                    strMaintainId: '',
+                    planId: '',
+                    maintainId: '',
+                    createTime: '',
                     executeTime: '',
-                    isCycle: '',
+                    isCycle: false,
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
@@ -352,14 +370,14 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    strMaintainId: [
+                    maintainId: [
                         {required: true, message: '请输入维护项ID', trigger: 'blur'}
                     ],
-                    executeTime: [
-                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-                    ],
+//                    executeTime: [
+//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+//                    ],
                     equipmentCategory: [
-                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
+                        {required: true, message: '请选择设备类型', trigger: 'blur'}
                     ],
                     equipmentId: [
                         {required: true, message: '请输入设备ID', trigger: 'blur'}
@@ -367,9 +385,11 @@
                 },
                 //新增界面数据
                 addForm: {
-                    strMaintainId: '',
+                    maintainId: '',
+                    maintain: {},
+                    createTime: '',
                     executeTime: '',
-                    isCycle: 0,
+                    isCycle: false,
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
@@ -379,12 +399,12 @@
             }
         },
         methods: {
-            format: function (time, format) {
+            dateFormat (time, format) {
                 var t = new Date(time);
                 var tf = function (i) {
                     return (i < 10 ? '0' : '') + i
                 };
-                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                return this.dateFormat.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
                         case 'yyyy':
                             return tf(t.getFullYear());
@@ -413,7 +433,7 @@
                 }
                 setTimeout(() => {
                     const now = new Date();
-                    if (format(value, 'yyyy-MM-dd HH:mm:ss') < format(now, 'yyyy-MM-dd HH:mm:ss')) {
+                    if (this.dateFormat(value, 'yyyy-MM-dd HH:mm:ss') < this.dateFormat(now, 'yyyy-MM-dd HH:mm:ss')) {
                         callback(new Error('执行时间必须大于当前时间'));
                     } else {
                         callback();
@@ -422,7 +442,7 @@
             },
             //状态显示转换
             formatCycle: function (row, column) {
-                return row.isCycle === 0 ? '否' : row.isCycle === 1 ? '是' : '未知';
+                return row.isCycle === false ? '否' : row.isCycle === true ? '是' : '未知';
             },
             handleChange: function (value) {
                 console.log(value);
@@ -443,19 +463,182 @@
             //获取维护计划列表
             getPlans() {
                 let para = {
-                    curPage: this.listQuery.curPage,
-                    pageSize: this.listQuery.pageSize,
-                    executeTime: this.filters.executeTime,
-                    isCycle: this.filters.isCycle
+//                    pageNo: this.listQuery.curPage,
+//                    pageSize: this.listQuery.pageSize,
+//                    executeTime: this.filters.executeTime,
+//                    isCycle: this.filters.isCycle
                 };
                 this.listLoading = true;
                 //NProgress.start();
                 getPlanListPage(para).then((res) => {
-                    this.total = res.data.total;
-                    this.plans = res.data.plans;
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let plans = JSON.parse(data.substr(0, index1 + 1));
+
+                    let totalStr = data.substr(index1 + 2, data.length - 1);
+                    let index2 = totalStr.indexOf(":");
+                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                    this.total = parseInt(totalStr);
+
+                    if (plans.length > 0) {
+                        this.plans = [];
+                        for (let plan of plans) {
+                            let item = {
+                                planId: '',
+                                maintainId: '',
+                                createTime: '',
+                                executeTime: '',
+                                isCycle: '',
+                                cycleDay: '',
+                                description: ''
+                            };
+                            item.planId = plan.PlanId;
+                            item.maintainId = plan.MaintainId.toString();
+                            item.createTime = plan.CreateTime;
+                            item.executeTime = plan.ExecuteTime;
+                            item.isCycle = plan.IsCycle;
+                            item.cycleDay = plan.CycleDay;
+                            item.description = plan.Description;
+                            this.plans.push(item);
+                        }
+                    }
+                    //NProgress.done();
+                });
+                setTimeout(() => {
+                    this.listLoading = false;
+                }, 2000);
+            },
+            //获取维护项列表
+            getMaintains() {
+                let para = {
+                };
+                this.listLoading = true;
+                //NProgress.start();
+                getMaintainListPage(para).then((res) => {
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let maintains = JSON.parse(data.substr(0, index1 + 1));
+
+                    if (maintains.length > 0) {
+                        this.maintains = [];
+                        for (let maintain of maintains) {
+                            let item = {
+                                value: '',
+                                label: ''
+                            };
+                            item.value = maintain.MaintainId;
+                            item.label = maintain.MaintainTitle;
+                            this.maintains.push(item);
+                        }
+                    }
+                    console.log('this.maintains: ' + JSON.stringify(this.maintains));
                     this.listLoading = false;
                     //NProgress.done();
                 });
+            },
+            //获取设备类型
+            getEquipmentCategories() {
+                let para = {
+                };
+                this.listLoading = true;
+                //NProgress.start();
+                getEquipmentCategoryList(para).then((res) => {
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let equipmentCategory = JSON.parse(data.substr(0, index1 + 1));
+
+                    if (equipmentCategory.length > 0) {
+                        this.equipmentCategories = [];
+                        for (let equipmentCate of equipmentCategory) {
+                            let item = {
+                                EquipmentCategoryId: '',
+                                EquipmentCategoryName: ''
+                            };
+                            item.EquipmentCategoryId = equipmentCate.EquipmentCategoryId;
+                            item.EquipmentCategoryName = equipmentCate.EquipmentCategoryName;
+                            this.equipmentCategories.push(item);
+                            this.categorySource.push({
+                                label: item.EquipmentCategoryName,
+                                key: item.EquipmentCategoryId
+                            });
+                        }
+                    }
+                    this.listLoading = false;
+                    //NProgress.done();
+                });
+//                setTimeout(() => {
+//                    this.listLoading = false;
+//                }, 2000);
+            },
+            //获取设备类型
+            getEquipments(strEquipmentCategoryId) {
+                let para = {
+                    strEquipmentCategoryId: strEquipmentCategoryId
+                };
+                this.listLoading = true;
+                //NProgress.start();
+                getEquipmentList(para).then((res) => {
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let equipments = JSON.parse(data.substr(0, index1 + 1));
+
+                    if (equipments.length > 0) {
+                        this.equipments = [];
+                        for (let equipment of equipments) {
+                            let item = {
+                                EquipmentId: '',
+                                EquipmentName: ''
+                            };
+                            item.EquipmentId = equipment.EquipmentId;
+                            item.EquipmentName = equipment.EquipmentName;
+                            this.equipments.push(item);
+                            this.equipmentSource.push({
+                                label: item.EquipmentName,
+                                key: item.EquipmentId
+                            });
+                        }
+                    }
+                    this.listLoading = false;
+                    //NProgress.done();
+                });
+//                setTimeout(() => {
+//                    this.listLoading = false;
+//                }, 2000);
+            },
+            //获取设备类型
+            getMaintainEquipments(strPlanId) {
+                let para = {
+                    strPlanId: strPlanId
+                };
+                this.listLoading = true;
+                //NProgress.start();
+                getMaintainEquipmentList(para).then((res) => {
+                    let data = res.data.d;
+                    let index1 = data.indexOf("]");
+                    let maintainEquipments = JSON.parse(data.substr(0, index1 + 1));
+
+                    if (maintainEquipments.length > 0) {
+                        this.equipments = [];
+                        for (let maintainEquipment of maintainEquipments) {
+                            let item = {
+                                EquipmentCategoryId: '',
+                                EquipmentCategoryName: ''
+                            };
+                            item.EquipmentId = maintainEquipment.EquipmentCategoryId;
+                            item.EquipmentName = maintainEquipment.EquipmentCategoryName;
+                            this.equipments.push(item);
+                            this.equipmentSource.push({
+                                label: item.EquipmentName,
+                                key: item.EquipmentId
+                            });
+                        }
+                    }
+                    this.listLoading = false;
+                    //NProgress.done();
+                });
+//                setTimeout(() => {
+//                    this.listLoading = false;
+//                }, 2000);
             },
             //删除
             handleDel: function (index, row) {
@@ -464,14 +647,24 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = {strPlanId: row.strPlanId};
+                    let para = {planId: row.planId};
                     removePlan(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
+                        let data = res.data.d;
+                        let index = data.indexOf(":");
+                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (result === 'true') {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        }else {
+                            this.$message({
+                                message: '删除失败',
+                                type: 'success'
+                            });
+                        }
                         this.getPlans();
                     });
                 }).catch(() => {
@@ -482,19 +675,25 @@
             handleEdit: function (index, row) {
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
+                this.getEquipmentCategories();
+                this.getEquipments();
             },
             //显示新增界面
             handleAdd: function () {
                 this.addFormVisible = true;
                 this.addForm = {
-                    strMaintainId: '',
+                    maintainId: '',
+                    maintain: {},
                     executeTime: '',
-                    isCycle: 1,
+                    isCycle: false,
                     cycleDay: '',
                     description: '',
                     equipmentCategory: '',
                     equipmentId: ''
                 };
+                this.getMaintains();
+                this.getEquipmentCategories();
+                this.getEquipments(this.addForm.equipmentCategory);
             },
             //编辑
             editSubmit: function () {
@@ -507,10 +706,20 @@
                             editPlan(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
-                                this.$message({
-                                    message: '提交成功',
-                                    type: 'success'
-                                });
+                                let data = res.data.d;
+                                let index = data.indexOf(":");
+                                let result = data.substr(index + 2, data.length - index - 3);
+                                if (result === 'true') {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
                                 this.$refs['editForm'].resetFields();
                                 this.editFormVisible = false;
                                 this.getPlans();
@@ -530,10 +739,20 @@
                             addPlan(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
-                                this.$message({
-                                    message: '提交成功',
-                                    type: 'success'
-                                });
+                                let data = res.data.d;
+                                let index = data.indexOf(":");
+                                let result = data.substr(index + 2, data.length - index - 3);
+                                if (result === 'true') {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
                                 this.getPlans();
@@ -547,7 +766,7 @@
             },
             //批量删除
             batchRemove: function () {
-                var ids = this.sels.map(item => item.strPlanId).toString();
+                var ids = this.sels.map(item => item.planId).toString();
                 this.$confirm('确认删除选中记录吗？', '提示', {
                     type: 'warning'
                 }).then(() => {
@@ -557,10 +776,20 @@
                     batchRemovePlan(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
+                        let data = res.data.d;
+                        let index = data.indexOf(":");
+                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (result === 'true') {
+                            this.$message({
+                                message: '提交成功',
+                                type: 'success'
+                            });
+                        }else {
+                            this.$message({
+                                message: '提交失败',
+                                type: 'success'
+                            });
+                        }
                         this.getPlans();
                     });
                 }).catch(() => {

@@ -54,3 +54,15 @@ export const batchRemovePlan = params => { return axios.get(url.planBatchremove,
 export const editPlan = params => { return axios.get(url.planEdit, { params: params }); };
 
 export const addPlan = params => { return axios.get(url.planAdd, { params: params }); };
+
+//plan
+export const getHistoryPlanList = params => { return axios.get(url.historyPlanListpage, { params: params }); };
+
+//maintainEquipment
+export const getEquipmentCategoryList = params => { return axios.get(url.equipmentCategoryList, { params: params }); };
+
+//equipment
+export const getEquipmentList = params => { return axios.get(url.equipmentList, { params: params }); };
+
+//maintainEquipment
+export const getMaintainEquipmentList = params => { return axios.get(url.maintainEquipmentList, { params: params }); };

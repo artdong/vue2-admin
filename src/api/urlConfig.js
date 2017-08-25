@@ -33,7 +33,7 @@ export const categoryEdit = base + '/category/edit';
 export const categoryAdd = base + '/category/add';
 
 //maintain
-export const maintainList = base + '/maintain/list';
+export const maintainList = base + '/MaintainService.svc/GetMaintainItems';
 
 // export const maintainListpage = base + '/maintain/listpage';
 export const maintainListpage = base + '/MaintainService.svc/GetMaintainItems';
@@ -47,14 +47,26 @@ export const maintainEdit = base + '/MaintainService.svc/UpdMaintainItem';
 export const maintainAdd = base + '/MaintainService.svc/AddMaintainItem';
 
 //plan
-export const planList = base + '/plan/list';
+export const planList = base + '/MaintainService.svc/GetMaintainPlan';
 
-export const planListpage = base + '/plan/listpage';
+export const planListpage = base + '/MaintainService.svc/GetMaintainPlan';
 
-export const planRemove = base + '/plan/remove';
+export const planRemove = base + '/MaintainService.svc/DelMaintainPlan';
 
-export const planBatchremove = base + '/plan/batchremove';
+export const planBatchremove = base + '/MaintainService.svc/DelMaintainPlan';
 
-export const planEdit = base + '/plan/edit';
+export const planEdit = base + '/MaintainService.svc/UpdMaintainPlan';
 
-export const planAdd = base + '/plan/add';
+export const planAdd = base + '/MaintainService.svc/AddMaintainPlan';
+
+//historyPlan
+export const historyPlanListpage = base + '/MaintainService.svc/GetHistoryMaintainPlan';
+
+//equipmentCategory
+export const equipmentCategoryList = base + '/MaintainService.svc/GetEquipmentCategory';
+
+//equipment
+export const equipmentList = base + '/MaintainService.svc/GetEquipment';
+
+//maintainEquipment
+export const maintainEquipmentList = base + '/MaintainService.svc/GetMaintainEquipment';

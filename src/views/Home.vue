@@ -1,7 +1,7 @@
 <template>
 	<el-row class="container">
 		<el-col :span="24" class="main">
-			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+			<aside id="menu" :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 						 unique-opened router v-if="!collapsed">
@@ -14,7 +14,7 @@
 					</template>
 				</el-menu>
 				<!--导航菜单-折叠后-->
-				<ul class="el-menu el-menu-vertical-demo collapsed" v-if="collapsed" ref="menuCollapsed">
+				<ul id="el-menu" class="el-menu el-menu-vertical-demo collapsed" v-if="collapsed" ref="menuCollapsed">
 					<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
 						<template v-if="!item.leaf">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
@@ -40,6 +40,9 @@
 					<el-col :xs="18" :sm="18" :md="18" :lg="19" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
 					</el-col>
+					<!--<el-col :xs="1" :sm="1" :md="1" :lg="1">-->
+						<!--<i class="fa fa-bell fa-lg hand" @click="navigateToAlarm" style="vertical-align:middle; color: #353f4f;"><span>8</span></i>-->
+					<!--</el-col>-->
 					<el-col :xs="1" :sm="1" :md="1" :lg="1">
 						<screenfull class="screenfull"></screenfull>
 					</el-col>
@@ -99,6 +102,9 @@
 			}
 		},
 		methods: {
+            navigateToAlarm() {
+                console.log('navigateToAlarm!');
+			},
 			onSubmit() {
 				console.log('submit!');
 			},
@@ -248,7 +254,6 @@
 						height:auto;
 						display:none;
 					}
-
 				}
 			}
 			.menu-collapsed{
@@ -304,5 +309,13 @@
                 }
             }
         }
+	}
+
+	.hand {
+		cursor:pointer;
+	}
+
+	@media screen and (max-width: 1200px) {
+		//
 	}
 </style>
