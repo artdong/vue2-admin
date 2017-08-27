@@ -49,18 +49,18 @@
                                     </el-radio-group>
                                 </el-form-item>
                             </el-col>
-                            <el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle" style="margin-left: 12px;">
-                                <el-form-item label="执行周期(天)">
-                                    <el-select v-model="filters.cycleDay" multiple placeholder="请选择">
-                                        <el-option
-                                                v-for="item in cycleDays"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
+                            <!--<el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle" style="margin-left: 12px;">-->
+                                <!--<el-form-item label="执行周期(天)">-->
+                                    <!--<el-select v-model="filters.cycleDay" multiple placeholder="请选择" style="min-width: 500px;">-->
+                                        <!--<el-option-->
+                                                <!--v-for="item in cycleDays"-->
+                                                <!--:key="item.value"-->
+                                                <!--:label="item.label"-->
+                                                <!--:value="item.value">-->
+                                        <!--</el-option>-->
+                                    <!--</el-select>-->
+                                <!--</el-form-item>-->
+                            <!--</el-col>-->
                             <el-col :xs="12" :sm="12" :md="12" :lg="6">
                                 <el-form-item style="margin-left: 10px;">
                                     <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
@@ -175,28 +175,61 @@
         <!--新增界面-->
         <el-dialog title="新增维护计划" v-model="addFormVisible" :close-on-click-modal="false">
             <el-form ref="addForm" :model="addForm" label-width="100px" :rules="addFormRules">
-                <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
-                    <el-input v-model="addForm.strMaintainId" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="执行时间" prop="executeTime">
-                    <el-date-picker
-                            v-model="addForm.executeTime"
-                            type="datetime"
-                            placeholder="选择日期时间"
-                            align="right"
-                            :picker-options="pickerOptions1">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="是否周期性" prop="isCycle">
-                    <el-radio-group v-model="addForm.isCycle">
-                        <el-radio class="radio" :label="1">是</el-radio>
-                        <el-radio class="radio" :label="0">否</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
-                    <el-input-number v-model="addForm.cycleDay" @change="handleChange" :min="1"
-                                     :max="90"></el-input-number>
-                </el-form-item>
+                <el-row>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                        <el-form-item label="维护项ID" prop="strMaintainId" style="width: 292px;">
+                            <el-input v-model="addForm.strMaintainId" auto-complete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                        <el-form-item label="执行时间" prop="executeTime">
+                            <el-date-picker
+                                    v-model="addForm.executeTime"
+                                    type="datetime"
+                                    placeholder="选择日期时间"
+                                    align="right"
+                                    :picker-options="pickerOptions1">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                        <el-form-item label="是否周期性" prop="isCycle">
+                            <el-radio-group v-model="addForm.isCycle">
+                                <el-radio class="radio" :label="1">是</el-radio>
+                                <el-radio class="radio" :label="0">否</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :xs="10" :sm="10" :md="10" :lg="10" style="margin-left: 12px;">
+                        <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
+                            <el-input-number v-model="addForm.cycleDay" @change="handleChange" :min="1" :max="90"></el-input-number>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                        <el-form-item label="提醒时间">
+                            <el-tag :closable="true" v-model="addForm.remindDay" type="primary" v-for="item in customDayOptions"  @close='closeViewTabs(item,$event)' style="margin-left: 2px;">{{item.label}}
+                            </el-tag>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :xs="10" :sm="10" :md="10" :lg="10" style="margin-left: 12px;">
+                        <el-form-item label="自定义(天)" prop="customDay">
+                            <el-input-number v-model="addForm.customDay" @change="handleCustomDayChange" :min="1" :max="365">
+                            </el-input-number>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :xs="10" :sm="10" :md="10" :lg="10">
+                        <el-form-item>
+                            <el-button type="primary" v-if="!showAddCustomDayButton" disabled="disabled">添加</el-button>
+                            <el-button type="primary" @click="onAddCustomDay" v-if="showAddCustomDayButton">添加</el-button>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
                 <el-form-item label="计划描述" prop="description" style="width: 450px;">
                     <el-input
                             type="textarea"
@@ -295,6 +328,24 @@
                     value: '2',
                     label: '2天'
                 }],
+                customDayOptions: [{
+                    value: '1',
+                    label: '1天'
+                }, {
+                    value: '2',
+                    label: '2天'
+                }, {
+                    value: '3',
+                    label: '3天'
+                }, {
+                    value: '4',
+                    label: '4天'
+                }, {
+                    value: '5',
+                    label: '5天'
+                }],
+                currentValue: '',
+                showAddCustomDayButton: false,
                 plans: [],
                 total: 0,
                 listLoading: false,
@@ -371,6 +422,8 @@
                     executeTime: '',
                     isCycle: 0,
                     cycleDay: '',
+                    remindDay: [1,2,3,4,5],
+                    customDay: '',
                     description: '',
                     equipmentCategory: '',
                     equipmentId: ''
@@ -426,6 +479,43 @@
             },
             handleChange: function (value) {
                 console.log(value);
+            },
+            // 检测是否已经存在，若存在添加按钮不可点击
+            checkCustomDay: function (value) {
+                let index = this.customDayOptions.findIndex(x => x.value == value);
+                console.log('index: ' + index);
+                console.log('value: ' + value);
+                if(index != -1){
+                    this.showAddCustomDayButton = false;
+                }else{
+                    this.showAddCustomDayButton = true;
+                }
+            },
+            handleCustomDayChange: function (value) {
+                // 检测是否已经存在，若存在添加按钮不可点击
+                this.checkCustomDay(value);
+            },
+            onAddCustomDay: function () {
+                this.currentValue = this.addForm.customDay;
+                this.customDayOptions.push({
+                    value: this.currentValue,
+                    label: this.currentValue + '天'
+                });
+                this.addForm.remindDay.push(this.currentValue);
+
+                // 检测是否已经存在，若存在添加按钮不可点击
+                this.checkCustomDay(this.currentValue);
+            },
+            isActive() {
+                //
+            },
+            closeViewTabs(item, $event) {
+                let index = this.customDayOptions.findIndex(x => x.value == item.value);
+                this.customDayOptions.splice(index,1);
+
+                this.currentValue = this.addForm.customDay;
+                this.checkCustomDay(this.currentValue);
+                $event.preventDefault()
             },
             //操作分页
             handleSizeChange(val) {
@@ -491,6 +581,8 @@
                     executeTime: '',
                     isCycle: 1,
                     cycleDay: '',
+                    remindDay: [1,2,3,4,5],
+                    customDay: '',
                     description: '',
                     equipmentCategory: '',
                     equipmentId: ''
