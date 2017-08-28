@@ -70,3 +70,15 @@ export const equipmentList = base + '/MaintainService.svc/GetEquipment';
 
 //maintainEquipment
 export const maintainEquipmentList = base + '/MaintainService.svc/GetMaintainEquipment';
+
+//maintainRemind
+export const remindAdd = base + '/MaintainService.svc/AddMaintainRemind';
+
+export const remindRemove = base + '/MaintainService.svc/DelMaintainRemind';
+
+export const remindConfirm = base + '/MaintainService.svc/ConfirmRemind';
+
+export const remindInfoList = base + '/MaintainService.svc/GetRemindInfo';
+
+
+

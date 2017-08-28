@@ -66,3 +66,13 @@ export const getEquipmentList = params => { return axios.get(url.equipmentList, 
 
 //maintainEquipment
 export const getMaintainEquipmentList = params => { return axios.get(url.maintainEquipmentList, { params: params }); };
+
+//maintainRemind
+export const addRemind = params => { return axios.get(url.remindAdd, { params: params }); };
+
+export const removeRemind = params => { return axios.get(url.remindRemove, { params: params }); };
+
+export const confirmRemind = params => { return axios.get(url.remindConfirm, { params: params }); };
+
+export const getRemindInfoList = params => { return axios.get(url.remindInfoList, { params: params }); };
+

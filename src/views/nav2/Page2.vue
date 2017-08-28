@@ -277,7 +277,7 @@
                             v-model="addForm.description">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="设备类型">
+                <el-form-item label="设备类型" prop="equipmentCategory">
                     <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles" @change="getEquipments(addForm.equipmentCategory)"></el-transfer>
                 </el-form-item>
                 <el-form-item label="设备" prop="equipmentId">
@@ -295,7 +295,7 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import {getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan, getMaintainListPage, getEquipmentCategoryList, getEquipmentList, getMaintainEquipmentList} from '../../api/api';
+    import {getPlanListPage, removePlan, batchRemovePlan, editPlan, addPlan, getMaintainListPage, getEquipmentCategoryList, getEquipmentList, getMaintainEquipmentList, remindAdd } from '../../api/api';
 
     export default {
         data() {
@@ -423,18 +423,15 @@
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
-//                    maintainId: [
-//                        {required: true, message: '请输入维护项ID', trigger: 'blur'}
-//                    ],
-//                    executeTime: [
-//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-//                    ],
-//                    equipmentCategory: [
-//                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
-//                    ],
-//                    equipmentId: [
-//                        {required: true, message: '请输入设备ID', trigger: 'blur'}
-//                    ]
+                    maintainId: [
+                        {required: true, message: '请输入维护项ID', trigger: 'blur'}
+                    ],
+                    executeTime: [
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                    ],
+                    equipmentCategory: [
+                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
+                    ]
                 },
                 //编辑界面数据
                 editForm: {
@@ -454,18 +451,15 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-//                    maintainId: [
-//                        {required: true, message: '请输选择护项', trigger: 'blur'}
-//                    ],
-//                    executeTime: [
-//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-//                    ],
-//                    equipmentCategory: [
-//                        {required: true, message: '请选择设备类型', trigger: 'blur'}
-//                    ],
-//                    equipmentId: [
-//                        {required: true, message: '请输入设备ID', trigger: 'blur'}
-//                    ]
+                    maintainId: [
+                        {required: true, message: '请输选择护项', trigger: 'blur'}
+                    ],
+                    executeTime: [
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                    ],
+                    equipmentCategory: [
+                        {required: true, message: '请选择设备类型', trigger: 'blur'}
+                    ]
                 },
                 //新增界面数据
                 addForm: {
@@ -908,11 +902,22 @@
                             let para = Object.assign({}, this.editForm);
                             para.equipmentCategory = para.equipmentCategory.toString();
                             para.equipmentId = para.equipmentId.toString();
+                            if(this.editForm.equipmentCategory.length === this.categorySource.length){
+                                para.equipmentCategory = -1;
+                            }else{
+                                para.equipmentCategory = this.editForm.equipmentCategory.toString();
+                            }
+                            if(this.editForm.equipmentId.length === this.equipmentSource.length){
+                                para.equipmentId = -1;
+                            }else{
+                                para.equipmentId = this.editForm.equipmentId.toString();
+                            }
                             editPlan(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
+                                let data = {};
                                 if(data) {
-                                    let data = JSON.parse(res.data.d);
+                                    data = JSON.parse(res.data.d);
                                 }
                                 if (data.result === true) {
                                     this.$message({
@@ -929,6 +934,32 @@
                                 this.editFormVisible = false;
                                 this.getPlans();
                             });
+                            let para2 = {};
+                            para2.strPlanId = this.editForm.planId;
+                            para2.strRemindDay = this.editForm.remindDay;
+
+                            remindAdd(para2).then((res) => {
+                                this.addLoading = false;
+                                //NProgress.done();
+                                let data = {};
+                                if(data) {
+                                    data = JSON.parse(res.data.d);
+                                }
+                                if (data.result === true) {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
+                                this.$refs['addForm'].resetFields();
+                                this.addFormVisible = false;
+                                this.getPlans();
+                            });
                         });
                     }
                 });
@@ -941,12 +972,54 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
+                            let para1 = {};
+                            para1.maintainId = this.addForm.maintainId;
+                            para1.executeTime = this.addForm.executeTime;
+                            para1.isCycle = this.addForm.isCycle;
+                            para1.cycleDay = this.addForm.cycleDay;
+                            para1.description = this.addForm.description;
+                            if(this.addForm.equipmentCategory.length === this.categorySource.length){
+                                para1.equipmentCategory = -1;
+                            }else{
+                                para1.equipmentCategory = this.addForm.equipmentCategory.toString();
+                            }
+                            if(this.addForm.equipmentId.length === this.equipmentSource.length){
+                                para1.equipmentId = -1;
+                            }else{
+                                para1.equipmentId = this.addForm.equipmentId.toString();
+                            }
                             console.log('add para:' + JSON.stringify(para));
-                            addPlan(para).then((res) => {
+                            addPlan(para1).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
+                                let data = {};
                                 if(data) {
-                                    let data = JSON.parse(res.data.d);
+                                    data = JSON.parse(res.data.d);
+                                }
+                                if (data.result === true) {
+                                    this.$message({
+                                        message: '提交成功',
+                                        type: 'success'
+                                    });
+                                }else {
+                                    this.$message({
+                                        message: '提交失败',
+                                        type: 'success'
+                                    });
+                                }
+                                this.$refs['addForm'].resetFields();
+                                this.addFormVisible = false;
+                                this.getPlans();
+                            });
+                            let para2 = {};
+                            para2.strRemindDay = this.addForm.remindDay;
+
+                            remindAdd(para2).then((res) => {
+                                this.addLoading = false;
+                                //NProgress.done();
+                                let data = {};
+                                if(data) {
+                                    data = JSON.parse(res.data.d);
                                 }
                                 if (data.result === true) {
                                     this.$message({
