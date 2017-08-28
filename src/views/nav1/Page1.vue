@@ -369,9 +369,11 @@
                             this.maintains.push(item);
                         }
                     }
-                    this.listLoading = false;
                     //NProgress.done();
                 });
+                setTimeout(() => {
+                    this.listLoading = false;
+                }, 1000);
             },
             //删除
             handleDel: function (index, row) {
@@ -384,10 +386,10 @@
                     removeMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        let data = res.data.d;
-                        let index = data.indexOf(":");
-                        let result = data.substr(index + 2, data.length - index - 3);
-                        if (result === 'true') {
+                        let data = JSON.parse(res.data.d);
+//                        let index = data.indexOf(":");
+//                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (data.result === true) {
                             this.$message({
                                 message: '删除成功',
                                 type: 'success'
@@ -428,10 +430,10 @@
                             editMaintain(para).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
-                                let data = res.data.d;
-                                let index = data.indexOf(":");
-                                let result = data.substr(index + 2, data.length - index - 3);
-                                if (result === 'true') {
+                                let data = JSON.parse(res.data.d);
+//                        let index = data.indexOf(":");
+//                        let result = data.substr(index + 2, data.length - index - 3);
+                                if (data.result === true) {
                                     this.$message({
                                         message: '提交成功',
                                         type: 'success'
@@ -461,10 +463,10 @@
                             addMaintain(para).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
-                                let data = res.data.d;
-                                let index = data.indexOf(":");
-                                let result = data.substr(index + 2, data.length - index - 3);
-                                if (result === 'true') {
+                                let data = JSON.parse(res.data.d);
+//                        let index = data.indexOf(":");
+//                        let result = data.substr(index + 2, data.length - index - 3);
+                                if (data.result === true) {
                                     this.$message({
                                         message: '提交成功',
                                         type: 'success'
@@ -498,10 +500,10 @@
                     batchRemoveMaintain(para).then((res) => {
                         this.listLoading = false;
                         //NProgress.done();
-                        let data = res.data.d;
-                        let index = data.indexOf(":");
-                        let result = data.substr(index + 2, data.length - index - 3);
-                        if (result === 'true') {
+                        let data = JSON.parse(res.data.d);
+//                        let index = data.indexOf(":");
+//                        let result = data.substr(index + 2, data.length - index - 3);
+                        if (data.result === true) {
                             this.$message({
                                 message: '删除成功',
                                 type: 'success'
