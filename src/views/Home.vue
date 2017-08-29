@@ -3,8 +3,7 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-						 unique-opened router v-if="!collapsed">
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router v-if="!collapsed">
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
@@ -37,8 +36,13 @@
 							<i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
 						</div>
 					</el-col>
-					<el-col :xs="18" :sm="18" :md="18" :lg="19" class="breadcrumb-container">
+					<el-col :xs="16" :sm="16" :md="16" :lg="17" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
+					</el-col>
+					<el-col :xs="2" :sm="2" :md="2" :lg="2">
+						<i class="fa fa-bell fa-lg" style="color: #353f4f" @click="dialogVisible = true"></i>
+						<el-badge :value="12" :max="10">
+						</el-badge>
 					</el-col>
 					<el-col :xs="1" :sm="1" :md="1" :lg="1">
 						<screenfull class="screenfull"></screenfull>
@@ -69,6 +73,47 @@
 						</transition>
 					</el-col>
 				</div>
+				<el-dialog
+						title="我的任务"
+						:visible.sync="dialogVisible"
+						:close-on-click-modal="false">
+					<!--列表-->
+					<el-table :data="maintains" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
+						<el-table-column type="selection" width="55">
+						</el-table-column>
+						<el-table-column type="index" width="60">
+						</el-table-column>
+						<el-table-column prop="strTitle" label="维护项">
+						</el-table-column>
+						<el-table-column prop="strContent" label="维护内容">
+						</el-table-column>
+						<el-table-column label="操作" width="160">
+							<template scope="scope">
+								<el-button size="small" @click="handleConfirm(scope.$index, scope.row)">确认</el-button>
+								<el-dropdown style="margin-left: 5px;">
+									 <span class="el-dropdown-link">
+										 延迟<i class="el-icon-caret-bottom el-icon--right"></i>
+									 </span>
+									<el-dropdown-menu slot="dropdown">
+										<el-dropdown-item>5分钟</el-dropdown-item>
+										<el-dropdown-item>10分钟</el-dropdown-item>
+										<el-dropdown-item>15分钟</el-dropdown-item>
+										<el-dropdown-item>20分钟</el-dropdown-item>
+										<el-dropdown-item divided>30分钟</el-dropdown-item>
+									</el-dropdown-menu>
+								</el-dropdown>
+								<!--<el-button type="danger" size="small" @click="handleDelay(scope.$index, scope.row)">延迟</el-button>-->
+							</template>
+						</el-table-column>
+					</el-table>
+
+					<!--工具条-->
+					<el-col :span="24" class="toolbar">
+						<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
+						</el-pagination>
+					</el-col>
+				</el-dialog>
 			</section>
 		</el-col>
 	</el-row>
@@ -76,63 +121,163 @@
 
 <script>
     import Screenfull from '../components/Screenfull';
+    import { getMaintainListPage, removeMaintain, batchRemoveMaintain } from '../api/api';
+
     export default {
         components: {
             Screenfull
         },
-		data() {
-			return {
-				sysName:'CRIANE蓄电池远程监控系统',
-				collapsed:false,
-				sysUserName: '',
-				sysUserAvatar: '',
-				form: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				}
-			}
-		},
-		methods: {
-			onSubmit() {
-				console.log('submit!');
-			},
-			handleopen() {
-				//console.log('handleopen');
-			},
-			handleclose() {
-				//console.log('handleclose');
-			},
-			handleselect: function (a, b) {
-			},
-			//退出登录
-			logout: function () {
-				var _this = this;
-				this.$confirm('确认退出吗?', '提示', {
-					//type: 'warning'
-				}).then(() => {
-					sessionStorage.removeItem('user');
-					_this.$router.push('/login');
-				}).catch(() => {
+        data() {
+            return {
+                sysName: 'CRIANE蓄电池远程监控系统',
+                collapsed: false,
+                sysUserName: '',
+                sysUserAvatar: '',
+                form: {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc: ''
+                },
+                dialogVisible: false,
+                maintains: [],
+                total: 0,
+                listLoading: false,
+                sels: [],//列表选中列
 
-				});
+                form: {
+                    strTitle: '',
+                    strContent: '',
+                    cStartTime: '',
+                    cEndTime: '',
+                    uStartTime: '',
+                    uEndTime: ''
+                },
+                listQuery: {
+                    curPage: 1,
+                    limit: 20,
+                    pageSize: 10,
+                    importance: undefined,
+                    title: undefined,
+                    type: undefined,
+                    sort: '+id'
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+            },
+            //退出登录
+            logout: function () {
+                var _this = this;
+                this.$confirm('确认退出吗?', '提示', {
+                    //type: 'warning'
+                }).then(() => {
+                    sessionStorage.removeItem('user');
+                    _this.$router.push('/login');
+                }).catch(() => {
+
+                });
 
 
-			},
-			//折叠导航栏
-			collapse:function(){
-				this.collapsed=!this.collapsed;
-			},
-			showMenu(i,status){
-				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
-			}
-		},
-		mounted() {
+            },
+            //折叠导航栏
+            collapse: function () {
+                this.collapsed = !this.collapsed;
+            },
+            showMenu(i, status){
+                this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
+            },
+            //获取维护项列表
+            getMaintains() {
+                let para = {
+                    curPage: this.listQuery.curPage,
+                    pageSize: this.listQuery.pageSize,
+                    strOrder: 'asc'
+                };
+                this.listLoading = true;
+                //NProgress.start();
+                getMaintainListPage(para).then((res) => {
+                    this.total = res.data.total;
+                    this.maintains = res.data.maintains;
+                    this.listLoading = false;
+                    //NProgress.done();
+                });
+            },
+            handleCurrentChange(val) {
+                this.listQuery.curPage = val;
+                this.getMaintains();
+            },
+            //删除
+            handleDel: function (index, row) {
+                this.$confirm('确认删除该记录吗?', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.listLoading = true;
+                    //NProgress.start();
+                    let para = {strMaintainId: row.strMaintainId};
+                    removeMaintain(para).then((res) => {
+                        this.listLoading = false;
+                        //NProgress.done();
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
+                        this.getMaintains();
+                    });
+                }).catch(() => {
+
+                });
+            },
+            //延迟
+            handleDelay: function (index, row) {
+                //
+            },
+			//确认
+            handleConfirm: function (index, row) {
+                //
+            },
+            selsChange: function (sels) {
+                this.sels = sels;
+            },
+            //操作分页
+            handleSizeChange(val) {
+                this.listQuery.pageSize = val;
+                this.getMaintains();
+            },
+            handleCurrentChange(val) {
+                this.listQuery.curPage = val;
+                this.getMaintains();
+            },
+            //批量删除
+            batchRemove: function () {
+                var ids = this.sels.map(item => item.strMaintainId).toString();
+                this.$confirm('确认删除选中记录吗？', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.listLoading = true;
+                    //NProgress.start();
+                    let para = {ids: ids};
+                    batchRemoveMaintain(para).then((res) => {
+                        this.listLoading = false;
+                        //NProgress.done();
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
+                        this.getMaintains();
+                    });
+                }).catch(() => {
+
+                });
+            }
+        },
+        mounted() {
             var loginUser =
                 {
                     avatar: 'https://avatars1.githubusercontent.com/u/16631463?v=4&s=460',
@@ -140,14 +285,15 @@
                 };
             sessionStorage.setItem('user', JSON.stringify(loginUser));
             var user = sessionStorage.getItem('user');
-			if (user) {
-				user = JSON.parse(user);
-				this.sysUserName = user.name || '';
-				this.sysUserAvatar = user.avatar || '';
-			}
+            if (user) {
+                user = JSON.parse(user);
+                this.sysUserName = user.name || '';
+                this.sysUserAvatar = user.avatar || '';
+            }
+            this.getMaintains();
 
-		}
-	}
+        }
+    }
 
 </script>
 
@@ -229,6 +375,7 @@
 			aside {
 				flex:0 0 230px;
 				width: 230px;
+				height: 100%;
 				// position: absolute;
 				// top: 0px;
 				// bottom: 0px;

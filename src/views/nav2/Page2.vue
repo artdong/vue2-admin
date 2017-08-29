@@ -211,7 +211,7 @@
                 <el-row>
                     <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <el-form-item label="提醒时间">
-                            <el-tag :closable="true" v-model="addForm.remindDay" type="primary" v-for="item in customDayOptions"  @close='closeViewTabs(item,$event)' style="margin-left: 2px;">{{item.label}}
+                            <el-tag :closable="true" v-model="addForm.remindDay" type="primary" v-for="item in customDayOptions" :key="item.value"  @close='closeViewTabs(item,$event)' style="margin-left: 2px;">{{item.label}}
                             </el-tag>
                         </el-form-item>
                     </el-col>
