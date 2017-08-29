@@ -36,7 +36,7 @@
 							<i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
 						</div>
 					</el-col>
-					<el-col :xs="16" :sm="16" :md="16" :lg="17" class="breadcrumb-container">
+					<el-col :xs="16" :sm="16" :md="16" :lg="16" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
 					</el-col>
 					<el-col :xs="2" :sm="2" :md="2" :lg="2">
@@ -47,7 +47,7 @@
 					<el-col :xs="1" :sm="1" :md="1" :lg="1">
 						<screenfull class="screenfull"></screenfull>
 					</el-col>
-					<el-col :xs="3" :sm="3" :md="3" :lg="2" class="userinfo">
+					<el-col :xs="3" :sm="3" :md="3" :lg="3" class="userinfo">
 						<el-dropdown trigger="hover">
 							<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
 							<el-dropdown-menu slot="dropdown">
