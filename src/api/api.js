@@ -74,5 +74,7 @@ export const removeRemind = params => { return axios.get(url.remindRemove, { par
 
 export const confirmRemind = params => { return axios.get(url.remindConfirm, { params: params }); };
 
-export const getRemindInfoList = params => { return axios.get(url.remindInfoList, { params: params }); };
+export const getMaintainRemindInfoList = params => { return axios.get(url.maintainRemindInfoList, { params: params }); };
+
+export const getRemindInfoListPage = params => { return axios.get(url.remindInfoList, { params: params }); };
 

@@ -78,6 +78,8 @@ export const remindRemove = base + '/MaintainService.svc/DelMaintainRemind';
 
 export const remindConfirm = base + '/MaintainService.svc/ConfirmRemind';
 
+export const maintainRemindInfoList = base + '/MaintainService.svc/GetMaintainRemind';
+
 export const remindInfoList = base + '/MaintainService.svc/GetRemindInfo';
 
 

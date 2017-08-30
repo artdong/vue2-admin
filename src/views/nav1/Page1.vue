@@ -274,34 +274,6 @@
             }
         },
         methods: {
-            format: function (time, format) {
-                var t = new Date(time);
-                var tf = function (i) {
-                    return ( i < 10 ? '0' : '') + i
-                };
-                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-                    switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear());
-                            break;
-                        case 'MM':
-                            return tf(t.getMonth() + 1);
-                            break;
-                        case 'mm':
-                            return tf(t.getMinutes());
-                            break;
-                        case 'dd':
-                            return tf(t.getDate());
-                            break;
-                        case 'HH':
-                            return tf(t.getHours());
-                            break;
-                        case 'ss':
-                            return tf(t.getSeconds());
-                            break;
-                    }
-                })
-            },
             //状态显示转换
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
@@ -321,23 +293,14 @@
             },
             //获取维护项列表
             getMaintains() {
-//                let para = {
-//                    curPage: this.listQuery.curPage,
-//                    pageSize: this.listQuery.pageSize,
-//                    strOrder: 'asc',
-//                    strTitle: this.filters.strTitle,
-//                    strContent: this.filters.strContent
-//                };
-//                console.log('this.filters.cTime: ' + this.filters.cTime);
-//                console.log('this.filters.cTime format: ' + this.format(this.filters.cTime, 'yyyy-MM-dd HH:mm:ss'));
                 let para = {
                     pageNo: this.listQuery.curPage,
                     pageSize: this.listQuery.pageSize,
-//                    strOrder: 'MaintainTitle ASC',
+                    strOrder: 'CreateTime DESC',
                     strTitle: this.filters.strTitle,
                     strContent: this.filters.strContent,
-                    cTime: this.filters.cTime,
-                    uTime: this.filters.uTime
+                    cTime: this.filters.cTime[0] && this.filters.cTime[1] ? util.formatDate.formatDate(this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(this.filters.cTime[1]) : '',
+                    uTime: this.filters.uTime[0] && this.filters.uTime[1] ? util.formatDate.formatDate(this.filters.uTime[0]) + ',' + util.formatDate.formatDate(this.filters.uTime[1]) : ''
                 };
                 this.listLoading = true;
                 //NProgress.start();
@@ -387,14 +350,12 @@
                         this.listLoading = false;
                         //NProgress.done();
                         let data = JSON.parse(res.data.d);
-//                        let index = data.indexOf(":");
-//                        let result = data.substr(index + 2, data.length - index - 3);
                         if (data.result === true) {
                             this.$message({
                                 message: '删除成功',
                                 type: 'success'
                             });
-                        }else {
+                        } else {
                             this.$message({
                                 message: '删除失败',
                                 type: 'success'
@@ -431,14 +392,12 @@
                                 this.editLoading = false;
                                 //NProgress.done();
                                 let data = JSON.parse(res.data.d);
-//                        let index = data.indexOf(":");
-//                        let result = data.substr(index + 2, data.length - index - 3);
                                 if (data.result === true) {
                                     this.$message({
                                         message: '提交成功',
                                         type: 'success'
                                     });
-                                }else {
+                                } else {
                                     this.$message({
                                         message: '提交失败',
                                         type: 'success'
@@ -464,14 +423,12 @@
                                 this.addLoading = false;
                                 //NProgress.done();
                                 let data = JSON.parse(res.data.d);
-//                        let index = data.indexOf(":");
-//                        let result = data.substr(index + 2, data.length - index - 3);
                                 if (data.result === true) {
                                     this.$message({
                                         message: '提交成功',
                                         type: 'success'
                                     });
-                                }else {
+                                } else {
                                     this.$message({
                                         message: '提交失败',
                                         type: 'success'
@@ -501,14 +458,12 @@
                         this.listLoading = false;
                         //NProgress.done();
                         let data = JSON.parse(res.data.d);
-//                        let index = data.indexOf(":");
-//                        let result = data.substr(index + 2, data.length - index - 3);
                         if (data.result === true) {
                             this.$message({
                                 message: '删除成功',
                                 type: 'success'
                             });
-                        }else {
+                        } else {
                             this.$message({
                                 message: '删除失败',
                                 type: 'success'

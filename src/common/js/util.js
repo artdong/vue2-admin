@@ -18,8 +18,6 @@ export default {
         return context == null || context == "" || context == "undefined" ? "" : context;
     },
     formatDate: {
-
-
         format: function (date, pattern) {
             pattern = pattern || DEFAULT_PATTERN;
             return pattern.replace(SIGN_REGEXP, function ($0) {
@@ -54,8 +52,18 @@ export default {
                 return _date;
             }
             return null;
+        },
+        formatTen: function (num) {
+            return num > 9 ? (num + "") : ("0" + num);
+        },
+        formatDate : function (date) {
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+            return year + "-" + this.formatTen(month) + "-" + this.formatTen(day) + ' ' + this.formatTen(hour) + ':' + this.formatTen(minute) + ':' + this.formatTen(second);
         }
-
     }
-
 };
