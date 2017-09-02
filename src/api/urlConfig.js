@@ -3,7 +3,7 @@
  */
 
 // const base = ''
-const base = '/api'
+const base = process.env.API_ROOT
 
 export const login = base + '/login';
 

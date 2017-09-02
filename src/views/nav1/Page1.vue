@@ -304,35 +304,73 @@
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getMaintainListPage(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let maintains = JSON.parse(data.substr(0, index1 + 1));
+//                getMaintainListPage(para).then((res) => {
+//                    let data = res.data.d;
+//                    let index1 = data.indexOf("]");
+//                    let maintains = JSON.parse(data.substr(0, index1 + 1));
+//
+//                    let totalStr = data.substr(index1 + 2, data.length - 1);
+//                    let index2 = totalStr.indexOf(":");
+//                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+//                    this.total = parseInt(totalStr);
+//
+//                    if (maintains.length > 0) {
+//                        this.maintains = [];
+//                        for (let maintain of maintains) {
+//                            let item = {
+//                                strMaintainId: '',
+//                                strTitle: '',
+//                                strContent: '',
+//                                cTime: '',
+//                                uTime: ''
+//                            };
+//                            item.strMaintainId = maintain.MaintainId;
+//                            item.strTitle = maintain.MaintainTitle;
+//                            item.strContent = maintain.MaintainContent;
+//                            item.cTime = maintain.CreateTime;
+//                            item.uTime = maintain.UpdateTime;
+//                            this.maintains.push(item);
+//                        }
+//                    }
+//                    //NProgress.done();
+//                });
+                jQuery.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    jsonp: 'jsoncallback',
+                    para: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainItems",
+                    success: function (res) {
+                       let data = res.data.d;
+                       let index1 = data.indexOf("]");
+                       let maintains = JSON.parse(data.substr(0, index1 + 1));
 
-                    let totalStr = data.substr(index1 + 2, data.length - 1);
-                    let index2 = totalStr.indexOf(":");
-                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-                    this.total = parseInt(totalStr);
+                        let totalStr = data.substr(index1 + 2, data.length - 1);
+                        let index2 = totalStr.indexOf(":");
+                        totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                        this.total = parseInt(totalStr);
 
-                    if (maintains.length > 0) {
-                        this.maintains = [];
-                        for (let maintain of maintains) {
-                            let item = {
-                                strMaintainId: '',
-                                strTitle: '',
-                                strContent: '',
-                                cTime: '',
-                                uTime: ''
-                            };
-                            item.strMaintainId = maintain.MaintainId;
-                            item.strTitle = maintain.MaintainTitle;
-                            item.strContent = maintain.MaintainContent;
-                            item.cTime = maintain.CreateTime;
-                            item.uTime = maintain.UpdateTime;
-                            this.maintains.push(item);
+                        if (maintains.length > 0) {
+                            this.maintains = [];
+                            for (let maintain of maintains) {
+                                let item = {
+                                    strMaintainId: '',
+                                    strTitle: '',
+                                    strContent: '',
+                                    cTime: '',
+                                    uTime: ''
+                                };
+                                item.strMaintainId = maintain.MaintainId;
+                                item.strTitle = maintain.MaintainTitle;
+                                item.strContent = maintain.MaintainContent;
+                                item.cTime = maintain.CreateTime;
+                                item.uTime = maintain.UpdateTime;
+                                this.maintains.push(item);
+                            }
                         }
                     }
-                    //NProgress.done();
                 });
                 setTimeout(() => {
                     this.listLoading = false;
@@ -411,6 +449,23 @@
                     }
                 });
             },
+            addSuccess: function (data, status) {
+                console.log('1111111111111111' + status);
+                if ('200' === status) {
+                    this.$message({
+                        message: '提交成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '提交失败',
+                        type: 'success'
+                    });
+                }
+                this.$refs['addForm'].resetFields();
+                this.addFormVisible = false;
+                this.getMaintains();
+            },
             //新增
             addSubmit: function () {
                 this.$refs.addForm.validate((valid) => {
@@ -419,24 +474,33 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-                            addMaintain(para).then((res) => {
-                                this.addLoading = false;
-                                //NProgress.done();
-                                let data = JSON.parse(res.data.d);
-                                if (data.result === true) {
-                                    this.$message({
-                                        message: '提交成功',
-                                        type: 'success'
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: '提交失败',
-                                        type: 'success'
-                                    });
-                                }
-                                this.$refs['addForm'].resetFields();
-                                this.addFormVisible = false;
-                                this.getMaintains();
+//                            addMaintain(para).then((res) => {
+//                                this.addLoading = false;
+//                                //NProgress.done();
+//                                let data = JSON.parse(res.data.d);
+//                                if (data.result === true) {
+//                                    this.$message({
+//                                        message: '提交成功',
+//                                        type: 'success'
+//                                    });
+//                                } else {
+//                                    this.$message({
+//                                        message: '提交失败',
+//                                        type: 'success'
+//                                    });
+//                                }
+//                                this.$refs['addForm'].resetFields();
+//                                this.addFormVisible = false;
+//                                this.getMaintains();
+//                            });
+                            $.ajax({
+                                async: true,
+                                type: 'GET',
+                                jsonp: 'jsoncallback',
+                                data: para,
+                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainItem",
+                                success: this.addSuccess,
+                                dataType: 'json'
                             });
                         });
                     }

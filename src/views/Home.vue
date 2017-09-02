@@ -219,52 +219,85 @@
                 this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
             },
             //获取计划执行的提示信息
+//            getRemindInfo() {
+//                let para = {
+//                };
+//                //NProgress.start();
+//                this.reminds = [];
+//                this.total = 0;
+//                this.hasRemindInfo = false;
+//                getRemindInfoListPage(para).then((res) => {
+//                    let data = res.data.d;
+//                    let index1 = data.indexOf("]");
+//                    let reminds = JSON.parse(data.substr(0, index1 + 1));
+//
+//                    if (reminds.length > 0) {
+//                        this.total = reminds.length;
+//                        this.hasRemindInfo = true;
+//                        this.reminds = [];
+//                        for (let remind of reminds) {
+//                            let item = {
+//                                PlanId: '',
+//                                RemindId: '',
+//                                PlanExeTime: '',
+//                                Description: '',
+//                                RemindMsg: '',
+//                                DiffDays: '',
+//                                MaintainTitle: '',
+//                                MaintainContent: ''
+//                            };
+//                            item.PlanId = remind.PlanId;
+//                            item.RemindId = remind.RemindId;
+//                            item.RemindMsg = remind.RemindMsg;
+//                            item.PlanExeTime = remind.PlanExeTime;
+//                            item.Description = remind.Description;
+//                            item.DiffDays = remind.DiffDays;
+//                            item.MaintainTitle = remind.MaintainTitle;
+//                            item.MaintainContent = remind.MaintainContent;
+//                            this.reminds.push(item);
+//                        }
+//                    }
+//                    //NProgress.done();
+//                });
+//            },
             getRemindInfo() {
-                let para = {
-//                    pageNo: this.listQuery.curPage,
-//                    pageSize: this.listQuery.pageSize
-                };
-                //NProgress.start();
-                this.reminds = [];
-                this.total = 0;
-                this.hasRemindInfo = false;
-                getRemindInfoListPage(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let reminds = JSON.parse(data.substr(0, index1 + 1));
+                jQuery.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    timeout: 2000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetRemindInfo",
+                    success: function (res) {
+                        let reminds = JSON.parse(res);
 
-//                    let totalStr = data.substr(index1 + 2, data.length - 1);
-//                    let index2 = totalStr.indexOf(":");
-//                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-//                    this.total = parseInt(totalStr);
-
-                    if (reminds.length > 0) {
-                        this.total = reminds.length;
-                        this.hasRemindInfo = true;
-                        this.reminds = [];
-                        for (let remind of reminds) {
-                            let item = {
-                                PlanId: '',
-                                RemindId: '',
-                                PlanExeTime: '',
-                                Description: '',
-                                RemindMsg: '',
-                                DiffDays: '',
-                                MaintainTitle: '',
-                                MaintainContent: ''
-                            };
-                            item.PlanId = remind.PlanId;
-                            item.RemindId = remind.RemindId;
-                            item.RemindMsg = remind.RemindMsg;
-                            item.PlanExeTime = remind.PlanExeTime;
-                            item.Description = remind.Description;
-                            item.DiffDays = remind.DiffDays;
-                            item.MaintainTitle = remind.MaintainTitle;
-                            item.MaintainContent = remind.MaintainContent;
-                            this.reminds.push(item);
+                        if (reminds.length > 0) {
+                            this.total = reminds.length;
+                            this.hasRemindInfo = true;
+                            this.reminds = [];
+                            for (let remind of reminds) {
+                                let item = {
+                                    PlanId: '',
+                                    RemindId: '',
+                                    PlanExeTime: '',
+                                    Description: '',
+                                    RemindMsg: '',
+                                    DiffDays: '',
+                                    MaintainTitle: '',
+                                    MaintainContent: ''
+                                };
+                                item.PlanId = remind.PlanId;
+                                item.RemindId = remind.RemindId;
+                                item.RemindMsg = remind.RemindMsg;
+                                item.PlanExeTime = remind.PlanExeTime;
+                                item.Description = remind.Description;
+                                item.DiffDays = remind.DiffDays;
+                                item.MaintainTitle = remind.MaintainTitle;
+                                item.MaintainContent = remind.MaintainContent;
+                                this.reminds.push(item);
+                            }
                         }
                     }
-                    //NProgress.done();
                 });
             },
             handleCurrentChange(val) {
@@ -369,8 +402,6 @@
                 this.sysUserName = user.name || '';
                 this.sysUserAvatar = user.avatar || '';
             }
-//            this.getMaintains();
-            this.getRemindInfo();
         },
         beforeMount() {
             //设置定时器，每3秒刷新一次
@@ -378,14 +409,65 @@
 
             window.setInterval(function () {
                 self.getRemindInfo();
+
                 setTimeout(() => {
-                    if(self.hasRemindInfo) {
-                        self.dialogVisible = true;
+                    if(this.hasRemindInfo) {
+                        this.dialogVisible = true;
                     }else{
-                        self.dialogVisible = false;
+                        this.dialogVisible = false;
                     }
-                }, 1000);
-            }, 3000);
+                }, 8000);
+            }, 6000);
+
+//            window.setInterval(function () {
+//                self.getRemindInfo();
+
+//                jQuery.ajax({
+//                    async: false,
+//                    type: 'GET',
+//                    dataType: 'jsonp',
+//                    jsonp: 'jsoncallback',
+//                    timeout: 5000,
+//                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetRemindInfo",
+//                    success: function (res) {
+//                        let reminds = JSON.parse(res);
+//
+//                        if (reminds.length > 0) {
+//                            self.total = reminds.length;
+//                            self.hasRemindInfo = true;
+//                            self.reminds = [];
+//                            for (let remind of reminds) {
+//                                let item = {
+//                                    PlanId: '',
+//                                    RemindId: '',
+//                                    PlanExeTime: '',
+//                                    Description: '',
+//                                    RemindMsg: '',
+//                                    DiffDays: '',
+//                                    MaintainTitle: '',
+//                                    MaintainContent: ''
+//                                };
+//                                item.PlanId = remind.PlanId;
+//                                item.RemindId = remind.RemindId;
+//                                item.RemindMsg = remind.RemindMsg;
+//                                item.PlanExeTime = remind.PlanExeTime;
+//                                item.Description = remind.Description;
+//                                item.DiffDays = remind.DiffDays;
+//                                item.MaintainTitle = remind.MaintainTitle;
+//                                item.MaintainContent = remind.MaintainContent;
+//                                self.reminds.push(item);
+//                            }
+//                        }
+//                    }
+//                });
+//                setTimeout(() => {
+//                    if(self.hasRemindInfo) {
+//                        self.dialogVisible = true;
+//                    }else{
+//                        self.dialogVisible = false;
+//                    }
+//                }, 1000);
+//            }, 3000);
         }
     }
 
