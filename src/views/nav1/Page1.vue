@@ -145,6 +145,7 @@
 
 <script>
     import util from '../../common/js/util'
+    import * as base from '../../api/urlConfig'
     //import NProgress from 'nprogress'
     import {getMaintainListPage, removeMaintain, batchRemoveMaintain, editMaintain, addMaintain} from '../../api/api';
 
@@ -314,7 +315,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainItems",
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainItems",
                     success: function (res) {
                         let index1 = res.indexOf("]");
                         let maintains = JSON.parse(res.substr(0, index1 + 1));
@@ -376,7 +377,7 @@
                         type: 'GET',
                         jsonp: 'jsoncallback',
                         data: para,
-                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainItem",
+                        url: base.baseUrl + "/MaintainService.svc/DelMaintainItem",
                         success: this.deleteSuccess,
                         dataType: 'jsonp'
                     });
@@ -429,7 +430,7 @@
                                 type: 'GET',
                                 jsonp: 'jsoncallback',
                                 data: para,
-                                url: "http://10.169.42.142:8080/service/MaintainService.svc/UpdMaintainItem",
+                                url: base.baseUrl + "/MaintainService.svc/UpdMaintainItem",
                                 success: this.editSuccess,
                                 dataType: 'jsonp'
                             });
@@ -469,7 +470,7 @@
                                 type: 'GET',
                                 jsonp: 'jsoncallback',
                                 data: para,
-                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainItem",
+                                url: base.baseUrl + "/MaintainService.svc/AddMaintainItem",
                                 success: this.addSuccess,
                                 dataType: 'jsonp'
                             });
@@ -494,7 +495,7 @@
                         type: 'GET',
                         jsonp: 'jsoncallback',
                         data: para,
-                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainItem",
+                        url: base.baseUrl + "/MaintainService.svc/DelMaintainItem",
                         success: this.deleteSuccess,
                         dataType: 'jsonp'
                     });

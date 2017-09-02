@@ -141,6 +141,7 @@
 
 <script>
     import Screenfull from '../components/Screenfull';
+    import * as base from '../api/urlConfig'
     import {
         getMaintainListPage,
         removeMaintain,
@@ -232,7 +233,7 @@
                     dataType: 'jsonp',
                     jsonp: 'jsoncallback',
                     timeout: 2000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetRemindInfo",
+                    url: base.baseUrl + "/MaintainService.svc/GetRemindInfo",
                     success: function (res) {
                         let reminds = JSON.parse(res);
 
@@ -302,7 +303,7 @@
                     type: 'GET',
                     jsonp: 'jsoncallback',
                     data: para,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/ConfirmRemind",
+                    url: base.baseUrl + "/MaintainService.svc/ConfirmRemind",
                     success: this.confirmSuccess,
                     dataType: 'jsonp'
                 });
@@ -337,7 +338,7 @@
                         type: 'GET',
                         jsonp: 'jsoncallback',
                         data: para,
-                        url: "http://10.169.42.142:8080/service/MaintainService.svc/ConfirmRemind",
+                        url: base.baseUrl + "/MaintainService.svc/ConfirmRemind",
                         success: this.confirmSuccess,
                         dataType: 'jsonp'
                     });

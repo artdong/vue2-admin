@@ -114,6 +114,7 @@
 
 <script>
     import util from '../../common/js/util'
+    import * as base from '../../api/urlConfig'
     //import NProgress from 'nprogress'
     import { getHistoryPlanList } from '../../api/api';
 
@@ -321,7 +322,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetHistoryMaintainPlan",
+                    url: base.baseUrl + "/MaintainService.svc/GetHistoryMaintainPlan",
                     success: function (res) {
                         let index1 = res.indexOf("]");
                         let historyPlans = JSON.parse(res.substr(0, index1 + 1));

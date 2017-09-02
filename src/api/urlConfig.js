@@ -2,8 +2,9 @@
  * Created by dongxingbin on 17/7/28.
  */
 
-// const base = ''
-const base = process.env.API_ROOT
+const base = 'process.env.API_ROOT'
+
+export const baseUrl = process.env.API_ROOT;
 
 export const login = base + '/login';
 

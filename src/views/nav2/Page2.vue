@@ -316,6 +316,7 @@
 
 <script>
     import util from '../../common/js/util'
+    import * as base from '../../api/urlConfig'
     //import NProgress from 'nprogress'
     import {
         getPlanListPage,
@@ -648,7 +649,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainPlan",
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainPlan",
                     success: function (res) {
                         console.log('res: ' + res);
                         let index1 = res.indexOf("]");
@@ -701,7 +702,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainItems",
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainItems",
                     success: function (res) {
                         let index1 = res.indexOf("]");
                         let maintains = JSON.parse(res.substr(0, index1 + 1));
@@ -734,7 +735,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetEquipmentCategory",
+                    url: base.baseUrl + "/MaintainService.svc/GetEquipmentCategory",
                     success: function (res) {
                         let equipmentCategory = {};
                         if (res) {
@@ -775,7 +776,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetEquipment",
+                    url: base.baseUrl + "/MaintainService.svc/GetEquipment",
                     success: function (res) {
                         let equipments = {};
                         if (res) {
@@ -815,7 +816,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/maintainEquipmentList",
+                    url: base.baseUrl + "/MaintainService.svc/maintainEquipmentList",
                     success: function (res) {
                         if (res) {
                             maintainEquipments = JSON.parse(res.substr(0, index1 + 1));
@@ -858,7 +859,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: "http://10.169.42.142:8080/service/MaintainService.svc/maintainRemindInfoList",
+                    url: base.baseUrl + "/MaintainService.svc/maintainRemindInfoList",
                     success: function (res) {
                         let maintainReminds = {};
                         if (res) {
@@ -908,7 +909,7 @@
                         type: 'GET',
                         jsonp: 'jsoncallback',
                         data: para,
-                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainPlan",
+                        url: base.baseUrl + "/MaintainService.svc/DelMaintainPlan",
                         success: this.deleteSuccess,
                         dataType: 'jsonp'
                     });
@@ -1020,7 +1021,7 @@
                                 type: 'GET',
                                 jsonp: 'jsoncallback',
                                 data: para,
-                                url: "http://10.169.42.142:8080/service/MaintainService.svc/UpdMaintainPlan",
+                                url: base.baseUrl + "/MaintainService.svc/UpdMaintainPlan",
                                 success: this.editSuccess,
                                 dataType: 'jsonp'
                             });
@@ -1033,7 +1034,7 @@
                                 type: 'GET',
                                 jsonp: 'jsoncallback',
                                 data: para2,
-                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainRemind",
+                                url: base.baseUrl + "/MaintainService.svc/AddMaintainRemind",
                                 success: this.editSuccess,
                                 dataType: 'jsonp'
                             });
@@ -1092,7 +1093,7 @@
                                 type: 'GET',
                                 jsonp: 'jsoncallback',
                                 data: para1,
-                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainPlan",
+                                url: base.baseUrl + "/MaintainService.svc/AddMaintainPlan",
                                 success: this.addSuccess,
                                 dataType: 'jsonp'
                             });
@@ -1119,7 +1120,7 @@
                         type: 'GET',
                         jsonp: 'jsoncallback',
                         data: para,
-                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainPlan",
+                        url: base.baseUrl + "/MaintainService.svc/DelMaintainPlan",
                         success: this.deleteSuccess,
                         dataType: 'jsonp'
                     });

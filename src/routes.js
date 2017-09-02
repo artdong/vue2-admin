@@ -67,7 +67,7 @@ let routes = [
         name: '综合实例',
         iconCls: 'el-icon-star-on',
         leaf: false,//不只一个节点
-        hidden: false,
+        hidden: true,
         children: [
             {
                 path: '/page4',
