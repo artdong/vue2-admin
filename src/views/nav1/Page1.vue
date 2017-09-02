@@ -293,67 +293,37 @@
             },
             //获取维护项列表
             getMaintains() {
+                let _this = this;
+                _this.maintains = [];
+
                 let para = {
-                    pageNo: this.listQuery.curPage,
-                    pageSize: this.listQuery.pageSize,
+                    pageNo: _this.listQuery.curPage,
+                    pageSize: _this.listQuery.pageSize,
                     strOrder: 'CreateTime DESC',
-                    strTitle: this.filters.strTitle,
-                    strContent: this.filters.strContent,
-                    cTime: this.filters.cTime[0] && this.filters.cTime[1] ? util.formatDate.formatDate(this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(this.filters.cTime[1]) : '',
-                    uTime: this.filters.uTime[0] && this.filters.uTime[1] ? util.formatDate.formatDate(this.filters.uTime[0]) + ',' + util.formatDate.formatDate(this.filters.uTime[1]) : ''
+                    strTitle: _this.filters.strTitle,
+                    strContent: _this.filters.strContent,
+                    cTime: _this.filters.cTime[0] && _this.filters.cTime[1] ? util.formatDate.formatDate(_this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(_this.filters.cTime[1]) : '',
+                    uTime: _this.filters.uTime[0] && _this.filters.uTime[1] ? util.formatDate.formatDate(_this.filters.uTime[0]) + ',' + util.formatDate.formatDate(_this.filters.uTime[1]) : ''
                 };
-                this.listLoading = true;
-                //NProgress.start();
-//                getMaintainListPage(para).then((res) => {
-//                    let data = res.data.d;
-//                    let index1 = data.indexOf("]");
-//                    let maintains = JSON.parse(data.substr(0, index1 + 1));
-//
-//                    let totalStr = data.substr(index1 + 2, data.length - 1);
-//                    let index2 = totalStr.indexOf(":");
-//                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-//                    this.total = parseInt(totalStr);
-//
-//                    if (maintains.length > 0) {
-//                        this.maintains = [];
-//                        for (let maintain of maintains) {
-//                            let item = {
-//                                strMaintainId: '',
-//                                strTitle: '',
-//                                strContent: '',
-//                                cTime: '',
-//                                uTime: ''
-//                            };
-//                            item.strMaintainId = maintain.MaintainId;
-//                            item.strTitle = maintain.MaintainTitle;
-//                            item.strContent = maintain.MaintainContent;
-//                            item.cTime = maintain.CreateTime;
-//                            item.uTime = maintain.UpdateTime;
-//                            this.maintains.push(item);
-//                        }
-//                    }
-//                    //NProgress.done();
-//                });
+                _this.listLoading = true;
+
                 jQuery.ajax({
-                    async: false,
+                    async: true,
                     type: 'GET',
-                    dataType: 'json',
+                    dataType: 'jsonp',
                     jsonp: 'jsoncallback',
-                    para: para,
+                    data: para,
                     timeout: 5000,
                     url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainItems",
                     success: function (res) {
-                       let data = res.data.d;
-                       let index1 = data.indexOf("]");
-                       let maintains = JSON.parse(data.substr(0, index1 + 1));
-
-                        let totalStr = data.substr(index1 + 2, data.length - 1);
+                        let index1 = res.indexOf("]");
+                        let maintains = JSON.parse(res.substr(0, index1 + 1));
+                        let totalStr = res.substr(index1 + 2, res.length - 1);
                         let index2 = totalStr.indexOf(":");
                         totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-                        this.total = parseInt(totalStr);
+                        _this.total = parseInt(totalStr);
 
                         if (maintains.length > 0) {
-                            this.maintains = [];
                             for (let maintain of maintains) {
                                 let item = {
                                     strMaintainId: '',
@@ -367,7 +337,7 @@
                                 item.strContent = maintain.MaintainContent;
                                 item.cTime = maintain.CreateTime;
                                 item.uTime = maintain.UpdateTime;
-                                this.maintains.push(item);
+                                _this.maintains.push(item);
                             }
                         }
                     }
@@ -375,6 +345,23 @@
                 setTimeout(() => {
                     this.listLoading = false;
                 }, 1000);
+            },
+            deleteSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '删除失败',
+                        type: 'success'
+                    });
+                }
+                this.listLoading = false;
+                this.getMaintains();
             },
             //删除
             handleDel: function (index, row) {
@@ -384,22 +371,14 @@
                     this.listLoading = true;
                     //NProgress.start();
                     let para = {strMaintainId: row.strMaintainId};
-                    removeMaintain(para).then((res) => {
-                        this.listLoading = false;
-                        //NProgress.done();
-                        let data = JSON.parse(res.data.d);
-                        if (data.result === true) {
-                            this.$message({
-                                message: '删除成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$message({
-                                message: '删除失败',
-                                type: 'success'
-                            });
-                        }
-                        this.getMaintains();
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        jsonp: 'jsoncallback',
+                        data: para,
+                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainItem",
+                        success: this.deleteSuccess,
+                        dataType: 'jsonp'
                     });
                 }).catch(() => {
 
@@ -418,6 +397,25 @@
                     strContent: ''
                 };
             },
+            editSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
+                    this.$message({
+                        message: '修改成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '修改失败',
+                        type: 'success'
+                    });
+                }
+                this.$refs['editForm'].resetFields();
+                this.editFormVisible = false;
+                this.editLoading = false;
+                this.getMaintains();
+            },
             //编辑
             editSubmit: function () {
                 this.$refs.editForm.validate((valid) => {
@@ -426,44 +424,36 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
-                            editMaintain(para).then((res) => {
-                                this.editLoading = false;
-                                //NProgress.done();
-                                let data = JSON.parse(res.data.d);
-                                if (data.result === true) {
-                                    this.$message({
-                                        message: '提交成功',
-                                        type: 'success'
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: '提交失败',
-                                        type: 'success'
-                                    });
-                                }
-                                this.$refs['editForm'].resetFields();
-                                this.editFormVisible = false;
-                                this.getMaintains();
+                            $.ajax({
+                                async: true,
+                                type: 'GET',
+                                jsonp: 'jsoncallback',
+                                data: para,
+                                url: "http://10.169.42.142:8080/service/MaintainService.svc/UpdMaintainItem",
+                                success: this.editSuccess,
+                                dataType: 'jsonp'
                             });
                         });
                     }
                 });
             },
-            addSuccess: function (data, status) {
-                console.log('1111111111111111' + status);
-                if ('200' === status) {
+            addSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
                     this.$message({
-                        message: '提交成功',
+                        message: '新增成功',
                         type: 'success'
                     });
                 } else {
                     this.$message({
-                        message: '提交失败',
+                        message: '新增失败',
                         type: 'success'
                     });
                 }
                 this.$refs['addForm'].resetFields();
                 this.addFormVisible = false;
+                this.addLoading = false;
                 this.getMaintains();
             },
             //新增
@@ -474,25 +464,6 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-//                            addMaintain(para).then((res) => {
-//                                this.addLoading = false;
-//                                //NProgress.done();
-//                                let data = JSON.parse(res.data.d);
-//                                if (data.result === true) {
-//                                    this.$message({
-//                                        message: '提交成功',
-//                                        type: 'success'
-//                                    });
-//                                } else {
-//                                    this.$message({
-//                                        message: '提交失败',
-//                                        type: 'success'
-//                                    });
-//                                }
-//                                this.$refs['addForm'].resetFields();
-//                                this.addFormVisible = false;
-//                                this.getMaintains();
-//                            });
                             $.ajax({
                                 async: true,
                                 type: 'GET',
@@ -500,7 +471,7 @@
                                 data: para,
                                 url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainItem",
                                 success: this.addSuccess,
-                                dataType: 'json'
+                                dataType: 'jsonp'
                             });
                         });
                     }
@@ -518,22 +489,14 @@
                     this.listLoading = true;
                     //NProgress.start();
                     let para = {strMaintainId: ids};
-                    batchRemoveMaintain(para).then((res) => {
-                        this.listLoading = false;
-                        //NProgress.done();
-                        let data = JSON.parse(res.data.d);
-                        if (data.result === true) {
-                            this.$message({
-                                message: '删除成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$message({
-                                message: '删除失败',
-                                type: 'success'
-                            });
-                        }
-                        this.getMaintains();
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        jsonp: 'jsoncallback',
+                        data: para,
+                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainItem",
+                        success: this.deleteSuccess,
+                        dataType: 'jsonp'
                     });
                 }).catch(() => {
 

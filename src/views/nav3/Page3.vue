@@ -261,60 +261,106 @@
             },
             //获取维护计划列表
             getHistoryPlans() {
-                let params = {
-                    pageNo: this.listQuery.curPage,
-                    pageSize: this.listQuery.pageSize,
-                    strTitle: this.filters.strTitle,
-                    strContent: this.filters.strContent,
-                    isCycle: this.filters.isCycle,
-                    description: this.filters.description,
-                    cTime: this.filters.cTime[0] && this.filters.cTime[1] ? util.formatDate.formatDate(this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(this.filters.cTime[1]) : '',
-                    eTime: this.filters.eTime[0] && this.filters.eTime[1] ? util.formatDate.formatDate(this.filters.eTime[0]) + ',' + util.formatDate.formatDate(this.filters.eTime[1]) : ''
+                let _this = this;
+                let para = {
+                    pageNo: _this.listQuery.curPage,
+                    pageSize: _this.listQuery.pageSize,
+                    strTitle: _this.filters.strTitle,
+                    strContent: _this.filters.strContent,
+                    isCycle: _this.filters.isCycle,
+                    description: _this.filters.description,
+                    cTime: _this.filters.cTime[0] && _this.filters.cTime[1] ? util.formatDate.formatDate(_this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(_this.filters.cTime[1]) : '',
+                    eTime: _this.filters.eTime[0] && _this.filters.eTime[1] ? util.formatDate.formatDate(_this.filters.eTime[0]) + ',' + util.formatDate.formatDate(_this.filters.eTime[1]) : ''
                 };
-                this.historyPlans = [];
-                this.listLoading = true;
+                _this.historyPlans = [];
+                _this.listLoading = true;
                 //NProgress.start();
-                getHistoryPlanList(params).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let historyPlans = JSON.parse(data.substr(0, index1 + 1));
+//                getHistoryPlanList(params).then((res) => {
+//                    let data = res.data.d;
+//                    let index1 = data.indexOf("]");
+//                    let historyPlans = JSON.parse(data.substr(0, index1 + 1));
+//
+//                    let totalStr = data.substr(index1 + 2, data.length - 1);
+//                    let index2 = totalStr.indexOf(":");
+//                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+//                    _this.total = parseInt(totalStr);
+//
+//                    if (historyPlans.length > 0) {
+//                        _this.historyPlans = [];
+//                        for (let historyPlan of historyPlans) {
+//                            let item = {
+//                                planId: '',
+//                                maintainId: '',
+//                                maintainTitle: '',
+//                                maintainContent: '',
+//                                createTime: '',
+//                                executeTime: '',
+//                                isCycle: '',
+//                                cycleDay: '',
+//                                description: ''
+//                            };
+//                            item.planId = historyPlan.PlanId;
+//                            item.maintainId = historyPlan.MaintainId.toString();
+//                            item.maintainTitle = historyPlan.MaintainTitle;
+//                            item.maintainContent = historyPlan.MaintainContent;
+//                            item.cTime = historyPlan.CreatePlanTime;
+//                            item.eTime = historyPlan.ExecuteTime;
+//                            item.isCycle = historyPlan.IsCycle;
+//                            item.cycleDay = historyPlan.CycleDay;
+//                            item.description = historyPlan.Description;
+//                            _this.historyPlans.push(item);
+//                        }
+//                    }
+//                    _this.listLoading = false;
+//                    //NProgress.done();
+//                });
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetHistoryMaintainPlan",
+                    success: function (res) {
+                        let index1 = res.indexOf("]");
+                        let historyPlans = JSON.parse(res.substr(0, index1 + 1));
 
-                    let totalStr = data.substr(index1 + 2, data.length - 1);
-                    let index2 = totalStr.indexOf(":");
-                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-                    this.total = parseInt(totalStr);
+                        let totalStr = res.substr(index1 + 2, res.length - 1);
+                        let index2 = totalStr.indexOf(":");
+                        totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                        _this.total = parseInt(totalStr);
 
-                    if (historyPlans.length > 0) {
-                        this.historyPlans = [];
-                        for (let historyPlan of historyPlans) {
-                            let item = {
-                                planId: '',
-                                maintainId: '',
-                                maintainTitle: '',
-                                maintainContent: '',
-                                createTime: '',
-                                executeTime: '',
-                                isCycle: '',
-                                cycleDay: '',
-                                description: ''
-                            };
-                            item.planId = historyPlan.PlanId;
-                            item.maintainId = historyPlan.MaintainId.toString();
-                            item.maintainTitle = historyPlan.MaintainTitle;
-                            item.maintainContent = historyPlan.MaintainContent;
-                            item.cTime = historyPlan.CreatePlanTime;
-                            item.eTime = historyPlan.ExecuteTime;
-                            item.isCycle = historyPlan.IsCycle;
-                            item.cycleDay = historyPlan.CycleDay;
-                            item.description = historyPlan.Description;
-                            this.historyPlans.push(item);
+                        if (historyPlans.length > 0) {
+                            _this.historyPlans = [];
+                            for (let historyPlan of historyPlans) {
+                                let item = {
+                                    planId: '',
+                                    maintainId: '',
+                                    maintainTitle: '',
+                                    maintainContent: '',
+                                    createTime: '',
+                                    executeTime: '',
+                                    isCycle: '',
+                                    cycleDay: '',
+                                    description: ''
+                                };
+                                item.planId = historyPlan.PlanId;
+                                item.maintainId = historyPlan.MaintainId.toString();
+                                item.maintainTitle = historyPlan.MaintainTitle;
+                                item.maintainContent = historyPlan.MaintainContent;
+                                item.cTime = historyPlan.CreatePlanTime;
+                                item.eTime = historyPlan.ExecuteTime;
+                                item.isCycle = historyPlan.IsCycle;
+                                item.cycleDay = historyPlan.CycleDay;
+                                item.description = historyPlan.Description;
+                                _this.historyPlans.push(item);
+                            }
                         }
                     }
-                    this.listLoading = false;
-                    //NProgress.done();
                 });
                 setTimeout(() => {
-                    this.listLoading = false;
+                    _this.listLoading = false;
                 }, 1000);
             },
             //删除

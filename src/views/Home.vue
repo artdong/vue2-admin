@@ -219,48 +219,13 @@
                 this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
             },
             //获取计划执行的提示信息
-//            getRemindInfo() {
-//                let para = {
-//                };
-//                //NProgress.start();
-//                this.reminds = [];
-//                this.total = 0;
-//                this.hasRemindInfo = false;
-//                getRemindInfoListPage(para).then((res) => {
-//                    let data = res.data.d;
-//                    let index1 = data.indexOf("]");
-//                    let reminds = JSON.parse(data.substr(0, index1 + 1));
-//
-//                    if (reminds.length > 0) {
-//                        this.total = reminds.length;
-//                        this.hasRemindInfo = true;
-//                        this.reminds = [];
-//                        for (let remind of reminds) {
-//                            let item = {
-//                                PlanId: '',
-//                                RemindId: '',
-//                                PlanExeTime: '',
-//                                Description: '',
-//                                RemindMsg: '',
-//                                DiffDays: '',
-//                                MaintainTitle: '',
-//                                MaintainContent: ''
-//                            };
-//                            item.PlanId = remind.PlanId;
-//                            item.RemindId = remind.RemindId;
-//                            item.RemindMsg = remind.RemindMsg;
-//                            item.PlanExeTime = remind.PlanExeTime;
-//                            item.Description = remind.Description;
-//                            item.DiffDays = remind.DiffDays;
-//                            item.MaintainTitle = remind.MaintainTitle;
-//                            item.MaintainContent = remind.MaintainContent;
-//                            this.reminds.push(item);
-//                        }
-//                    }
-//                    //NProgress.done();
-//                });
-//            },
             getRemindInfo() {
+                let _this = this;
+                _this.reminds = [];
+                _this.hasRemindInfo = false;
+                _this.hasRemindInfo = false;
+                _this.total = 0;
+
                 jQuery.ajax({
                     async: false,
                     type: 'GET',
@@ -272,9 +237,8 @@
                         let reminds = JSON.parse(res);
 
                         if (reminds.length > 0) {
-                            this.total = reminds.length;
-                            this.hasRemindInfo = true;
-                            this.reminds = [];
+                            _this.total = reminds.length;
+                            _this.hasRemindInfo = true;
                             for (let remind of reminds) {
                                 let item = {
                                     PlanId: '',
@@ -294,7 +258,7 @@
                                 item.DiffDays = remind.DiffDays;
                                 item.MaintainTitle = remind.MaintainTitle;
                                 item.MaintainContent = remind.MaintainContent;
-                                this.reminds.push(item);
+                                _this.reminds.push(item);
                             }
                         }
                     }
@@ -308,6 +272,23 @@
             handleDelay: function (index, row) {
                 //
             },
+            confirmSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
+                    this.$message({
+                        message: '确认成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '确认失败',
+                        type: 'success'
+                    });
+                }
+                this.listLoading = false;
+                this.getRemindInfo();
+            },
             //确认
             handleConfirm: function (index, row) {
                 let para = {
@@ -315,27 +296,15 @@
                     strConfirmType: 1,
                     strConfirmUser: 'alex'
                 };
-                confirmRemind(para).then((res) => {
-                    this.listLoading = true;
-                    //NProgress.done();
-                    let data = {};
-                    //NProgress.done();
-                    if (data) {
-                        data = JSON.parse(res.data.d);
-                    }
-                    if (data.result === true) {
-                        this.$message({
-                            message: '确认成功',
-                            type: 'success'
-                        });
-                    } else {
-                        this.$message({
-                            message: '确认失败',
-                            type: 'success'
-                        });
-                    }
-                    this.listLoading = false;
-                    this.getRemindInfo();
+
+                $.ajax({
+                    async: true,
+                    type: 'GET',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/ConfirmRemind",
+                    success: this.confirmSuccess,
+                    dataType: 'jsonp'
                 });
             },
             selsChange: function (sels) {
@@ -363,27 +332,14 @@
                         strConfirmType: 1,
                         strConfirmUser: 'alex'
                     };
-                    confirmRemind(para).then((res) => {
-                        this.listLoading = true;
-                        //NProgress.done();
-                        let data = {};
-                        //NProgress.done();
-                        if (data) {
-                            data = JSON.parse(res.data.d);
-                        }
-                        if (data.result === true) {
-                            this.$message({
-                                message: '确认成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$message({
-                                message: '确认失败',
-                                type: 'success'
-                            });
-                        }
-                        this.listLoading = false;
-                        this.getRemindInfo();
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        jsonp: 'jsoncallback',
+                        data: para,
+                        url: "http://10.169.42.142:8080/service/MaintainService.svc/ConfirmRemind",
+                        success: this.confirmSuccess,
+                        dataType: 'jsonp'
                     });
                 }).catch(() => {
                 });
@@ -405,69 +361,18 @@
         },
         beforeMount() {
             //设置定时器，每3秒刷新一次
-            var self = this;
+            var _this = this;
 
             window.setInterval(function () {
-                self.getRemindInfo();
-
+                _this.getRemindInfo();
                 setTimeout(() => {
-                    if(this.hasRemindInfo) {
-                        this.dialogVisible = true;
+                    if(_this.hasRemindInfo) {
+                        _this.dialogVisible = true;
                     }else{
-                        this.dialogVisible = false;
+                        _this.dialogVisible = false;
                     }
-                }, 8000);
-            }, 6000);
-
-//            window.setInterval(function () {
-//                self.getRemindInfo();
-
-//                jQuery.ajax({
-//                    async: false,
-//                    type: 'GET',
-//                    dataType: 'jsonp',
-//                    jsonp: 'jsoncallback',
-//                    timeout: 5000,
-//                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetRemindInfo",
-//                    success: function (res) {
-//                        let reminds = JSON.parse(res);
-//
-//                        if (reminds.length > 0) {
-//                            self.total = reminds.length;
-//                            self.hasRemindInfo = true;
-//                            self.reminds = [];
-//                            for (let remind of reminds) {
-//                                let item = {
-//                                    PlanId: '',
-//                                    RemindId: '',
-//                                    PlanExeTime: '',
-//                                    Description: '',
-//                                    RemindMsg: '',
-//                                    DiffDays: '',
-//                                    MaintainTitle: '',
-//                                    MaintainContent: ''
-//                                };
-//                                item.PlanId = remind.PlanId;
-//                                item.RemindId = remind.RemindId;
-//                                item.RemindMsg = remind.RemindMsg;
-//                                item.PlanExeTime = remind.PlanExeTime;
-//                                item.Description = remind.Description;
-//                                item.DiffDays = remind.DiffDays;
-//                                item.MaintainTitle = remind.MaintainTitle;
-//                                item.MaintainContent = remind.MaintainContent;
-//                                self.reminds.push(item);
-//                            }
-//                        }
-//                    }
-//                });
-//                setTimeout(() => {
-//                    if(self.hasRemindInfo) {
-//                        self.dialogVisible = true;
-//                    }else{
-//                        self.dialogVisible = false;
-//                    }
-//                }, 1000);
-//            }, 3000);
+                }, 6000);
+            }, 5000);
         }
     }
 

@@ -56,17 +56,17 @@
                             </el-col>
 
                             <!--<el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle"-->
-                                    <!--style="margin-left: 12px;">-->
-                                <!--<el-form-item label="执行周期(天)">-->
-                                    <!--<el-select v-model="filters.cycleDay" multiple placeholder="请选择">-->
-                                        <!--<el-option-->
-                                                <!--v-for="item in cycleDays"-->
-                                                <!--:key="item.value"-->
-                                                <!--:label="item.label"-->
-                                                <!--:value="item.value">-->
-                                        <!--</el-option>-->
-                                    <!--</el-select>-->
-                                <!--</el-form-item>-->
+                            <!--style="margin-left: 12px;">-->
+                            <!--<el-form-item label="执行周期(天)">-->
+                            <!--<el-select v-model="filters.cycleDay" multiple placeholder="请选择">-->
+                            <!--<el-option-->
+                            <!--v-for="item in cycleDays"-->
+                            <!--:key="item.value"-->
+                            <!--:label="item.label"-->
+                            <!--:value="item.value">-->
+                            <!--</el-option>-->
+                            <!--</el-select>-->
+                            <!--</el-form-item>-->
                             <!--</el-col>-->
                             <el-col :xs="24" :sm="24" :md="24" :lg="24">
                                 <el-form-item style="margin-left: 10px;">
@@ -514,9 +514,9 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-                    maintainId: [
-                        {required: true, message: '请输选择护项', trigger: 'blur'}
-                    ],
+//                    maintainId: [
+//                        {required: true, message: '请输选择护项', trigger: 'blur'}
+//                    ],
 //                    executeTime: [
 //                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
 //                    ],
@@ -624,239 +624,275 @@
             },
             //获取维护计划列表
             getPlans() {
+                let _this = this;
+                _this.plans = [];
+
                 let para = {
-                    pageNo: this.listQuery.curPage,
-                    pageSize: this.listQuery.pageSize,
-                    planId: this.filters.planId,
-                    maintainId: this.filters.maintainId,
-                    cTime: this.filters.cTime[0] && this.filters.cTime[1] ? util.formatDate.formatDate(this.filters.cTime[0]) +  ',' + util.formatDate.formatDate(this.filters.cTime[1]) : '',
-                    eTime: this.filters.eTime[0] && this.filters.eTime[1] ? util.formatDate.formatDate(this.filters.eTime[0]) + ',' + util.formatDate.formatDate(this.filters.eTime[1]) : '',
-                    isCycle: this.filters.isCycle.toString(),
-                    description: this.filters.description,
+                    pageNo: _this.listQuery.curPage,
+                    pageSize: _this.listQuery.pageSize,
+                    planId: _this.filters.planId,
+                    maintainId: _this.filters.maintainId,
+                    cTime: _this.filters.cTime[0] && _this.filters.cTime[1] ? util.formatDate.formatDate(_this.filters.cTime[0]) + ',' + util.formatDate.formatDate(_this.filters.cTime[1]) : '',
+                    eTime: _this.filters.eTime[0] && _this.filters.eTime[1] ? util.formatDate.formatDate(_this.filters.eTime[0]) + ',' + util.formatDate.formatDate(_this.filters.eTime[1]) : '',
+                    isCycle: _this.filters.isCycle.toString(),
+                    description: _this.filters.description,
                     strOrder: 'CreateTime DESC'
                 };
 
-                this.plans = [];
+                _this.listLoading = true;
 
-                this.listLoading = true;
-                //NProgress.start();
-                getPlanListPage(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let plans = JSON.parse(data.substr(0, index1 + 1));
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainPlan",
+                    success: function (res) {
+                        console.log('res: ' + res);
+                        let index1 = res.indexOf("]");
+                        let plans = JSON.parse(res.substr(0, index1 + 1));
 
-                    let totalStr = data.substr(index1 + 2, data.length - 1);
-                    let index2 = totalStr.indexOf(":");
-                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-                    this.total = parseInt(totalStr);
+                        let totalStr = res.substr(index1 + 2, res.length - 1);
+                        let index2 = totalStr.indexOf(":");
+                        totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                        _this.total = parseInt(totalStr);
 
-                    if (plans.length > 0) {
-                        this.plans = [];
-                        for (let plan of plans) {
-                            let item = {
-                                planId: '',
-                                maintainId: '',
-                                createTime: '',
-                                executeTime: '',
-                                isCycle: '',
-                                cycleDay: '',
-                                description: ''
-                            };
-                            item.planId = plan.PlanId;
-                            item.maintainId = plan.MaintainId.toString();
-                            item.createTime = plan.CreateTime;
-                            item.executeTime = plan.ExecuteTime;
-                            item.isCycle = plan.IsCycle;
-                            item.cycleDay = plan.CycleDay;
-                            item.description = plan.Description;
-                            this.plans.push(item);
+                        if (plans.length > 0) {
+                            _this.plans = [];
+                            for (let plan of plans) {
+                                let item = {
+                                    planId: '',
+                                    maintainId: '',
+                                    createTime: '',
+                                    executeTime: '',
+                                    isCycle: '',
+                                    cycleDay: '',
+                                    description: ''
+                                };
+                                item.planId = plan.PlanId;
+                                item.maintainId = plan.MaintainId.toString();
+                                item.createTime = plan.CreateTime;
+                                item.executeTime = plan.ExecuteTime;
+                                item.isCycle = plan.IsCycle;
+                                item.cycleDay = plan.CycleDay;
+                                item.description = plan.Description;
+                                _this.plans.push(item);
+                            }
                         }
                     }
-                    //NProgress.done();
                 });
                 setTimeout(() => {
-                    this.listLoading = false;
+                    _this.listLoading = false;
                 }, 1000);
             },
             //获取维护项列表
             getMaintains() {
-                let para = {};
-//                this.listLoading = true;
-                //NProgress.start();
-                getMaintainListPage(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let maintains = {};
-                    if (data) {
-                        maintains = JSON.parse(data.substr(0, index1 + 1));
-                    }
+                let _this = this;
+                _this.maintainOptions = [];
 
-                    if (maintains.length > 0) {
-                        this.maintainOptions = [];
-                        for (let maintain of maintains) {
-                            let item = {
-                                value: '',
-                                label: ''
-                            };
-                            item.value = maintain.MaintainId.toString();
-                            item.label = maintain.MaintainTitle;
-                            this.maintainOptions.push(item);
+                let para = {};
+
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetMaintainItems",
+                    success: function (res) {
+                        let index1 = res.indexOf("]");
+                        let maintains = JSON.parse(res.substr(0, index1 + 1));
+
+                        if (maintains.length > 0) {
+                            for (let maintain of maintains) {
+                                let item = {
+                                    value: '',
+                                    label: ''
+                                };
+                                item.value = maintain.MaintainId.toString();
+                                item.label = maintain.MaintainTitle;
+                                _this.maintainOptions.push(item);
+                            }
                         }
                     }
-//                    this.listLoading = false;
-                    //NProgress.done();
                 });
             },
             //获取设备类型
             getEquipmentCategories() {
-                let para = {};
-//                this.listLoading = true;
-                //NProgress.start();
-                getEquipmentCategoryList(para).then((res) => {
-                    let data = res.data.d;
-//                    let index1 = data.indexOf("]");
-                    let equipmentCategory = {};
-                    if (data) {
-                        equipmentCategory = JSON.parse(data);
-                    }
+                let _this = this;
+                _this.categorySource = [];
 
-                    if (equipmentCategory.length > 0) {
-//                        this.equipmentCategories = [];
-                        this.categorySource = [];
-                        for (let equipmentCategory of equipmentCategory) {
-                            let item = {
-                                EquipmentCategoryId: '',
-                                EquipmentCategoryName: ''
-                            };
-                            item.EquipmentCategoryId = equipmentCategory.EquipmentCategoryId;
-                            item.EquipmentCategoryName = equipmentCategory.EquipmentCategoryName;
-//                            this.equipmentCategories.push(item);
-                            this.categorySource.push({
-                                label: item.EquipmentCategoryName,
-                                key: parseInt(item.EquipmentCategoryId)
-                            });
+                let para = {};
+
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetEquipmentCategory",
+                    success: function (res) {
+                        let equipmentCategory = {};
+                        if (res) {
+                            equipmentCategory = JSON.parse(res);
+                        }
+
+                        if (equipmentCategory.length > 0) {
+                            for (let equipmentCategory of equipmentCategory) {
+                                let item = {
+                                    EquipmentCategoryId: '',
+                                    EquipmentCategoryName: ''
+                                };
+                                item.EquipmentCategoryId = equipmentCategory.EquipmentCategoryId;
+                                item.EquipmentCategoryName = equipmentCategory.EquipmentCategoryName;
+                                _this.categorySource.push({
+                                    label: item.EquipmentCategoryName,
+                                    key: parseInt(item.EquipmentCategoryId)
+                                });
+                            }
                         }
                     }
-//                    this.listLoading = false;
-                    //NProgress.done();
                 });
-//                setTimeout(() => {
-//                    this.listLoading = false;
-//                }, 2000);
             },
             //获取设备类型
             getEquipments(CategoryId) {
+                let _this = this;
+                _this.equipmentSource = [];
+
                 let para = {
                     strEquipmentCategoryId: CategoryId
                 };
-//                this.listLoading = true;
-                //NProgress.start();
-                getEquipmentList(para).then((res) => {
-                    let data = res.data.d;
-                    //let index1 = data.indexOf("]");
-                    let equipments = {};
-                    if (data) {
-                        equipments = JSON.parse(data);
-                    }
-//                    this.equipments = [];
-                    this.equipmentSource = [];
+                console.log('CategoryId: ' + CategoryId);
 
-                    if (equipments.length > 0) {
-                        for (let equipment of equipments) {
-                            let item = {
-                                EquipmentId: '',
-                                EquipmentName: ''
-                            };
-                            item.EquipmentId = equipment.EquipmentId;
-                            item.EquipmentName = equipment.EquipmentName;
-//                            this.equipments.push(item);
-                            this.equipmentSource.push({
-                                label: item.EquipmentName,
-                                key: item.EquipmentId
-                            });
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/GetEquipment",
+                    success: function (res) {
+                        let equipments = {};
+                        if (res) {
+                            equipments = JSON.parse(res);
+                        }
+                        if (equipments.length > 0) {
+                            for (let equipment of equipments) {
+                                let item = {
+                                    EquipmentId: '',
+                                    EquipmentName: ''
+                                };
+                                item.EquipmentId = equipment.EquipmentId;
+                                item.EquipmentName = equipment.EquipmentName;
+                                _this.equipmentSource.push({
+                                    label: item.EquipmentName,
+                                    key: item.EquipmentId
+                                });
+                            }
                         }
                     }
-//                    this.listLoading = false;
-                    //NProgress.done();
                 });
-//                setTimeout(() => {
-//                    this.listLoading = false;
-//                }, 2000);
             },
             //获取维护计划相关设备
             getMaintainEquipments(strPlanId) {
                 let para = {
                     strPlanId: strPlanId
                 };
-//                this.listLoading = true;
-                //NProgress.start();
-                getMaintainEquipmentList(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let maintainEquipments = {};
-                    this.editForm.equipmentId = [];
-                    this.editForm.equipmentCategory = [];
-                    if (data) {
-                        maintainEquipments = JSON.parse(data.substr(0, index1 + 1));
-                    }
+                let _this = this;
+                let maintainEquipments = {};
+                _this.editForm.equipmentId = [];
+                _this.editForm.equipmentCategory = [];
 
-                    if (maintainEquipments.length > 0) {
-                        for (let maintainEquipment of maintainEquipments) {
-                            let equipmentCategoryItem = {
-                                EquipmentCategoryId: '',
-                                EquipmentCategoryName: ''
-                            };
-                            equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
-                            equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
-                            this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/maintainEquipmentList",
+                    success: function (res) {
+                        if (res) {
+                            maintainEquipments = JSON.parse(res.substr(0, index1 + 1));
+                        }
 
-                            let equipmentItem = {
-                                EquipmentId: '',
-                                EquipmentName: ''
-                            };
-                            equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
-                            equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
-                            this.editForm.equipmentId.push(equipmentItem.EquipmentId);
+                        if (maintainEquipments.length > 0) {
+                            for (let maintainEquipment of maintainEquipments) {
+                                let equipmentCategoryItem = {
+                                    EquipmentCategoryId: '',
+                                    EquipmentCategoryName: ''
+                                };
+                                equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
+                                equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
+                                _this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
+
+                                let equipmentItem = {
+                                    EquipmentId: '',
+                                    EquipmentName: ''
+                                };
+                                equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
+                                equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
+                                _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
+                            }
                         }
                     }
-                    console.log('this.editForm.equipmentId: ' + this.editForm.equipmentId);
-                    console.log('this.editForm.equipmentCategory: ' + this.editForm.equipmentCategory);
-//                    this.listLoading = false;
-                    //NProgress.done();
                 });
-//                setTimeout(() => {
-//                    this.listLoading = false;
-//                }, 2000);
             },
             getMaintainRemindInfo(strPlanId) {
+                let _this = this;
                 let para = {
                     strPlanId: strPlanId
                 };
-//                this.listLoading = true;
-                //NProgress.start();
-                this.customDayOptions = [];
-                this.editForm.remindDay = [];
-                getMaintainRemindInfoList(para).then((res) => {
-                    let data = res.data.d;
-                    let index1 = data.indexOf("]");
-                    let maintainReminds = {};
-                    if (data) {
-                        maintainReminds = JSON.parse(data.substr(0, index1 + 1));
-                    }
+                _this.customDayOptions = [];
+                _this.editForm.remindDay = [];
 
-                    if (maintainReminds.length > 0) {
-                        for (let maintainRemind of maintainReminds) {
-                            this.editForm.remindDay.push(maintainRemind.RemindDay);
-                            this.customDayOptions.push({
-                                value: maintainRemind.RemindDay,
-                                label: maintainRemind.RemindDay + '天'
-                            });
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: "http://10.169.42.142:8080/service/MaintainService.svc/maintainRemindInfoList",
+                    success: function (res) {
+                        let maintainReminds = {};
+                        if (res) {
+                            maintainReminds = JSON.parse(res.substr(0, index1 + 1));
                         }
+
+                        if (maintainReminds.length > 0) {
+                            for (let maintainRemind of maintainReminds) {
+                                _this.editForm.remindDay.push(maintainRemind.RemindDay);
+                                _this.customDayOptions.push({
+                                    value: maintainRemind.RemindDay,
+                                    label: maintainRemind.RemindDay + '天'
+                                });
+                            }
+                        }
+                        _this.checkCustomDay(_this.editForm.customDay);
                     }
-                    this.checkCustomDay(this.editForm.customDay);
-//                    this.listLoading = false;
-                    //NProgress.done();
                 });
+            },
+            deleteSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '删除失败',
+                        type: 'success'
+                    });
+                }
+                this.getPlans();
             },
             //删除
             handleDel: function (index, row) {
@@ -865,57 +901,45 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = {planId: row.planId};
-                    removePlan(para).then((res) => {
-                        this.listLoading = false;
-                        let data = {};
-                        //NProgress.done();
-                        if (data) {
-                            data = JSON.parse(res.data.d);
-                        }
-                        if (data.result === true) {
-                            this.$message({
-                                message: '删除成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$message({
-                                message: '删除失败',
-                                type: 'success'
-                            });
-                        }
-                        this.getPlans();
+                    let para = {strPlanId: row.planId};
+
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        jsonp: 'jsoncallback',
+                        data: para,
+                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainPlan",
+                        success: this.deleteSuccess,
+                        dataType: 'jsonp'
                     });
                 }).catch(() => {
 
                 });
-            }
-            ,
+            },
             //显示编辑界面
             handleEdit: function (index, row) {
                 this.editFormVisible = true;
                 this.operate = 'edit';
-                    this.editForm = {
-                        planId: row.planId,
-                        maintainId: row.maintainId,
-                        createTime: row.createTime,
-                        executeTime: row.executeTime,
-                        isCycle: row.isCycle,
-                        cycleDay: row.cycleDay,
-                        remindDay: [],
-                        customDay: row.customDay,
-                        description: row.description,
-                        equipmentCategory: row.equipmentCategory,
-                        equipmentId: row.equipmentId
-                    },
+                this.editForm = {
+                    planId: row.planId,
+                    maintainId: row.maintainId,
+                    createTime: row.createTime,
+                    executeTime: row.executeTime,
+                    isCycle: row.isCycle,
+                    cycleDay: row.cycleDay,
+                    remindDay: [],
+                    customDay: row.customDay,
+                    description: row.description,
+                    equipmentCategory: row.equipmentCategory,
+                    equipmentId: row.equipmentId
+                },
 //                this.editForm = Object.assign({}, row);
-                this.getMaintains();
-                this.getEquipmentCategories();
+//                this.getPlans();
+                    this.getEquipmentCategories();
                 this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
-            }
-            ,
+            },
             //显示新增界面
             handleAdd: function () {
                 this.addFormVisible = true;
@@ -952,6 +976,25 @@
                 this.getEquipments(this.addForm.equipmentCategory.toString());
             }
             ,
+            editSuccess: function (res, status) {
+                let data = JSON.parse(res);
+
+                if (data.result === true) {
+                    this.$message({
+                        message: '修改成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '修改失败',
+                        type: 'success'
+                    });
+                }
+                this.$refs['editForm'].resetFields();
+                this.editFormVisible = false;
+                this.getPlans();
+            }
+            ,
             //编辑
             editSubmit: function () {
                 this.$refs.editForm.validate((valid) => {
@@ -972,57 +1015,50 @@
                             } else {
                                 para.equipmentId = this.editForm.equipmentId.toString();
                             }
-                            editPlan(para).then((res) => {
-                                this.editLoading = false;
-                                //NProgress.done();
-                                let data = {};
-                                if (data) {
-                                    data = JSON.parse(res.data.d);
-                                }
-                                if (data.result === true) {
-                                    this.$message({
-                                        message: '提交成功',
-                                        type: 'success'
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: '提交失败',
-                                        type: 'success'
-                                    });
-                                }
-                                this.$refs['editForm'].resetFields();
-                                this.editFormVisible = false;
-                                this.getPlans();
+                            $.ajax({
+                                async: true,
+                                type: 'GET',
+                                jsonp: 'jsoncallback',
+                                data: para,
+                                url: "http://10.169.42.142:8080/service/MaintainService.svc/UpdMaintainPlan",
+                                success: this.editSuccess,
+                                dataType: 'jsonp'
                             });
+
                             let para2 = {};
                             para2.strPlanId = this.editForm.planId;
                             para2.strRemindDay = this.editForm.remindDay.toString();
-
-                            addRemind(para2).then((res) => {
-                                this.addLoading = false;
-                                //NProgress.done();
-                                let data = {};
-                                if (data) {
-                                    data = JSON.parse(res.data.d);
-                                }
-                                if (data.result === true) {
-                                    this.$message({
-                                        message: '提交成功',
-                                        type: 'success'
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: '提交失败',
-                                        type: 'success'
-                                    });
-                                }
-                                this.$refs['addForm'].resetFields();
-                                this.addFormVisible = false;
-                                this.getPlans();
+                            $.ajax({
+                                async: true,
+                                type: 'GET',
+                                jsonp: 'jsoncallback',
+                                data: para2,
+                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainRemind",
+                                success: this.editSuccess,
+                                dataType: 'jsonp'
                             });
                         });
                     }
                 });
+            }
+            ,
+            addSuccess: function (res, status) {
+                let data = JSON.parse(res);
+                if (data.result === true) {
+                    this.$message({
+                        message: '新增成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: '新增失败',
+                        type: 'success'
+                    });
+                }
+                this.$refs['addForm'].resetFields();
+                this.addFormVisible = false;
+                this.addLoading = false;
+                this.getPlans();
             }
             ,
             //新增
@@ -1032,10 +1068,10 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             //NProgress.start();
-                            let para = Object.assign({}, this.addForm);
+                            //let para = Object.assign({}, this.addForm);
                             let para1 = {};
                             para1.maintainId = this.addForm.maintainId;
-                            para1.executeTime = this.addForm.executeTime;
+                            para1.executeTime = this.addForm.executeTime ? util.formatDate.formatDate(this.addForm.executeTime) : '';
                             para1.isCycle = this.addForm.isCycle;
                             para1.cycleDay = this.addForm.cycleDay;
                             para1.description = this.addForm.description;
@@ -1050,54 +1086,16 @@
                             } else {
                                 para1.equipmentId = this.addForm.equipmentId.toString();
                             }
-                            console.log('add para:' + JSON.stringify(para));
-                            addPlan(para1).then((res) => {
-                                this.addLoading = false;
-                                //NProgress.done();
-                                let data = {};
-                                if (data) {
-                                    data = JSON.parse(res.data.d);
-                                }
-                                if (data.result === true) {
-                                    this.$message({
-                                        message: '提交成功',
-                                        type: 'success'
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: '提交失败',
-                                        type: 'success'
-                                    });
-                                }
-                                this.$refs['addForm'].resetFields();
-                                this.addFormVisible = false;
-                                this.getPlans();
+                            console.log('add para1:' + JSON.stringify(para1));
+                            $.ajax({
+                                async: true,
+                                type: 'GET',
+                                jsonp: 'jsoncallback',
+                                data: para1,
+                                url: "http://10.169.42.142:8080/service/MaintainService.svc/AddMaintainPlan",
+                                success: this.addSuccess,
+                                dataType: 'jsonp'
                             });
-//                            let para2 = {};
-//                            para2.strRemindDay = this.addForm.remindDay.toString();
-//
-//                            addRemind(para2).then((res) => {
-//                                this.addLoading = false;
-//                                //NProgress.done();
-//                                let data = {};
-//                                if (data) {
-//                                    data = JSON.parse(res.data.d);
-//                                }
-//                                if (data.result === true) {
-//                                    this.$message({
-//                                        message: '提交成功',
-//                                        type: 'success'
-//                                    });
-//                                } else {
-//                                    this.$message({
-//                                        message: '提交失败',
-//                                        type: 'success'
-//                                    });
-//                                }
-//                                this.$refs['addForm'].resetFields();
-//                                this.addFormVisible = false;
-//                                this.getPlans();
-//                            });
                         });
                     }
                 });
@@ -1115,27 +1113,15 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = {ids: ids};
-                    batchRemovePlan(para).then((res) => {
-                        this.listLoading = false;
-                        //NProgress.done();
-                        let data = {};
-                        //NProgress.done();
-                        if (data) {
-                            data = JSON.parse(res.data.d);
-                        }
-                        if (data.result === true) {
-                            this.$message({
-                                message: '删除成功',
-                                type: 'success'
-                            });
-                        } else {
-                            this.$message({
-                                message: '删除失败',
-                                type: 'success'
-                            });
-                        }
-                        this.getPlans();
+                    let para = {strPlanId: ids};
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        jsonp: 'jsoncallback',
+                        data: para,
+                        url: "http://10.169.42.142:8080/service/MaintainService.svc/DelMaintainPlan",
+                        success: this.deleteSuccess,
+                        dataType: 'jsonp'
                     });
                 }).catch(() => {
 
