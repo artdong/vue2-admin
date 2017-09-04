@@ -2,9 +2,12 @@
  * Created by dongxingbin on 17/7/28.
  */
 
+// localStorage.setItem('baseUrl','http://localhost:8082');
+// localStorage.clear();
+
 const base = 'process.env.API_ROOT'
 
-export const baseUrl = process.env.API_ROOT;
+export const baseUrl = localStorage.getItem('baseUrl') ? localStorage.getItem('baseUrl') : process.env.API_ROOT;
 
 export const login = base + '/login';
 
