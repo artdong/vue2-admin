@@ -514,7 +514,7 @@
 <style scoped>
 
     .toolbar {
-        background-color: #f4f4f4;
+        background-color: #f8f8f8 !important;
     }
 
 </style>

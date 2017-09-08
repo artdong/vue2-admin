@@ -542,10 +542,13 @@
                 .content-wrapper {
                     background-color: #fff;
                     box-sizing: border-box;
-                    margin-top: 10px;
                 }
             }
         }
+    }
+
+    .toolbar {
+        background-color: #f8f8f8 !important;
     }
 
     .hand {
