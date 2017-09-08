@@ -52,7 +52,7 @@
                 <i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
             </div>
         </el-col>
-        <el-col :xs="16" :sm="16" :md="16" :lg="18" class="breadcrumb-container">
+        <el-col :xs="19" :sm="19" :md="19" :lg="20" class="breadcrumb-container">
             <strong class="title">{{$route.name}}</strong>
         </el-col>
         <el-col :xs="2" :sm="2" :md="2" :lg="2">
@@ -60,31 +60,31 @@
             <el-badge :value="total" :max="10">
             </el-badge>
         </el-col>
-        <el-col :xs="1" :sm="1" :md="1" :lg="1">
-            <screenfull class="screenfull"></screenfull>
-        </el-col>
-        <el-col :xs="2" :sm="2" :md="2" :lg="1" class="userinfo">
-            <el-dropdown trigger="hover">
-                <span class="el-dropdown-link userinfo-inner">
-                    <!--<img :src="this.sysUserAvatar"/> -->
-                    {{sysUserName}}
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <router-link class='inlineBlock' to="/" style="text-decoration:none; color: black;">
-                        <el-dropdown-item>
-                            首页
-                        </el-dropdown-item>
-                    </router-link>
-                    <a target='_blank' href="https://alex-0407.github.io/vue2-admin-grace/"
-                       style="text-decoration:none; color: black;">
-                        <el-dropdown-item>
-                            演示地址
-                        </el-dropdown-item>
-                    </a>
-                    <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-        </el-col>
+        <!--<el-col :xs="1" :sm="1" :md="1" :lg="1">-->
+            <!--<screenfull class="screenfull"></screenfull>-->
+        <!--</el-col>-->
+        <!--<el-col :xs="2" :sm="2" :md="2" :lg="1" class="userinfo">-->
+            <!--<el-dropdown trigger="hover">-->
+                <!--<span class="el-dropdown-link userinfo-inner">-->
+                    <!--&lt;!&ndash;<img :src="this.sysUserAvatar"/> &ndash;&gt;-->
+                    <!--{{sysUserName}}-->
+                <!--</span>-->
+                <!--<el-dropdown-menu slot="dropdown">-->
+                    <!--<router-link class='inlineBlock' to="/" style="text-decoration:none; color: black;">-->
+                        <!--<el-dropdown-item>-->
+                            <!--首页-->
+                        <!--</el-dropdown-item>-->
+                    <!--</router-link>-->
+                    <!--<a target='_blank' href="https://alex-0407.github.io/vue2-admin-grace/"-->
+                       <!--style="text-decoration:none; color: black;">-->
+                        <!--<el-dropdown-item>-->
+                            <!--演示地址-->
+                        <!--</el-dropdown-item>-->
+                    <!--</a>-->
+                    <!--<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>-->
+                <!--</el-dropdown-menu>-->
+            <!--</el-dropdown>-->
+        <!--</el-col>-->
     </el-col>
     <div class="grid-content bg-purple-light">
         <el-col :span="24" class="content-wrapper">
@@ -395,9 +395,9 @@
         .header {
             height: 60px;
             line-height: 60px;
-            background: #eef1f6;
-            color: #fff;
+            background: #eeeeee;
             border-left: 1px solid white;
+            border-bottom: 6px solid #c0c1e1;
             .userinfo {
                 text-align: right;
                 padding-right: 35px;
@@ -453,7 +453,6 @@
         }
         .main {
             display: flex;
-            // background: #324057;
             position: absolute;
             top: 0px;
             bottom: 0px;
@@ -461,11 +460,13 @@
             aside {
                 flex: 0 0 230px;
                 width: 230px;
+                height: 100%;
                 // position: absolute;
                 // top: 0px;
                 // bottom: 0px;
                 .el-menu {
                     height: 100%;
+                    background-color: #2c2f43;
                 }
                 .collapsed {
                     width: 60px;
@@ -492,19 +493,29 @@
             }
             .el-menu-item {
                 min-width: 60px;
+                color: #f1f1f1;
+                &:hover {
+                    background-color: #e6f1fe;
+                    color: #3877db;
+                }
                 &.is-active {
-                    background-color: #353f4f !important;
-                    border-right: 4px solid $color-primary;
-                    color: $color-primary;
+                    /*background-color: #353f4f !important;*/
+                    border-left: 4px solid #3877db;
+                    color: #3877db;
                 }
             }
             .menu-list {
                 height: 45px;
                 line-height: 45px;
+                color: #f1f1f1;
+                &:hover {
+                    background-color:#e6f1fe;
+                    color: #3877db;
+                }
                 &.is-active {
-                    background-color: #353f4f !important;
-                    border-right: 4px solid $color-primary;
-                    color: $color-primary;
+                    /*background-color: #353f4f !important;*/
+                    border-left: 4px solid #3877db;
+                    color: #3877db;
                 }
             }
             .content-container {
@@ -522,7 +533,7 @@
                     .title {
                         width: 200px;
                         float: left;
-                        color: #475669;
+                        color: #686868;
                     }
                     .breadcrumb-inner {
                         float: right;
