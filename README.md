@@ -2,10 +2,10 @@
 
 ## About
 
-此项目是 vue2 + element-ui 构建的后台管理系统，所有数据都是mock server处理的，所以只需下载即可运行，非常方便就可以替换自己的rest api接口。
+此项目是 vue2 + element-ui 构建的后台管理系统，自适应多种屏幕大小，所有数据都是mock server处理的，所以只需下载即可运行，非常方便就可以替换自己的rest api接口。
 
 
-## 说明
+## 来了就喝杯咖啡吧，star一下证明你来过 :)
 
 >  如果对您对此项目有兴趣，可以点 "Star" 支持一下 谢谢！ ^_^
 
@@ -18,7 +18,7 @@
 
 ## 技术栈
 
-vue2 + vuex + vue-router + webpack + ES6/7 + sass + element-ui
+vue2 + vuex + vue-router + axios + webpack + ES6/7 + sass + element-ui
 
 
 ## 项目运行
@@ -45,12 +45,11 @@ npm run build (打包发布)
 
 ## 部分截图
 
-
 <img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/1.PNG" style="display:inline;">
     
 <img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/2.PNG" style="display:inline;">
 
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" style="display:inline;">
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" width="500px" style="display:inline;">
 
 #### 欢迎关注我的微信公众号或头条号`全栈弄潮儿` ，获取更多学习资源及技术文章等
 
