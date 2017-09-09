@@ -46,11 +46,11 @@ npm run build (打包发布)
 ## 部分截图
 
 
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/1.PNG" width="320px" style="display:inline;">
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/1.PNG" style="display:inline;">
     
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/2.PNG" width="320px" style="display:inline;">
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/2.PNG" style="display:inline;">
 
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" width="320px" style="display:inline;">
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" style="display:inline;">
 
 #### 欢迎关注我的微信公众号或头条号`全栈弄潮儿` ，获取更多学习资源及技术文章等
 
