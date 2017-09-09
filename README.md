@@ -5,7 +5,7 @@
 此项目是 vue2 + element-ui + axios 构建的后台管理系统，自适应多种屏幕大小，所有数据都是mock server处理的，所以只需下载即可运行，非常方便就可以替换自己的rest api接口。
 
 
-## 来了就喝杯咖啡吧，star一下证明你来过 :)
+## 来了就留个 :feet:吧，star一下证明你来过  :stuck_out_tongue_closed_eyes:
 
 >  如果对您对此项目有兴趣，可以点 "Star" 支持一下 谢谢！ ^_^
 
@@ -41,7 +41,7 @@ npm run build (打包发布)
 
 ## 在线效果演示
 
-[点我吧\ue057](https://alex-0407.github.io/vue2-admin-grace)
+[点我吧 :smiley:](https://alex-0407.github.io/vue2-admin-grace)
 
 ## 部分截图
 
