@@ -45,3 +45,20 @@ npm run build (打包发布)
 
 ## 部分截图
 
+
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/1.PNG" width="320px" style="display:inline;">
+    
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/2.PNG" width="320px" style="display:inline;">
+
+<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" width="320px" style="display:inline;">
+
+#### 欢迎关注我的微信公众号或头条号`全栈弄潮儿` ，获取更多学习资源及技术文章等
+
+* 微信公众号二维码，扫一扫或者搜索"全栈弄潮儿"即可关注
+
+<img src="https://github.com/Alex-0407/sinacloud-node/blob/master/fullstack-8cm.jpg" width="320px" style="display:inline;">
+
+* 今日头条号二维码，扫一扫即可关注
+
+<img src="https://github.com/Alex-0407/node-demo/blob/master/toutiao.jpg" width="320px" style="display:inline;">
+
