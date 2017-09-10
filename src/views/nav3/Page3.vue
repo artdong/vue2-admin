@@ -61,29 +61,13 @@
 					</el-table-column>
 					<el-table-column type="index" width="60">
 					</el-table-column>
-					<el-table-column prop="strPlanId" label="计划ID" width="120" sortable>
+                    <el-table-column prop="strTitle" label="维护项名称" width="120">
                     </el-table-column>
-                    <el-table-column prop="strMaintainId" label="维护项ID" width="120" sortable>
-                    </el-table-column>
+					<el-table-column prop="description" label="描述">
+					</el-table-column>
 					<el-table-column prop="executeTime" label="执行时间" width="120" sortable>
 					</el-table-column>
 					<el-table-column prop="isCycle" label="是否周期性" width="130" :formatter="formatCycle">
-					</el-table-column>
-					<el-table-column prop="cycleDay" label="天">
-					</el-table-column>
-					<el-table-column prop="executeHour" label="时">
-					</el-table-column>
-					<el-table-column prop="executeMinute" label="分">
-					</el-table-column>
-					<el-table-column prop="description" label="描述">
-					</el-table-column>
-					<el-table-column prop="equipmentCategory" label="设备类型ID" sortable>
-                    </el-table-column>
-                    <el-table-column prop="equipmentId" label="设备ID" sortable>
-                    </el-table-column>
-					<el-table-column prop="strTitle" label="维护项" width="120">
-					</el-table-column>
-					<el-table-column prop="strContent" label="维护内容" width="120">
 					</el-table-column>
 					<el-table-column prop="cStartTime" label="创建时间" width="120">
 					</el-table-column>

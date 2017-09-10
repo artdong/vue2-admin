@@ -52,6 +52,7 @@ for (let i = 0; i < 21; i++) {
     Plans.push(Mock.mock({
         strPlanId: Mock.Random.guid(),
         strMaintainId: Mock.Random.guid(),
+        strTitle: Mock.Random.cname(),
         executeTime: Mock.Random.datetime(),
         isCycle: Mock.Random.integer(0, 1),
         'cycleDay|1': ['1', '2', '3', '4', '5'],

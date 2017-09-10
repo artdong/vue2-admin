@@ -62,7 +62,7 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="strTitle" label="维护项">
+                    <el-table-column prop="strTitle" label="维护项名称">
                     </el-table-column>
                     <el-table-column prop="strContent" label="维护内容">
                     </el-table-column>
