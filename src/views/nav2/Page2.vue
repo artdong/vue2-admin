@@ -96,17 +96,19 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="planId" label="计划ID" width="120">
+                    <!--<el-table-column prop="planId" label="计划ID" width="120">-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column prop="maintainId" label="维护项ID" width="120">-->
+                    <!--</el-table-column>-->
+                    <el-table-column prop="maintainTitle" label="维护名称" width="120">
                     </el-table-column>
-                    <el-table-column prop="maintainId" label="维护项ID" width="120">
+                    <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <el-table-column prop="executeTime" label="执行时间" width="180">
+                    <el-table-column prop="cycleDay" label="剩余天数" width="180">
                     </el-table-column>
                     <el-table-column prop="isCycle" label="是否周期性" width="180" :formatter="formatCycle">
                     </el-table-column>
-                    <el-table-column prop="cycleDay" label="天" width="180">
-                    </el-table-column>
-                    <el-table-column prop="description" label="描述">
+                    <el-table-column prop="executeTime" label="执行时间" width="120">
                     </el-table-column>
                     <el-table-column label="操作" width="180">
                         <template scope="scope">
@@ -436,17 +438,11 @@
                     value: '1',
                     label: '1天'
                 }, {
-                    value: '2',
-                    label: '2天'
-                }, {
                     value: '3',
                     label: '3天'
                 }, {
-                    value: '4',
-                    label: '4天'
-                }, {
-                    value: '5',
-                    label: '5天'
+                    value: '7',
+                    label: '7天'
                 }],
                 operate: '',
                 currentCustomDay: '',
@@ -465,6 +461,7 @@
                 form: {
                     planId: '',
                     maintainId: '',
+                    maintainTitle: '',
                     createTime: '',
                     executeTime: '',
                     isCycle: '',
@@ -515,9 +512,9 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
-//                    maintainId: [
-//                        {required: true, message: '请输选择护项', trigger: 'blur'}
-//                    ],
+                    maintainId: [
+                        {required: true, message: '请输选择护项', trigger: 'blur'}
+                    ],
 //                    executeTime: [
 //                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
 //                    ],
@@ -666,6 +663,7 @@
                                 let item = {
                                     planId: '',
                                     maintainId: '',
+                                    maintainTitle: '',
                                     createTime: '',
                                     executeTime: '',
                                     isCycle: '',
@@ -679,6 +677,11 @@
                                 item.isCycle = plan.IsCycle;
                                 item.cycleDay = plan.CycleDay;
                                 item.description = plan.Description;
+                                for (let maintain of _this.maintainOptions) {
+                                    if(maintain.value == item.maintainId) {
+                                        item.maintainTitle = maintain.label;
+                                    }
+                                }
                                 _this.plans.push(item);
                             }
                         }
@@ -693,7 +696,8 @@
                 let _this = this;
                 _this.maintainOptions = [];
 
-                let para = {};
+                let para = {
+                };
 
                 jQuery.ajax({
                     async: true,
@@ -936,7 +940,7 @@
                 },
 //                this.editForm = Object.assign({}, row);
 //                this.getPlans();
-                    this.getEquipmentCategories();
+                this.getEquipmentCategories();
                 this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
@@ -949,17 +953,11 @@
                     value: '1',
                     label: '1天'
                 }, {
-                    value: '2',
-                    label: '2天'
-                }, {
                     value: '3',
                     label: '3天'
                 }, {
-                    value: '4',
-                    label: '4天'
-                }, {
-                    value: '5',
-                    label: '5天'
+                    value: '7',
+                    label: '7天'
                 }],
                     this.addForm = {
                         maintainId: '',
@@ -1131,6 +1129,7 @@
         },
         mounted() {
             this.getPlans();
+            this.getMaintains();
         }
     }
 

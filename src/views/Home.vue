@@ -368,16 +368,16 @@
             //设置定时器，每3秒刷新一次
             var _this = this;
 
-            window.setInterval(function () {
-                _this.getRemindInfo();
-                setTimeout(() => {
-                    if (_this.hasRemindInfo) {
-                        _this.dialogVisible = true;
-                    } else {
-                        _this.dialogVisible = false;
-                    }
-                }, 6000);
-            }, 5000);
+//            window.setInterval(function () {
+//                _this.getRemindInfo();
+//                setTimeout(() => {
+//                    if (_this.hasRemindInfo) {
+//                        _this.dialogVisible = true;
+//                    } else {
+//                        _this.dialogVisible = false;
+//                    }
+//                }, 6000);
+//            }, 5000);
         }
     }
 
