@@ -292,16 +292,16 @@
             }
             var _this = this;
 
-//            window.setInterval(function () {
-//                _this.getMaintains();
-//                setTimeout(() => {
-//                    if (!_this.dialogVisible) {
-//                        _this.dialogVisible = true;
-//                    } else {
-//                        _this.dialogVisible = false;
-//                    }
-//                }, 9000);
-//            }, 8000);
+            window.setInterval(function () {
+                _this.getMaintains();
+                setTimeout(() => {
+                    if (!_this.dialogVisible) {
+                        _this.dialogVisible = true;
+                    } else {
+                        _this.dialogVisible = false;
+                    }
+                }, 9000);
+            }, 5000);
 
         }
     }

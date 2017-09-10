@@ -51,14 +51,11 @@
 					<el-button @click.stop="on_refresh" size="small">
 						<i class="fa fa-refresh"></i>
 					</el-button>
-					<el-button type="primary" @click="handleAdd" icon="plus" size="small">新增</el-button>
 				</div>
 			</div>
 			<div class="panel-body">
 				<!--列表-->
 				<el-table :data="plans" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
-					<el-table-column type="selection" width="55">
-					</el-table-column>
 					<el-table-column type="index" width="60">
 					</el-table-column>
                     <el-table-column prop="strTitle" label="维护项名称" width="120">
@@ -73,17 +70,10 @@
 					</el-table-column>
 					<el-table-column prop="uStartTime" label="更新时间" width="120">
 					</el-table-column>
-					<el-table-column label="操作" width="150">
-						<template scope="scope">
-							<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-							<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-						</template>
-					</el-table-column>
 				</el-table>
 
 				<!--工具条-->
 				<el-col :span="24" class="toolbar">
-					<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" class="fl">批量删除</el-button>
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.curPage" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" class="fr">
 					</el-pagination>
 				</el-col>
