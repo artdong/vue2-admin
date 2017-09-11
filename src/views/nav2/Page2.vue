@@ -151,8 +151,9 @@
                                     v-model="editForm.executeTime"
                                     type="datetime"
                                     placeholder="选择日期时间"
+                                    :picker-options="pickerOptions0"
                                     align="right"
-                                    :picker-options="pickerOptions1">
+                                    >
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -242,8 +243,9 @@
                                     v-model="addForm.executeTime"
                                     type="datetime"
                                     placeholder="选择日期时间"
+                                    :picker-options="pickerOptions0"
                                     align="right"
-                                    :picker-options="pickerOptions1">
+                                    >
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -350,6 +352,11 @@
                 },
                 panelTitle: '维护计划列表',
                 activeNames: ['1'],
+                pickerOptions0: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
                 pickerOptions1: {
                     shortcuts: [{
                         text: '今天',
@@ -545,7 +552,8 @@
                 }
                 setTimeout(() => {
                     const now = new Date();
-                    if (this.formatDate(value) < this.formatDate(now)) {
+                    console.log("Math.abs(value - now) < 0 : " + Math.abs(value - now) < 60);
+                    if (Math.abs(value - now) < 0) {
                         callback(new Error('执行时间必须大于当前时间'));
                     } else {
                         callback();
@@ -649,6 +657,7 @@
                     url: base.baseUrl + "/MaintainService.svc/GetMaintainPlan",
                     success: function (res) {
                         console.log('res: ' + res);
+                        _this.getMaintains();
                         let index1 = res.indexOf("]");
                         let plans = JSON.parse(res.substr(0, index1 + 1));
 
@@ -820,7 +829,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: base.baseUrl + "/MaintainService.svc/maintainEquipmentList",
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainEquipment",
                     success: function (res) {
                         if (res) {
                             maintainEquipments = JSON.parse(res.substr(0, index1 + 1));
@@ -863,7 +872,7 @@
                     jsonp: 'jsoncallback',
                     data: para,
                     timeout: 5000,
-                    url: base.baseUrl + "/MaintainService.svc/maintainRemindInfoList",
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainRemind",
                     success: function (res) {
                         let maintainReminds = {};
                         if (res) {
@@ -1129,7 +1138,6 @@
         },
         mounted() {
             this.getPlans();
-            this.getMaintains();
         }
     }
 

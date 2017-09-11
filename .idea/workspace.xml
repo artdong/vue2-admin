@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c28365fe-dd25-4f3f-af7c-31c2897a066b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Home.vue" afterPath="$PROJECT_DIR$/src/views/Home.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/nav2/Page2.vue" afterPath="$PROJECT_DIR$/src/views/nav2/Page2.vue" />
     </list>
@@ -18,47 +17,10 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="525">
-      <file leaf-file-name="Main.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Main.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Page2.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/nav2/Page2.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3706">
-              <caret line="941" column="34" lean-forward="false" selection-start-line="941" selection-start-column="34" selection-end-line="941" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Page1.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/nav1/Page1.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="303" column="28" lean-forward="false" selection-start-line="303" selection-start-column="20" selection-end-line="303" selection-end-column="28" />
-              <folding>
-                <element signature="e#7813#12306#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="525" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addForm</find>
-      <find>getMaintains</find>
-      <find>maintains</find>
-      <find>handleAdd</find>
       <find>addFormVisible</find>
       <find>addSubmit</find>
       <find>self</find>
@@ -66,7 +28,6 @@
       <find>addSuccess</find>
       <find>util</find>
       <find>loading</find>
-      <find>getEquipments</find>
       <find>deleteSuccess</find>
       <find>para</find>
       <find>this</find>
@@ -85,6 +46,11 @@
       <find>form</find>
       <find>reminds</find>
       <find>getMaintainEquipments</find>
+      <find>getEquipments</find>
+      <find>getRemindInfo</find>
+      <find>getPlans</find>
+      <find>checkExecuteTime</find>
+      <find>formatDate</find>
     </findStrings>
     <replaceStrings>
       <replace>getHistoryPlans</replace>
@@ -133,7 +99,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1239" />
+    <option name="width" value="1230" />
     <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -152,6 +118,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -165,99 +132,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nav2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nav1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vue2-admin-grace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,16 +259,17 @@
       <workItem from="1504488175263" duration="2542000" />
       <workItem from="1504876166398" duration="6090000" />
       <workItem from="1504955933363" duration="3581000" />
+      <workItem from="1505136047589" duration="2405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148498000" />
+    <option name="totallyTimeSpent" value="150903000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1239" height="777" extended-state="0" />
+    <frame x="0" y="23" width="1230" height="777" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17159277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17121588" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -418,7 +295,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -426,7 +305,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21318">
           <caret line="1122" column="64" lean-forward="false" selection-start-line="1122" selection-start-column="64" selection-end-line="1122" selection-end-column="64" />
-          <folding />
+          <folding>
+            <element signature="e#18767#19099#0" expanded="false" />
+            <element signature="e#19392#20269#0" expanded="false" />
+            <element signature="e#20303#21510#0" expanded="false" />
+            <element signature="e#21544#22745#0" expanded="false" />
+            <element signature="e#22775#22858#0" expanded="false" />
+            <element signature="e#23780#24162#0" expanded="false" />
+            <element signature="e#24192#24458#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -453,8 +340,8 @@
         <state relative-caret-position="2622">
           <caret line="138" column="9" lean-forward="true" selection-start-line="138" selection-start-column="9" selection-end-line="138" selection-end-column="9" />
           <folding>
-            <marker date="1504955985000" expanded="false" signature="4431:4466" ph="..." />
-            <marker date="1504955985000" expanded="false" signature="4786:4821" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4431:4466" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4786:4821" ph="..." />
           </folding>
         </state>
       </provider>
@@ -488,8 +375,8 @@
         <state relative-caret-position="4902">
           <caret line="266" column="38" lean-forward="false" selection-start-line="266" selection-start-column="38" selection-end-line="266" selection-end-column="38" />
           <folding>
-            <marker date="1504955985000" expanded="false" signature="4431:4466" ph="..." />
-            <marker date="1504955985000" expanded="false" signature="4786:4821" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4431:4466" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4786:4821" ph="..." />
           </folding>
         </state>
       </provider>
@@ -513,8 +400,8 @@
         <state relative-caret-position="4997">
           <caret line="263" column="22" lean-forward="false" selection-start-line="263" selection-start-column="16" selection-end-line="263" selection-end-column="22" />
           <folding>
-            <marker date="1504955985000" expanded="false" signature="4431:4466" ph="..." />
-            <marker date="1504955985000" expanded="false" signature="4786:4821" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4431:4466" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4786:4821" ph="..." />
           </folding>
         </state>
       </provider>
@@ -551,7 +438,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -581,8 +467,8 @@
         <state relative-caret-position="4997">
           <caret line="263" column="22" lean-forward="false" selection-start-line="263" selection-start-column="16" selection-end-line="263" selection-end-column="22" />
           <folding>
-            <marker date="1504955985000" expanded="false" signature="4431:4466" ph="..." />
-            <marker date="1504955985000" expanded="false" signature="4786:4821" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4431:4466" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4786:4821" ph="..." />
           </folding>
         </state>
       </provider>
@@ -619,7 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -742,13 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/urlConfig.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="24" lean-forward="true" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Login.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -778,27 +656,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="9" column="48" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/nav1/Page1.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="303" column="28" lean-forward="false" selection-start-line="303" selection-start-column="20" selection-end-line="303" selection-end-column="28" />
+        <state relative-caret-position="421">
+          <caret line="507" column="29" lean-forward="false" selection-start-line="507" selection-start-column="17" selection-end-line="507" selection-end-column="29" />
           <folding>
             <element signature="e#7813#12306#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/urlConfig.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="84" column="84" lean-forward="false" selection-start-line="84" selection-start-column="67" selection-end-line="84" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Home.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2266">
-          <caret line="227" column="29" lean-forward="false" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="29" />
+        <state relative-caret-position="3983">
+          <caret line="321" column="31" lean-forward="false" selection-start-line="321" selection-start-column="12" selection-end-line="321" selection-end-column="31" />
           <folding>
-            <marker date="1504955985000" expanded="false" signature="4431:4466" ph="..." />
-            <marker date="1504955985000" expanded="false" signature="4786:4821" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4431:4466" ph="..." />
+            <marker date="1505136458000" expanded="false" signature="4786:4821" ph="..." />
           </folding>
         </state>
       </provider>
@@ -813,9 +698,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/nav2/Page2.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3706">
-          <caret line="941" column="34" lean-forward="false" selection-start-line="941" selection-start-column="34" selection-end-line="941" selection-end-column="34" />
-          <folding />
+        <state relative-caret-position="126">
+          <caret line="498" column="24" lean-forward="true" selection-start-line="496" selection-start-column="22" selection-end-line="498" selection-end-column="24" />
+          <folding>
+            <element signature="e#18767#19099#0" expanded="false" />
+            <element signature="e#19392#20269#0" expanded="false" />
+            <element signature="e#20303#21510#0" expanded="false" />
+            <element signature="e#21544#22745#0" expanded="false" />
+            <element signature="e#22775#22858#0" expanded="false" />
+            <element signature="e#23780#24162#0" expanded="false" />
+            <element signature="e#24192#24458#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
