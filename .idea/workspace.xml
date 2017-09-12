@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c28365fe-dd25-4f3f-af7c-31c2897a066b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Home.vue" afterPath="$PROJECT_DIR$/src/views/Home.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/nav2/Page2.vue" afterPath="$PROJECT_DIR$/src/views/nav2/Page2.vue" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dist20170909.zip" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -259,12 +259,12 @@
       <workItem from="1504488175263" duration="2542000" />
       <workItem from="1504876166398" duration="6090000" />
       <workItem from="1504955933363" duration="3581000" />
-      <workItem from="1505136047589" duration="2405000" />
+      <workItem from="1505136047589" duration="2619000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150903000" />
+    <option name="totallyTimeSpent" value="151117000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1230" height="777" extended-state="6" />
