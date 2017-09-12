@@ -96,13 +96,13 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <!--<el-table-column prop="planId" label="计划ID" width="120">-->
-                    <!--</el-table-column>-->
-                    <!--<el-table-column prop="maintainId" label="维护项ID" width="120">-->
-                    <!--</el-table-column>-->
                     <el-table-column prop="maintainTitle" label="维护名称" width="120">
                     </el-table-column>
+                    <el-table-column prop="maintainContent" label="维护内容" width="120">
+                    </el-table-column>
                     <el-table-column prop="description" label="描述">
+                    </el-table-column>
+                    <el-table-column prop="equipmentName" label="相关设备" width="180">
                     </el-table-column>
                     <el-table-column prop="cycleDay" label="剩余天数" width="180">
                     </el-table-column>
@@ -469,6 +469,8 @@
                     planId: '',
                     maintainId: '',
                     maintainTitle: '',
+                    maintainContent: '',
+                    equipmentName: '',
                     createTime: '',
                     executeTime: '',
                     isCycle: '',
@@ -657,7 +659,6 @@
                     url: base.baseUrl + "/MaintainService.svc/GetMaintainPlan",
                     success: function (res) {
                         console.log('res: ' + res);
-                        _this.getMaintains();
                         let index1 = res.indexOf("]");
                         let plans = JSON.parse(res.substr(0, index1 + 1));
 
@@ -673,6 +674,8 @@
                                     planId: '',
                                     maintainId: '',
                                     maintainTitle: '',
+                                    maintainContent: '',
+                                    equipmentName: '',
                                     createTime: '',
                                     executeTime: '',
                                     isCycle: '',
@@ -681,16 +684,15 @@
                                 };
                                 item.planId = plan.PlanId;
                                 item.maintainId = plan.MaintainId.toString();
+                                item.maintainTitle = plan.MaintainTitle;
+                                item.maintainContent = plan.MaintainContent;
+                                let equipmentName = plan.EquipmentName.split(',');
+                                item.equipmentName = equipmentName[0] + "...";
                                 item.createTime = plan.CreateTime;
                                 item.executeTime = plan.ExecuteTime;
                                 item.isCycle = plan.IsCycle;
                                 item.cycleDay = plan.CycleDay;
                                 item.description = plan.Description;
-                                for (let maintain of _this.maintainOptions) {
-                                    if(maintain.value == item.maintainId) {
-                                        item.maintainTitle = maintain.label;
-                                    }
-                                }
                                 _this.plans.push(item);
                             }
                         }
@@ -832,6 +834,7 @@
                     url: base.baseUrl + "/MaintainService.svc/GetMaintainEquipment",
                     success: function (res) {
                         if (res) {
+                            let index1 = res.indexOf("]");
                             maintainEquipments = JSON.parse(res.substr(0, index1 + 1));
                         }
 
@@ -876,6 +879,7 @@
                     success: function (res) {
                         let maintainReminds = {};
                         if (res) {
+                            let index1 = res.indexOf("]");
                             maintainReminds = JSON.parse(res.substr(0, index1 + 1));
                         }
 
@@ -950,7 +954,9 @@
 //                this.editForm = Object.assign({}, row);
 //                this.getPlans();
                 this.getEquipmentCategories();
-                this.getEquipments(row.equipmentCategory);
+                if(row.equipmentCategory) {
+                    this.getEquipments(row.equipmentCategory);
+                }
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
             },
@@ -1094,7 +1100,7 @@
                             } else {
                                 para1.equipmentId = this.addForm.equipmentId.toString();
                             }
-                            console.log('add para1:' + JSON.stringify(para1));
+//                            console.log('add para1:' + JSON.stringify(para1));
                             $.ajax({
                                 async: true,
                                 type: 'GET',

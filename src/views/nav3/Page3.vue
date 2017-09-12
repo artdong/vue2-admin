@@ -84,13 +84,11 @@
 				<el-table :data="historyPlans" highlight-current-row v-loading="listLoading">
 					<el-table-column type="index" width="60">
 					</el-table-column>
-					<el-table-column prop="planId" label="计划ID" width="100">
-                    </el-table-column>
-                    <el-table-column prop="maintainId" label="维护项ID" width="120">
-                    </el-table-column>
-					<el-table-column prop="maintainTitle" label="维护项名称" width="120">
+					<el-table-column prop="maintainTitle" label="维护名称" width="120">
 					</el-table-column>
-					<el-table-column prop="maintainContent" label="维护项内容">
+					<el-table-column prop="maintainContent" label="维护内容" width="120">
+					</el-table-column>
+					<el-table-column prop="equipmentName" label="相关设备" width="180">
 					</el-table-column>
 					<el-table-column prop="cTime" label="创建时间" width="180">
 					</el-table-column>
@@ -340,6 +338,7 @@
                                     maintainId: '',
                                     maintainTitle: '',
                                     maintainContent: '',
+                                    equipmentName: '',
                                     createTime: '',
                                     executeTime: '',
                                     isCycle: '',
@@ -350,6 +349,8 @@
                                 item.maintainId = historyPlan.MaintainId.toString();
                                 item.maintainTitle = historyPlan.MaintainTitle;
                                 item.maintainContent = historyPlan.MaintainContent;
+                                let equipmentName = historyPlan.EquipmentName.split(',');
+                                item.equipmentName = equipmentName[0] + "...";
                                 item.cTime = historyPlan.CreatePlanTime;
                                 item.eTime = historyPlan.ExecuteTime;
                                 item.isCycle = historyPlan.IsCycle;
