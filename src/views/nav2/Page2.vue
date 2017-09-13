@@ -102,7 +102,7 @@
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <el-table-column prop="equipmentName" label="相关设备" width="180">
+                    <el-table-column prop="equipmentName" label="相关设备" width="260">
                     </el-table-column>
                     <el-table-column prop="cycleDay" label="剩余天数" width="180">
                     </el-table-column>
@@ -642,7 +642,7 @@
                     maintainId: _this.filters.maintainId,
                     cTime: _this.filters.cTime[0] && _this.filters.cTime[1] ? util.formatDate.formatDate(_this.filters.cTime[0]) + ',' + util.formatDate.formatDate(_this.filters.cTime[1]) : '',
                     eTime: _this.filters.eTime[0] && _this.filters.eTime[1] ? util.formatDate.formatDate(_this.filters.eTime[0]) + ',' + util.formatDate.formatDate(_this.filters.eTime[1]) : '',
-                    isCycle: _this.filters.isCycle.toString(),
+                    isCycle: _this.filters.isCycle,
                     description: _this.filters.description,
                     strOrder: 'CreateTime DESC'
                 };
@@ -954,9 +954,7 @@
 //                this.editForm = Object.assign({}, row);
 //                this.getPlans();
                 this.getEquipmentCategories();
-                if(row.equipmentCategory) {
-                    this.getEquipments(row.equipmentCategory);
-                }
+                this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
             },
@@ -1006,6 +1004,7 @@
                 }
                 this.$refs['editForm'].resetFields();
                 this.editFormVisible = false;
+                this.editLoading = false;
                 this.getPlans();
             }
             ,
@@ -1019,6 +1018,7 @@
                             let para = Object.assign({}, this.editForm);
                             para.equipmentCategory = para.equipmentCategory.toString();
                             para.equipmentId = para.equipmentId.toString();
+                            para.remindDay = para.remindDay.toString();
                             if (this.editForm.equipmentCategory.length === this.categorySource.length) {
                                 para.equipmentCategory = -1;
                             } else {
