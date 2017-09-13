@@ -89,6 +89,8 @@
                     <el-button type="primary" @click="handleAdd" icon="plus" size="small">新增</el-button>
                 </div>
             </div>
+            <el-button type="info" size="small" icon="information" @click="detailFormVisible = true">
+            </el-button>
             <div class="panel-body">
                 <!--列表-->
                 <el-table :data="plans" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
@@ -113,6 +115,8 @@
                     <el-table-column label="操作" width="180">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button type="info" size="small" icon="information" @click="detailFormVisible = true">
+                            </el-button>
                             <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除
                             </el-button>
                         </template>
@@ -315,6 +319,22 @@
                 <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
             </div>
         </el-dialog>
+
+        <!--设备详情界面-->
+        <el-dialog
+                title="设备详情"
+                size="small"
+                :visible.sync="detailFormVisible"
+                :close-on-click-modal="false">
+            <!--列表-->
+            <el-table :data="equipmentNameList" highlight-current-row>
+                <el-table-column type="index" width="60">
+                </el-table-column>
+                <el-table-column prop="equipmentName" label="设备名称">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+
     </section>
 </template>
 
@@ -458,6 +478,7 @@
                 equipmentSource: [],
                 categoryTitles: ['设备类型', '已选设备类型'],
                 equipmentTitles: ['设备', '已选设备'],
+                equipmentNameList: [],
                 plans: [],
                 equipmentCategories: [],
                 equipments: [],
@@ -518,6 +539,8 @@
                     equipmentId: []
                 },
 
+                detailFormVisible: false,//设备详情界面是否显示
+
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
@@ -543,7 +566,24 @@
                     description: '',
                     equipmentCategory: [],
                     equipmentId: []
-                }
+                },
+                gridData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }]
 
             }
         },
@@ -634,6 +674,7 @@
             getPlans() {
                 let _this = this;
                 _this.plans = [];
+                _this.equipmentNameList = [];
 
                 let para = {
                     pageNo: _this.listQuery.curPage,
@@ -687,6 +728,9 @@
                                 item.maintainTitle = plan.MaintainTitle;
                                 item.maintainContent = plan.MaintainContent;
                                 let equipmentName = plan.EquipmentName.split(',');
+                                for (let item of equipmentName) {
+                                    _this.equipmentNameList.push({"equipmentName" : item});
+                                }
                                 item.equipmentName = equipmentName[0] + "...";
                                 item.createTime = plan.CreateTime;
                                 item.executeTime = plan.ExecuteTime;
