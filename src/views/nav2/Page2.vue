@@ -89,8 +89,6 @@
                     <el-button type="primary" @click="handleAdd" icon="plus" size="small">新增</el-button>
                 </div>
             </div>
-            <el-button type="info" size="small" icon="information" @click="detailFormVisible = true">
-            </el-button>
             <div class="panel-body">
                 <!--列表-->
                 <el-table :data="plans" highlight-current-row v-loading="listLoading" @selection-change="selsChange">
@@ -100,7 +98,7 @@
                     </el-table-column>
                     <el-table-column prop="maintainTitle" label="维护名称" width="120">
                     </el-table-column>
-                    <el-table-column prop="maintainContent" label="维护内容" width="120">
+                    <el-table-column prop="maintainContent" label="维护内容" width="260">
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
@@ -112,10 +110,10 @@
                     </el-table-column>
                     <el-table-column prop="executeTime" label="执行时间" width="120">
                     </el-table-column>
-                    <el-table-column label="操作" width="180">
+                    <el-table-column label="操作" width="190">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button type="info" size="small" icon="information" @click="detailFormVisible = true">
+                            <el-button type="info" size="small" icon="information" @click="handleDetail(scope.$index, scope.row)">
                             </el-button>
                             <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除
                             </el-button>
@@ -478,8 +476,19 @@
                 equipmentSource: [],
                 categoryTitles: ['设备类型', '已选设备类型'],
                 equipmentTitles: ['设备', '已选设备'],
-                equipmentNameList: [],
-                plans: [],
+                plans: [{
+                    planId: '',
+                    maintainId: '',
+                    maintainTitle: '',
+                    maintainContent: '',
+                    equipmentName: '',
+                    equipmentNameList: [],
+                    createTime: '',
+                    executeTime: '',
+                    isCycle: '',
+                    cycleDay: '',
+                    description: ''
+                }],
                 equipmentCategories: [],
                 equipments: [],
                 total: 0,
@@ -540,6 +549,7 @@
                 },
 
                 detailFormVisible: false,//设备详情界面是否显示
+                equipmentNameList: [],
 
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
@@ -561,7 +571,7 @@
                     executeTime: '',
                     isCycle: false,
                     cycleDay: '',
-                    remindDay: [1, 2, 3, 4, 5],
+                    remindDay: [1, 3, 7],
                     customDay: '',
                     description: '',
                     equipmentCategory: [],
@@ -656,7 +666,6 @@
             getPlans() {
                 let _this = this;
                 _this.plans = [];
-                _this.equipmentNameList = [];
 
                 let para = {
                     pageNo: _this.listQuery.curPage,
@@ -681,7 +690,6 @@
                     timeout: 5000,
                     url: base.baseUrl + "/MaintainService.svc/GetMaintainPlan",
                     success: function (res) {
-                        console.log('res: ' + res);
                         let index1 = res.indexOf("]");
                         let plans = JSON.parse(res.substr(0, index1 + 1));
 
@@ -699,6 +707,7 @@
                                     maintainTitle: '',
                                     maintainContent: '',
                                     equipmentName: '',
+                                    equipmentNameList: [],
                                     createTime: '',
                                     executeTime: '',
                                     isCycle: '',
@@ -710,10 +719,15 @@
                                 item.maintainTitle = plan.MaintainTitle;
                                 item.maintainContent = plan.MaintainContent;
                                 let equipmentName = plan.EquipmentName.split(',');
-                                for (let item of equipmentName) {
-                                    _this.equipmentNameList.push({"equipmentName" : item});
+                                item.equipmentNameList = [];
+                                for (let equipment of equipmentName) {
+                                    item.equipmentNameList.push({"planId" : item.planId,"equipmentName" : equipment});
                                 }
-                                item.equipmentName = equipmentName[0] + "...";
+                                if(equipmentName[0]) {
+                                    item.equipmentName = equipmentName[0] + "...";
+                                }else {
+                                    item.equipmentName = "无数据";
+                                }
                                 item.createTime = plan.CreateTime;
                                 item.executeTime = plan.ExecuteTime;
                                 item.isCycle = plan.IsCycle;
@@ -808,7 +822,6 @@
                 let para = {
                     strEquipmentCategoryId: CategoryId
                 };
-                console.log('CategoryId: ' + CategoryId);
 
                 jQuery.ajax({
                     async: true,
@@ -911,11 +924,13 @@
 
                         if (maintainReminds.length > 0) {
                             for (let maintainRemind of maintainReminds) {
-                                _this.editForm.remindDay.push(maintainRemind.RemindDay);
-                                _this.customDayOptions.push({
-                                    value: maintainRemind.RemindDay,
-                                    label: maintainRemind.RemindDay + '天'
-                                });
+                                if(maintainRemind.RemindDay !== 0) {
+                                    _this.editForm.remindDay.push(maintainRemind.RemindDay);
+                                    _this.customDayOptions.push({
+                                        value: maintainRemind.RemindDay,
+                                        label: maintainRemind.RemindDay + '天'
+                                    });
+                                }
                             }
                         }
                         _this.checkCustomDay(_this.editForm.customDay);
@@ -971,7 +986,7 @@
                     executeTime: row.executeTime,
                     isCycle: row.isCycle,
                     cycleDay: row.cycleDay,
-                    remindDay: [],
+                    remindDay: [1, 3, 7],
                     customDay: row.customDay,
                     description: row.description,
                     equipmentCategory: row.equipmentCategory,
@@ -983,6 +998,26 @@
                 this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
+            },
+            //显示设备详情界面
+            handleDetail: function (index, row) {
+                let _this = this;
+                _this.detailFormVisible = true;
+                _this.operate = 'detail';
+                _this.equipmentNameList = [];
+                if (_this.plans.length > 0) {
+                    for (let plan of _this.plans) {
+                        if(plan.equipmentNameList.length > 0) {
+                            for (let equipment of plan.equipmentNameList) {
+                                if (row.planId === equipment.planId) {
+                                    if("" != equipment.equipmentName){
+                                        _this.equipmentNameList.push({equipmentName: equipment.equipmentName});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             //显示新增界面
             handleAdd: function () {
@@ -1003,7 +1038,7 @@
                         executeTime: '',
                         isCycle: false,
                         cycleDay: '',
-                        remindDay: [1, 2, 3, 4, 5],
+                        remindDay: [1, 3, 7],
                         customDay: '',
                         description: '',
                         equipmentCategory: [],
@@ -1126,7 +1161,7 @@
                             } else {
                                 para1.equipmentId = this.addForm.equipmentId.toString();
                             }
-//                            console.log('add para1:' + JSON.stringify(para1));
+
                             $.ajax({
                                 async: true,
                                 type: 'GET',

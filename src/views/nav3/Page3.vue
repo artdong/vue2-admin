@@ -86,7 +86,7 @@
 					</el-table-column>
 					<el-table-column prop="maintainTitle" label="维护名称" width="120">
 					</el-table-column>
-					<el-table-column prop="maintainContent" label="维护内容" width="120">
+					<el-table-column prop="maintainContent" label="维护内容" width="260">
 					</el-table-column>
 					<el-table-column prop="description" label="描述">
 					</el-table-column>

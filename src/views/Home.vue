@@ -238,8 +238,10 @@
                     timeout: 2000,
                     url: base.baseUrl + "/MaintainService.svc/GetRemindInfo",
                     success: function (res) {
-                        let reminds = JSON.parse(res);
-
+                        let reminds = [];
+                        if(res) {
+                            let reminds = JSON.parse(res);
+                        }
                         if (reminds.length > 0) {
                             _this.total = reminds.length;
                             _this.hasRemindInfo = true;
