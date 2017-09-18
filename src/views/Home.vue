@@ -240,10 +240,11 @@
                     success: function (res) {
                         let reminds = [];
                         if(res) {
-                            let reminds = JSON.parse(res);
+                            reminds = JSON.parse(res);
                         }
                         if (reminds.length > 0) {
                             _this.total = reminds.length;
+                            console.log("_this.total: " + _this.total);
                             _this.hasRemindInfo = true;
                             for (let remind of reminds) {
                                 let item = {
