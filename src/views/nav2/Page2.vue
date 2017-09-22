@@ -212,11 +212,11 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="设备类型" prop="equipmentCategory">
-                    <el-transfer v-model="editForm.equipmentCategory" :data="categorySource" :titles="categoryTitles"
+                    <el-transfer v-model="editForm.equipmentCategory" :data="categorySource" filterable :titles="categoryTitles"
                                  @change="getEquipments(editForm.equipmentCategory)"></el-transfer>
                 </el-form-item>
                 <el-form-item label="设备" prop="equipmentId">
-                    <el-transfer v-model="editForm.equipmentId" :data="equipmentSource"
+                    <el-transfer v-model="editForm.equipmentId" :data="equipmentSource" filterable
                                  :titles="equipmentTitles"></el-transfer>
                 </el-form-item>
             </el-form>
@@ -304,11 +304,11 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="设备类型" prop="equipmentCategory">
-                    <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles"
+                    <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles" filterable
                                  @change="getEquipments(addForm.equipmentCategory.toString())"></el-transfer>
                 </el-form-item>
                 <el-form-item label="设备" prop="equipmentId">
-                    <el-transfer v-model="addForm.equipmentId" :data="equipmentSource"
+                    <el-transfer v-model="addForm.equipmentId" :data="equipmentSource" filterable
                                  :titles="equipmentTitles"></el-transfer>
                 </el-form-item>
             </el-form>
@@ -628,7 +628,6 @@
                     this.addForm.remindDay.push(this.currentCustomDay);
                 } else {
                     this.editForm.remindDay.push(this.currentCustomDay);
-
                 }
 
                 // 检测是否已经存在，若存在添加按钮不可点击
@@ -640,6 +639,16 @@
             closeViewTabs(item, $event) {
                 let index = this.customDayOptions.findIndex(x => x.value == item.value);
                 this.customDayOptions.splice(index, 1);
+
+                if (this.operate == 'add') {
+                    let index1 = this.addForm.remindDay.findIndex(x => x.value == item.value);
+                    this.addForm.remindDay.splice(index1, 1);
+                    console.log("add this.addForm.remindDay: " + this.addForm.remindDay);
+                }else {
+                    let index2 = this.editForm.remindDay.findIndex(x => x.value == item.value);
+                    this.editForm.remindDay.splice(index2, 1);
+                    console.log("add this.editForm.remindDay: " + this.editForm.remindDay);
+                }
 
                 if (this.operate == 'add') {
                     this.currentCustomDay = this.addForm.customDay;
@@ -697,9 +706,10 @@
                         let index2 = totalStr.indexOf(":");
                         totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
                         _this.total = parseInt(totalStr);
+                        console.log("plans _this.total: " + JSON.stringify(_this.total));
 
                         if (plans.length > 0) {
-                            _this.plans = [];
+                            console.log("plans: " + JSON.stringify(plans));
                             for (let plan of plans) {
                                 let item = {
                                     planId: '',
@@ -718,7 +728,8 @@
                                 item.maintainId = plan.MaintainId.toString();
                                 item.maintainTitle = plan.MaintainTitle;
                                 item.maintainContent = plan.MaintainContent;
-                                let equipmentName = plan.EquipmentName.split(',');
+                                let equipmentName = [];
+                                equipmentName = plan.EquipmentName.split(',');
                                 item.equipmentNameList = [];
                                 for (let equipment of equipmentName) {
                                     item.equipmentNameList.push({"planId" : item.planId,"equipmentName" : equipment});
@@ -922,6 +933,8 @@
                             maintainReminds = JSON.parse(res.substr(0, index1 + 1));
                         }
 
+                        console.log("strPlanId: " + strPlanId + " &maintainReminds : " + JSON.stringify(maintainReminds));
+
                         if (maintainReminds.length > 0) {
                             for (let maintainRemind of maintainReminds) {
                                 if(maintainRemind.RemindDay !== 0) {
@@ -1009,7 +1022,7 @@
                     for (let plan of _this.plans) {
                         if(plan.equipmentNameList.length > 0) {
                             for (let equipment of plan.equipmentNameList) {
-                                if (row.planId === equipment.planId) {
+                                if (row.planId == equipment.planId) {
                                     if("" != equipment.equipmentName){
                                         _this.equipmentNameList.push({equipmentName: equipment.equipmentName});
                                     }

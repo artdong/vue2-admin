@@ -98,6 +98,12 @@
 					</el-table-column>
 					<el-table-column prop="isCycle" label="是否周期性" :formatter="formatCycle" width="120">
 					</el-table-column>
+					<el-table-column label="操作" width="120">
+						<template scope="scope">
+							<el-button type="info" size="small" icon="information" @click="handleDetail(scope.$index, scope.row)">
+							</el-button>
+						</template>
+					</el-table-column>
 				</el-table>
 
 				<!--工具条-->
@@ -107,6 +113,21 @@
 				</el-col>
 			</div>
 		</div>
+
+		<!--设备详情界面-->
+		<el-dialog
+				title="设备详情"
+				size="small"
+				:visible.sync="detailFormVisible"
+				:close-on-click-modal="false">
+			<!--列表-->
+			<el-table :data="equipmentNameList" highlight-current-row>
+				<el-table-column type="index" width="60">
+				</el-table-column>
+				<el-table-column prop="equipmentName" label="设备名称">
+				</el-table-column>
+			</el-table>
+		</el-dialog>
 	</section>
 </template>
 
@@ -128,6 +149,8 @@
                     description: ''
                 },
                 panelTitle: '维护历史列表',
+                detailFormVisible: false,//设备详情界面是否显示
+                equipmentNameList: [],
                 pickerOptions1: {
                     shortcuts: [{
                         text: '今天',
@@ -274,46 +297,7 @@
                 };
                 _this.historyPlans = [];
                 _this.listLoading = true;
-                //NProgress.start();
-//                getHistoryPlanList(params).then((res) => {
-//                    let data = res.data.d;
-//                    let index1 = data.indexOf("]");
-//                    let historyPlans = JSON.parse(data.substr(0, index1 + 1));
-//
-//                    let totalStr = data.substr(index1 + 2, data.length - 1);
-//                    let index2 = totalStr.indexOf(":");
-//                    totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
-//                    _this.total = parseInt(totalStr);
-//
-//                    if (historyPlans.length > 0) {
-//                        _this.historyPlans = [];
-//                        for (let historyPlan of historyPlans) {
-//                            let item = {
-//                                planId: '',
-//                                maintainId: '',
-//                                maintainTitle: '',
-//                                maintainContent: '',
-//                                createTime: '',
-//                                executeTime: '',
-//                                isCycle: '',
-//                                cycleDay: '',
-//                                description: ''
-//                            };
-//                            item.planId = historyPlan.PlanId;
-//                            item.maintainId = historyPlan.MaintainId.toString();
-//                            item.maintainTitle = historyPlan.MaintainTitle;
-//                            item.maintainContent = historyPlan.MaintainContent;
-//                            item.cTime = historyPlan.CreatePlanTime;
-//                            item.eTime = historyPlan.ExecuteTime;
-//                            item.isCycle = historyPlan.IsCycle;
-//                            item.cycleDay = historyPlan.CycleDay;
-//                            item.description = historyPlan.Description;
-//                            _this.historyPlans.push(item);
-//                        }
-//                    }
-//                    _this.listLoading = false;
-//                    //NProgress.done();
-//                });
+
                 jQuery.ajax({
                     async: true,
                     type: 'GET',
@@ -340,6 +324,7 @@
                                     maintainTitle: '',
                                     maintainContent: '',
                                     equipmentName: '',
+                                    equipmentNameList: [],
                                     createTime: '',
                                     executeTime: '',
                                     isCycle: '',
@@ -350,8 +335,17 @@
                                 item.maintainId = historyPlan.MaintainId.toString();
                                 item.maintainTitle = historyPlan.MaintainTitle;
                                 item.maintainContent = historyPlan.MaintainContent;
-                                let equipmentName = historyPlan.EquipmentName.split(',');
-                                item.equipmentName = equipmentName[0] + "...";
+                                let equipmentName = [];
+                                equipmentName = historyPlan.EquipmentName.split(',');
+                                item.equipmentNameList = [];
+                                for (let equipment of equipmentName) {
+                                    item.equipmentNameList.push({"planId" : item.planId,"equipmentName" : equipment});
+                                }
+                                if(equipmentName[0]) {
+                                    item.equipmentName = equipmentName[0] + "...";
+                                }else {
+                                    item.equipmentName = "无数据";
+                                }
                                 item.cTime = historyPlan.CreatePlanTime;
                                 item.eTime = historyPlan.ExecuteTime;
                                 item.isCycle = historyPlan.IsCycle;
@@ -365,6 +359,25 @@
                 setTimeout(() => {
                     _this.listLoading = false;
                 }, 1000);
+            },
+            //显示设备详情界面
+            handleDetail: function (index, row) {
+                let _this = this;
+                _this.detailFormVisible = true;
+                _this.equipmentNameList = [];
+                if (_this.historyPlans.length > 0) {
+                    for (let historyPlan of _this.historyPlans) {
+                        if(historyPlan.equipmentNameList.length > 0) {
+                            for (let equipment of historyPlan.equipmentNameList) {
+                                if (row.planId == equipment.planId) {
+                                    if("" != equipment.equipmentName){
+                                        _this.equipmentNameList.push({equipmentName: equipment.equipmentName});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             //删除
             handleDel: function (index, row) {
