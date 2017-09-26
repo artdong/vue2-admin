@@ -102,13 +102,15 @@
                     </el-table-column>
                     <el-table-column prop="description" label="描述">
                     </el-table-column>
-                    <el-table-column prop="equipmentName" label="相关设备" width="260">
+                    <el-table-column prop="equipmentName" label="相关设备" width="200">
                     </el-table-column>
-                    <el-table-column prop="cycleDay" label="剩余天数" width="180">
+                    <el-table-column prop="cycleDay" label="剩余天数" width="100">
                     </el-table-column>
-                    <el-table-column prop="isCycle" label="是否周期性" width="180" :formatter="formatCycle">
+                    <el-table-column prop="isCycle" label="是否周期性" width="110" :formatter="formatCycle">
                     </el-table-column>
-                    <el-table-column prop="executeTime" label="执行时间" width="120">
+                    <el-table-column prop="cycleDay" label="执行周期（天）" width="150">
+                    </el-table-column>
+                    <el-table-column prop="executeTime" label="执行时间" width="110">
                     </el-table-column>
                     <el-table-column label="操作" width="190">
                         <template scope="scope">
@@ -170,7 +172,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :xs="10" :sm="10" :md="10" :lg="10" style="margin-left: 22px;">
-                        <el-form-item label="执行周期(天)" prop="cycleDay" v-if="addForm.isCycle">
+                        <el-form-item label="执行周期(天)" prop="cycleDay" v-if="editForm.isCycle">
                             <el-input-number v-model="editForm.cycleDay" @change="handleChange" :min="1"
                                              :max="90"></el-input-number>
                         </el-form-item>
@@ -366,7 +368,7 @@
                     eTime: '',
                     isCycle: '',
                     description: '',
-                    cycleDay: []
+                    cycleDay: ''
                 },
                 panelTitle: '维护计划列表',
                 activeNames: ['1'],
@@ -709,7 +711,6 @@
                         console.log("plans _this.total: " + JSON.stringify(_this.total));
 
                         if (plans.length > 0) {
-                            console.log("plans: " + JSON.stringify(plans));
                             for (let plan of plans) {
                                 let item = {
                                     planId: '',
@@ -1005,8 +1006,7 @@
                     equipmentCategory: row.equipmentCategory,
                     equipmentId: row.equipmentId
                 },
-//                this.editForm = Object.assign({}, row);
-//                this.getPlans();
+                this.getMaintains();
                 this.getEquipmentCategories();
                 this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
@@ -1090,9 +1090,11 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
+                            console.log("this.editForm: " + JSON.stringify(this.editForm));
                             para.equipmentCategory = para.equipmentCategory.toString();
                             para.equipmentId = para.equipmentId.toString();
                             para.remindDay = para.remindDay.toString();
+                            para.executeTime = para.executeTime ? util.formatDate.formatDate(new Date(this.editForm.executeTime)) : util.formatDate.formatDate(new Date());
                             if (this.editForm.equipmentCategory.length === this.categorySource.length) {
                                 para.equipmentCategory = -1;
                             } else {
@@ -1109,7 +1111,7 @@
                                 jsonp: 'jsoncallback',
                                 data: para,
                                 url: base.baseUrl + "/MaintainService.svc/UpdMaintainPlan",
-                                success: this.editSuccess,
+//                                success: this.editSuccess,
                                 dataType: 'jsonp'
                             });
 
@@ -1159,7 +1161,7 @@
                             //let para = Object.assign({}, this.addForm);
                             let para1 = {};
                             para1.maintainId = this.addForm.maintainId;
-                            para1.executeTime = this.addForm.executeTime ? util.formatDate.formatDate(this.addForm.executeTime) : '';
+                            para1.executeTime = this.addForm.executeTime ? util.formatDate.formatDate(this.addForm.executeTime) : util.formatDate.formatDate(new Date());
                             para1.isCycle = this.addForm.isCycle;
                             para1.cycleDay = this.addForm.cycleDay;
                             para1.description = this.addForm.description;

@@ -98,6 +98,8 @@
 					</el-table-column>
 					<el-table-column prop="isCycle" label="是否周期性" :formatter="formatCycle" width="120">
 					</el-table-column>
+					<!--<el-table-column prop="cycleDay" label="执行周期（天）" width="150">-->
+					<!--</el-table-column>-->
 					<el-table-column label="操作" width="120">
 						<template scope="scope">
 							<el-button type="info" size="small" icon="information" @click="handleDetail(scope.$index, scope.row)">
