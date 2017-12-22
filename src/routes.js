@@ -8,6 +8,7 @@ import Page3 from './views/nav3/Page3.vue'
 import Page4 from './views/nav4/Page4.vue'
 import Page5 from './views/nav4/Page5.vue'
 import Page6 from './views/nav4/backToTop.vue'
+import echarts from './views/charts/echarts.vue'
 
 let routes = [
     {
@@ -90,6 +91,15 @@ let routes = [
                 component: Page6,
                 name: 'backToTop'
             }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: 'Charts',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/echarts', component: echarts, name: 'echarts' }
         ]
     },
     {
