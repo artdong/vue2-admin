@@ -95,6 +95,12 @@
                         type: 'category',
                         data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
                     },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'right'
+                        }
+                    },
                     series: [
                         {
                             name: '2011年',
@@ -131,6 +137,12 @@
                         type: 'category',
                         boundaryGap: false,
                         data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
                     },
                     yAxis: {
                         type: 'value'
@@ -174,6 +186,26 @@
                         left: 'left',
                         data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
                     },
+                    label : {
+                        normal : {
+                            formatter: '{b}:{c}: ({d}%)',
+                            textStyle : {
+                                fontWeight : 'normal',
+                                fontSize : 15
+                            }
+                        }
+                    },
+                    // label:{            //饼图图形上的文本标签
+                    //     normal:{
+                    //         show:true,
+                    //         position:'inner', //标签的位置
+                    //         textStyle : {
+                    //             fontWeight : 300 ,
+                    //             fontSize : 16    //文字的字体大小
+                    //         },
+                    //         formatter:'{d}%'
+                    //     }
+                    // },
                     series: [
                         {
                             name: '访问来源',
