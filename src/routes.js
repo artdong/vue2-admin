@@ -32,7 +32,7 @@ let routes = [
         leaf: true,//只有一个节点
         children: [
             // { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/', component: Page1, name: '维护项' },
+            { path: '/page1', component: Page1, name: '维护项' },
         ]
     },
     {

@@ -56,9 +56,9 @@
 										首页
 									</el-dropdown-item>
 								</router-link>
-								<a target='_blank' href="https://alex-0407.github.io/vue2-admin-grace/" style="text-decoration:none; color: black;">
+								<a target='_blank' href="https://github.com/alex-0407/vue2-admin-grace" style="text-decoration:none; color: black;">
 									<el-dropdown-item>
-										演示地址
+										开源项目地址
 									</el-dropdown-item>
 								</a>
 								<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
@@ -278,12 +278,12 @@
             }
         },
         mounted() {
-            var loginUser =
-                {
-                    avatar: 'https://avatars1.githubusercontent.com/u/16631463?v=4&s=460',
-                    name: 'Alex'
-                };
-            sessionStorage.setItem('user', JSON.stringify(loginUser));
+            // var loginUser =
+            //     {
+            //         avatar: 'https://avatars1.githubusercontent.com/u/16631463?v=4&s=460',
+            //         name: 'admin'
+            //     };
+            // sessionStorage.setItem('user', JSON.stringify(loginUser));
             var user = sessionStorage.getItem('user');
             if (user) {
                 user = JSON.parse(user);
