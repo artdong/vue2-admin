@@ -35,7 +35,7 @@
 							</el-radio-group>
 						</el-form-item>
 					</el-col>
-					<el-col :span="4">
+					<el-col :span="2">
 						<el-form-item style="margin-left: 10px;">
 							<el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
 						</el-form-item>

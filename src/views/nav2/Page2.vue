@@ -61,7 +61,7 @@
                                     <!--</el-select>-->
                                 <!--</el-form-item>-->
                             <!--</el-col>-->
-                            <el-col :xs="12" :sm="12" :md="12" :lg="6">
+                            <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                 <el-form-item style="margin-left: 10px;">
                                     <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
                                 </el-form-item>
