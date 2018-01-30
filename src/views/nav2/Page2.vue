@@ -115,7 +115,8 @@
                     <el-table-column label="操作" width="190">
                         <template scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button type="info" size="small" icon="information" @click="handleDetail(scope.$index, scope.row)">
+                            <el-button type="info" size="small" icon="information"
+                                       @click="handleDetail(scope.$index, scope.row)">
                             </el-button>
                             <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除
                             </el-button>
@@ -157,7 +158,7 @@
                                     placeholder="选择日期时间"
                                     :picker-options="pickerOptions0"
                                     align="right"
-                                    >
+                            >
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -214,8 +215,9 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="设备类型" prop="equipmentCategory">
-                    <el-transfer v-model="editForm.equipmentCategory" :data="categorySource" filterable :titles="categoryTitles"
-                                 @change="getEquipments(editForm.equipmentCategory)"></el-transfer>
+                    <el-transfer v-model="editForm.equipmentCategory" :data="categorySource" filterable
+                                 :titles="categoryTitles"
+                                 @change="getEquipments(editForm.equipmentCategory.toString())"></el-transfer>
                 </el-form-item>
                 <el-form-item label="设备" prop="equipmentId">
                     <el-transfer v-model="editForm.equipmentId" :data="equipmentSource" filterable
@@ -249,7 +251,7 @@
                                     placeholder="选择日期时间"
                                     :picker-options="pickerOptions0"
                                     align="right"
-                                    >
+                            >
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -306,7 +308,8 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="设备类型" prop="equipmentCategory">
-                    <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles" filterable
+                    <el-transfer v-model="addForm.equipmentCategory" :data="categorySource" :titles="categoryTitles"
+                                 filterable
                                  @change="getEquipments(addForm.equipmentCategory.toString())"></el-transfer>
                 </el-form-item>
                 <el-form-item label="设备" prop="equipmentId">
@@ -646,7 +649,7 @@
                     let index1 = this.addForm.remindDay.findIndex(x => x.value == item.value);
                     this.addForm.remindDay.splice(index1, 1);
                     console.log("add this.addForm.remindDay: " + this.addForm.remindDay);
-                }else {
+                } else {
                     let index2 = this.editForm.remindDay.findIndex(x => x.value == item.value);
                     this.editForm.remindDay.splice(index2, 1);
                     console.log("add this.editForm.remindDay: " + this.editForm.remindDay);
@@ -670,7 +673,7 @@
                 this.getPlans();
             },
             //刷新
-            on_refresh(){
+            on_refresh() {
                 this.getPlans();
             },
             //获取维护计划列表
@@ -733,11 +736,11 @@
                                 equipmentName = plan.EquipmentName.split(',');
                                 item.equipmentNameList = [];
                                 for (let equipment of equipmentName) {
-                                    item.equipmentNameList.push({"planId" : item.planId,"equipmentName" : equipment});
+                                    item.equipmentNameList.push({"planId": item.planId, "equipmentName": equipment});
                                 }
-                                if(equipmentName[0]) {
+                                if (equipmentName[0]) {
                                     item.equipmentName = equipmentName[0] + "...";
-                                }else {
+                                } else {
                                     item.equipmentName = "无数据";
                                 }
                                 item.createTime = plan.CreateTime;
@@ -759,8 +762,7 @@
                 let _this = this;
                 _this.maintainOptions = [];
 
-                let para = {
-                };
+                let para = {};
 
                 jQuery.ajax({
                     async: true,
@@ -817,10 +819,12 @@
                                 };
                                 item.EquipmentCategoryId = equipmentCategory.EquipmentCategoryId;
                                 item.EquipmentCategoryName = equipmentCategory.EquipmentCategoryName;
-                                _this.categorySource.push({
-                                    label: item.EquipmentCategoryName,
-                                    key: parseInt(item.EquipmentCategoryId)
-                                });
+                                if (_this.categorySource.indexOf(parseInt(item.EquipmentCategoryId)) == -1) {
+                                    _this.categorySource.push({
+                                        label: item.EquipmentCategoryName,
+                                        key: parseInt(item.EquipmentCategoryId)
+                                    });
+                                }
                             }
                         }
                     }
@@ -834,6 +838,8 @@
                 let para = {
                     strEquipmentCategoryId: CategoryId
                 };
+
+                console.log('CategoryId: ' + CategoryId)
 
                 jQuery.ajax({
                     async: true,
@@ -862,10 +868,26 @@
                                 });
                             }
                         }
+
+                        if (CategoryId == -1) {
+                            _this.editForm.equipmentId = [];
+                            for (let equipment of _this.equipmentSource) {
+                                _this.editForm.equipmentId.push(equipment.key);
+                            }
+                        }
+
+                        if (localStorage.getItem('editEquipmentId') && localStorage.getItem('editEquipmentId') == '-1') {
+                            _this.editForm.equipmentId = [];
+                            for (let equipment of _this.equipmentSource) {
+                                if (_this.editForm.equipmentId.indexOf(equipment.key) == -1) {
+                                    _this.editForm.equipmentId.push(equipment.key);
+                                }
+                            }
+                        }
                     }
                 });
             },
-            //获取维护计划相关设备
+            // 获取维护计划相关设备
             getMaintainEquipments(strPlanId) {
                 let para = {
                     strPlanId: strPlanId
@@ -890,27 +912,47 @@
                         }
 
                         if (maintainEquipments.length > 0) {
-                            for (let maintainEquipment of maintainEquipments) {
-                                let equipmentCategoryItem = {
-                                    EquipmentCategoryId: '',
-                                    EquipmentCategoryName: ''
-                                };
-                                equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
-                                equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
-                                _this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
+                            if (maintainEquipments[0].EquipmentCategoryId == -1) {
+                                for (let category of _this.categorySource) {
+                                    _this.editForm.equipmentCategory.push(category.key);
+                                }
 
-                                let equipmentItem = {
-                                    EquipmentId: '',
-                                    EquipmentName: ''
-                                };
-                                equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
-                                equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
-                                _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
+                                if (maintainEquipments[0].EquipmentId == -1) {
+                                    _this.getEquipments(-1);
+                                }
+                            } else {
+                                for (let maintainEquipment of maintainEquipments) {
+                                    let equipmentCategoryItem = {
+                                        EquipmentCategoryId: '',
+                                        EquipmentCategoryName: ''
+                                    };
+                                    equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
+                                    equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
+
+                                    if (_this.editForm.equipmentCategory.indexOf(equipmentCategoryItem.EquipmentCategoryId) == -1) {
+                                        _this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
+                                    }
+
+                                    let equipmentItem = {
+                                        EquipmentId: '',
+                                        EquipmentName: ''
+                                    };
+                                    equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
+                                    equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
+                                    if (_this.editForm.equipmentId.indexOf(equipmentItem.EquipmentId) == -1) {
+                                        _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
+                                    }
+                                }
+                                if (maintainEquipments[0].EquipmentId == -1) {
+                                    localStorage.setItem('editEquipmentId', '-1')
+                                    _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                                }
                             }
                         }
                     }
                 });
             },
+            // 获取维护计划提醒
             getMaintainRemindInfo(strPlanId) {
                 let _this = this;
                 let para = {
@@ -938,7 +980,7 @@
 
                         if (maintainReminds.length > 0) {
                             for (let maintainRemind of maintainReminds) {
-                                if(maintainRemind.RemindDay !== 0) {
+                                if (maintainRemind.RemindDay !== 0) {
                                     _this.editForm.remindDay.push(maintainRemind.RemindDay);
                                     _this.customDayOptions.push({
                                         value: maintainRemind.RemindDay,
@@ -1006,11 +1048,13 @@
                     equipmentCategory: row.equipmentCategory,
                     equipmentId: row.equipmentId
                 },
-                this.getMaintains();
+
+                    this.getMaintains();
                 this.getEquipmentCategories();
-                this.getEquipments(row.equipmentCategory);
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
+                console.log('this.editForm.equipmentId: ' + this.editForm.equipmentId.length);
+                console.log('this.equipmentSource: ' + this.equipmentSource.length);
             },
             //显示设备详情界面
             handleDetail: function (index, row) {
@@ -1020,10 +1064,10 @@
                 _this.equipmentNameList = [];
                 if (_this.plans.length > 0) {
                     for (let plan of _this.plans) {
-                        if(plan.equipmentNameList.length > 0) {
+                        if (plan.equipmentNameList.length > 0) {
                             for (let equipment of plan.equipmentNameList) {
                                 if (row.planId == equipment.planId) {
-                                    if("" != equipment.equipmentName){
+                                    if ("" != equipment.equipmentName) {
                                         _this.equipmentNameList.push({equipmentName: equipment.equipmentName});
                                     }
                                 }

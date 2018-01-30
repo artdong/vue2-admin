@@ -372,7 +372,7 @@
             var _this = this;
 
             window.setInterval(function () {
-                _this.getRemindInfo();
+                // _this.getRemindInfo();
 //                setTimeout(() => {
 //                    if (_this.hasRemindInfo) {
 //                        _this.dialogVisible = true;
