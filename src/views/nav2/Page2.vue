@@ -529,14 +529,17 @@
                 editLoading: false,
                 editFormRules: {
                     maintainId: [
-                        {required: true, message: '请输入维护项ID', trigger: 'blur'}
+                        {required: true, message: '请选择维护项', trigger: 'blur'}
                     ],
-//                    executeTime: [
-//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-//                    ],
-//                    equipmentCategory: [
-//                        {required: true, message: '请输入设备类型ID', trigger: 'blur'}
-//                    ]
+                   // executeTime: [
+                   //     {required: true, message: '请选择执行时间', trigger: 'blur'}
+                   // ],
+                    equipmentCategory: [
+                        {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
+                    ],
+                    equipmentId: [
+                        {required: true, validator: this.checkEquipmentId, trigger: 'blur'}
+                    ]
                 },
                 //编辑界面数据
                 editForm: {
@@ -560,14 +563,17 @@
                 addLoading: false,
                 addFormRules: {
                     maintainId: [
-                        {required: true, message: '请输选择护项', trigger: 'blur'}
+                        {required: true, message: '请选择护项', trigger: 'blur'}
                     ],
-//                    executeTime: [
-//                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-//                    ],
-//                    equipmentCategory: [
-//                        {required: true, message: '请选择设备类型', trigger: 'blur'}
-//                    ]
+                   // executeTime: [
+                   //     {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                   // ],
+                    equipmentCategory: [
+                        {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
+                    ],
+                    equipmentId: [
+                       {required: true, validator: this.checkEquipmentId, trigger: 'blur'}
+                   ]
                 },
                 //新增界面数据
                 addForm: {
@@ -599,6 +605,22 @@
                     }
                 }, 500);
             },
+            checkEquipmentCategory: (rule, value, callback) => {
+                console.log('checkEquipmentCategory value: ' + value);
+                if (value.length<=0) {
+                    return callback(new Error('请选择设备类型'));
+                }else {
+                    callback();
+                }
+            },
+            checkEquipmentId: (rule, value, callback) => {
+                console.log('checkEquipmentId value: ' + value);
+                if (value.length<=0) {
+                    return callback(new Error('请选择设备'));
+                }else {
+                    callback();
+                }
+             },
             //状态显示转换
             formatCycle: function (row, column) {
                 return row.isCycle === false ? '否' : row.isCycle === true ? '是' : '未知';
@@ -646,13 +668,11 @@
                 this.customDayOptions.splice(index, 1);
 
                 if (this.operate == 'add') {
-                    let index1 = this.addForm.remindDay.findIndex(x => x.value == item.value);
+                    let index1 = this.addForm.remindDay.findIndex(x => x == item.value);
                     this.addForm.remindDay.splice(index1, 1);
-                    console.log("add this.addForm.remindDay: " + this.addForm.remindDay);
                 } else {
-                    let index2 = this.editForm.remindDay.findIndex(x => x.value == item.value);
+                    let index2 = this.editForm.remindDay.findIndex(x => x == item.value);
                     this.editForm.remindDay.splice(index2, 1);
-                    console.log("add this.editForm.remindDay: " + this.editForm.remindDay);
                 }
 
                 if (this.operate == 'add') {
@@ -869,7 +889,10 @@
                             }
                         }
 
+                        console.log('localStorage.getItem(\'editEquipmentId\'): ' + localStorage.getItem('editEquipmentId'));
+
                         if (CategoryId == -1) {
+                            console.log('==========CategoryId == -1');
                             _this.editForm.equipmentId = [];
                             for (let equipment of _this.equipmentSource) {
                                 _this.editForm.equipmentId.push(equipment.key);
@@ -877,6 +900,7 @@
                         }
 
                         if (localStorage.getItem('editEquipmentId') && localStorage.getItem('editEquipmentId') == '-1') {
+                            console.log('==========editEquipmentId == -1');
                             _this.editForm.equipmentId = [];
                             for (let equipment of _this.equipmentSource) {
                                 if (_this.editForm.equipmentId.indexOf(equipment.key) == -1) {
@@ -889,6 +913,7 @@
             },
             // 获取维护计划相关设备
             getMaintainEquipments(strPlanId) {
+                localStorage.setItem('editEquipmentId', '0')
                 let para = {
                     strPlanId: strPlanId
                 };
@@ -918,6 +943,7 @@
                                 }
 
                                 if (maintainEquipments[0].EquipmentId == -1) {
+                                    _this.editForm.equipmentId = [];
                                     _this.getEquipments(-1);
                                 }
                             } else {
@@ -945,8 +971,10 @@
                                 }
                                 if (maintainEquipments[0].EquipmentId == -1) {
                                     localStorage.setItem('editEquipmentId', '-1')
-                                    _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                                    // _this.getEquipments(_this.editForm.equipmentCategory.toString());
                                 }
+                                _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                                console.log('_this.editForm.equipmentId: ' + _this.editForm.equipmentId);
                             }
                         }
                     }
@@ -1033,6 +1061,7 @@
             },
             //显示编辑界面
             handleEdit: function (index, row) {
+                this.equipmentSource = [];
                 this.editFormVisible = true;
                 this.operate = 'edit';
                 this.editForm = {
@@ -1049,7 +1078,7 @@
                     equipmentId: row.equipmentId
                 },
 
-                    this.getMaintains();
+                this.getMaintains();
                 this.getEquipmentCategories();
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
