@@ -57,10 +57,6 @@ npm run build (打包发布)
 
 <img src="https://github.com/Alex-0407/sinacloud-node/blob/master/fullstack-8cm.jpg" width="320px" style="display:inline;">
 
-* 今日头条号二维码，扫一扫即可关注
-
-<img src="https://github.com/Alex-0407/node-demo/blob/master/toutiao.jpg" width="320px" style="display:inline;">
-
 #### 随意打赏
 
 <img src="https://github.com/alex-0407/vue2-admin-grace/blob/develop/assets/images/%E8%B5%9E%E8%B5%8F%E7%A0%812.jpg" width="320px" style="display:inline;">
