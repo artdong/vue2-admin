@@ -109,6 +109,18 @@
                             v-model="editForm.strContent">
                     </el-input>
                 </el-form-item>
+                <el-form-item label="图标" prop="selectedIcon" style="width: 450px;">
+                    <el-select v-model="editForm.selectedIcon" placeholder="请选择">
+                        <el-option
+                                v-for="item in icons"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <img style="float: right; width: 20px; height: 20px;" :src="item.value"></img>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click.native="editFormVisible = false">取消</el-button>
@@ -133,6 +145,18 @@
                             placeholder="请输入内容"
                             v-model="addForm.strContent">
                     </el-input>
+                </el-form-item>
+                <el-form-item label="图标" prop="selectedIcon" style="width: 450px;">
+                    <el-select v-model="addForm.selectedIcon" placeholder="请选择">
+                        <el-option
+                                v-for="item in icons"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            <span style="float: left">{{ item.label }}</span>
+                            <img style="float: right; width: 20px; height: 20px;" :src="item.value"></img>
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -217,6 +241,16 @@
                         }
                     }]
                 },
+                icons: [{
+                    value: 'http://ico.58pic.com/iconset01/devices-icons/gif/117838.gif',
+                    label: '电池'
+                }, {
+                    value: 'http://ico.58pic.com/iconset01/Windows7-icons/gif/123603.gif',
+                    label: '电源'
+                }, {
+                    value: 'http://ico.58pic.com/iconset01/Container-icon/gif/83681.gif',
+                    label: 'ups'
+                }],
                 maintains: [],
                 total: 0,
                 listLoading: false,
@@ -247,13 +281,17 @@
                     ],
                     strContent: [
                         {required: true, message: '请输入维护内容', trigger: 'blur'}
+                    ],
+                    selectedIcon: [
+                        {required: true, message: '请选择图标', trigger: 'blur'}
                     ]
                 },
                 //编辑界面数据
                 editForm: {
                     strMaintainId: 0,
                     strTitle: '',
-                    strContent: ''
+                    strContent: '',
+                    selectedIcon: ''
                 },
 
                 addFormVisible: false,//新增界面是否显示
@@ -264,12 +302,16 @@
                     ],
                     strContent: [
                         {required: true, message: '请输入维护内容', trigger: 'blur'}
+                    ],
+                    selectedIcon: [
+                        {required: true, message: '请选择图标', trigger: 'blur'}
                     ]
                 },
                 //新增界面数据
                 addForm: {
                     strTitle: '',
-                    strContent: ''
+                    strContent: '',
+                    selectedIcon: ''
                 }
 
             }
