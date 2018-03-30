@@ -10,6 +10,8 @@ import Page5 from './views/nav4/Page5.vue'
 import Page6 from './views/nav4/backToTop.vue'
 import echarts from './views/charts/echarts.vue'
 import threejs from './views/3d/threejs.vue'
+import vedio from './views/3d/vedio.vue'
+import babylonjs from './views/3d/babylonjs.vue'
 
 let routes = [
     {
@@ -109,7 +111,9 @@ let routes = [
         name: '3d',
         iconCls: 'fa fa-diamond',
         children: [
-            { path: '/threejs', component: threejs, name: 'threejs' }
+            { path: '/threejs', component: threejs, name: 'threejs' },
+            { path: '/babylonjs', component: babylonjs, name: 'babylonjs' }
+            // { path: '/vedio', component: vedio, name: 'vedio' }
         ]
     },
     {

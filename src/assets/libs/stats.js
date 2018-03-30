@@ -2,6 +2,12 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
+if ( typeof module === 'object' ) {
+
+    module.exports = Stats;
+
+}
+
 var Stats = function () {
 
 	var startTime = Date.now(), prevTime = startTime;
