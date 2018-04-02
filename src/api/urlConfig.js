@@ -5,7 +5,7 @@
 // localStorage.setItem('baseUrl','http://localhost:8082');
 // localStorage.clear();
 
-const base = 'process.env.API_ROOT'
+const base = process.env.API_ROOT
 
 export const baseUrl = localStorage.getItem('baseUrl') ? localStorage.getItem('baseUrl') : process.env.API_ROOT;
 

@@ -891,23 +891,23 @@
 
                         console.log('localStorage.getItem(\'editEquipmentId\'): ' + localStorage.getItem('editEquipmentId'));
 
-                        if (CategoryId == -1) {
-                            console.log('==========CategoryId == -1');
-                            _this.editForm.equipmentId = [];
-                            for (let equipment of _this.equipmentSource) {
-                                _this.editForm.equipmentId.push(equipment.key);
-                            }
-                        }
+                        // if (CategoryId == -1) {
+                        //     console.log('==========CategoryId == -1');
+                        //     _this.editForm.equipmentId = [];
+                        //     for (let equipment of _this.equipmentSource) {
+                        //         _this.editForm.equipmentId.push(equipment.key);
+                        //     }
+                        // }
 
-                        if (localStorage.getItem('editEquipmentId') && localStorage.getItem('editEquipmentId') == '-1') {
-                            console.log('==========editEquipmentId == -1');
-                            _this.editForm.equipmentId = [];
-                            for (let equipment of _this.equipmentSource) {
-                                if (_this.editForm.equipmentId.indexOf(equipment.key) == -1) {
-                                    _this.editForm.equipmentId.push(equipment.key);
-                                }
-                            }
-                        }
+                        // if (localStorage.getItem('editEquipmentId') && localStorage.getItem('editEquipmentId') == '-1') {
+                        //     console.log('==========editEquipmentId == -1');
+                        //     _this.editForm.equipmentId = [];
+                        //     for (let equipment of _this.equipmentSource) {
+                        //         if (_this.editForm.equipmentId.indexOf(equipment.key) == -1) {
+                        //             _this.editForm.equipmentId.push(equipment.key);
+                        //         }
+                        //     }
+                        // }
                     }
                 });
             },
@@ -937,16 +937,16 @@
                         }
 
                         if (maintainEquipments.length > 0) {
-                            if (maintainEquipments[0].EquipmentCategoryId == -1) {
-                                for (let category of _this.categorySource) {
-                                    _this.editForm.equipmentCategory.push(category.key);
-                                }
-
-                                if (maintainEquipments[0].EquipmentId == -1) {
-                                    _this.editForm.equipmentId = [];
-                                    _this.getEquipments(-1);
-                                }
-                            } else {
+                            // if (maintainEquipments[0].EquipmentCategoryId == -1) {
+                            //     for (let category of _this.categorySource) {
+                            //         _this.editForm.equipmentCategory.push(category.key);
+                            //     }
+                            //
+                            //     if (maintainEquipments[0].EquipmentId == -1) {
+                            //         _this.editForm.equipmentId = [];
+                            //         _this.getEquipments(-1);
+                            //     }
+                            // } else {
                                 for (let maintainEquipment of maintainEquipments) {
                                     let equipmentCategoryItem = {
                                         EquipmentCategoryId: '',
@@ -969,14 +969,14 @@
                                         _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
                                     }
                                 }
-                                if (maintainEquipments[0].EquipmentId == -1) {
-                                    localStorage.setItem('editEquipmentId', '-1')
-                                    // _this.getEquipments(_this.editForm.equipmentCategory.toString());
-                                }
+                                // if (maintainEquipments[0].EquipmentId == -1) {
+                                //     localStorage.setItem('editEquipmentId', '-1')
+                                //     // _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                                // }
                                 _this.getEquipments(_this.editForm.equipmentCategory.toString());
                                 console.log('_this.editForm.equipmentId: ' + _this.editForm.equipmentId);
                             }
-                        }
+                        // }
                     }
                 });
             },
@@ -1168,16 +1168,16 @@
                             para.equipmentId = para.equipmentId.toString();
                             para.remindDay = para.remindDay.toString();
                             para.executeTime = para.executeTime ? util.formatDate.formatDate(new Date(this.editForm.executeTime)) : util.formatDate.formatDate(new Date());
-                            if (this.editForm.equipmentCategory.length === this.categorySource.length) {
-                                para.equipmentCategory = -1;
-                            } else {
+                            // if (this.editForm.equipmentCategory.length === this.categorySource.length) {
+                            //     para.equipmentCategory = -1;
+                            // } else {
                                 para.equipmentCategory = this.editForm.equipmentCategory.toString();
-                            }
-                            if (this.editForm.equipmentId.length === this.equipmentSource.length) {
-                                para.equipmentId = -1;
-                            } else {
+                            // }
+                            // if (this.editForm.equipmentId.length === this.equipmentSource.length) {
+                            //     para.equipmentId = -1;
+                            // } else {
                                 para.equipmentId = this.editForm.equipmentId.toString();
-                            }
+                            // }
                             $.ajax({
                                 async: true,
                                 type: 'GET',
@@ -1239,16 +1239,16 @@
                             para1.cycleDay = this.addForm.cycleDay;
                             para1.description = this.addForm.description;
                             para1.remindDay = this.addForm.remindDay.toString();
-                            if (this.addForm.equipmentCategory.length === this.categorySource.length) {
-                                para1.equipmentCategory = -1;
-                            } else {
+                            // if (this.addForm.equipmentCategory.length === this.categorySource.length) {
+                            //     para1.equipmentCategory = -1;
+                            // } else {
                                 para1.equipmentCategory = this.addForm.equipmentCategory.toString();
-                            }
-                            if (this.addForm.equipmentId.length === this.equipmentSource.length) {
-                                para1.equipmentId = -1;
-                            } else {
+                            // }
+                            // if (this.addForm.equipmentId.length === this.equipmentSource.length) {
+                            //     para1.equipmentId = -1;
+                            // } else {
                                 para1.equipmentId = this.addForm.equipmentId.toString();
-                            }
+                            // }
 
                             $.ajax({
                                 async: true,

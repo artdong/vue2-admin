@@ -109,8 +109,8 @@
                             v-model="editForm.strContent">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="图标" prop="selectedIcon" style="width: 450px;">
-                    <el-select v-model="editForm.selectedIcon" placeholder="请选择">
+                <el-form-item label="图标" prop="strPath" style="width: 450px;">
+                    <el-select v-model="editForm.strPath" placeholder="请选择">
                         <el-option
                                 v-for="item in icons"
                                 :key="item.value"
@@ -146,8 +146,8 @@
                             v-model="addForm.strContent">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="图标" prop="selectedIcon" style="width: 450px;">
-                    <el-select v-model="addForm.selectedIcon" placeholder="请选择">
+                <el-form-item label="图标" prop="strPath" style="width: 450px;">
+                    <el-select v-model="addForm.strPath" placeholder="请选择">
                         <el-option
                                 v-for="item in icons"
                                 :key="item.value"
@@ -252,6 +252,8 @@
                     label: 'ups'
                 }],
                 maintains: [],
+                plans: [],
+                total_plan: 0,
                 total: 0,
                 listLoading: false,
                 sels: [],//列表选中列
@@ -282,7 +284,7 @@
                     strContent: [
                         {required: true, message: '请输入维护内容', trigger: 'blur'}
                     ],
-                    selectedIcon: [
+                    strPath: [
                         {required: true, message: '请选择图标', trigger: 'blur'}
                     ]
                 },
@@ -291,7 +293,7 @@
                     strMaintainId: 0,
                     strTitle: '',
                     strContent: '',
-                    selectedIcon: ''
+                    strPath: ''
                 },
 
                 addFormVisible: false,//新增界面是否显示
@@ -303,7 +305,7 @@
                     strContent: [
                         {required: true, message: '请输入维护内容', trigger: 'blur'}
                     ],
-                    selectedIcon: [
+                    strPath: [
                         {required: true, message: '请选择图标', trigger: 'blur'}
                     ]
                 },
@@ -311,7 +313,7 @@
                 addForm: {
                     strTitle: '',
                     strContent: '',
-                    selectedIcon: ''
+                    strPath: ''
                 }
 
             }
@@ -380,6 +382,7 @@
                                 item.strContent = maintain.MaintainContent;
                                 item.cTime = maintain.CreateTime;
                                 item.uTime = maintain.UpdateTime;
+                                item.strPath = maintain.ImagePath;
                                 _this.maintains.push(item);
                             }
                         }
@@ -406,26 +409,64 @@
                 this.listLoading = false;
                 this.getMaintains();
             },
+            //获取维护计划列表
+            getPlans(maintainId) {
+                let _this = this;
+                _this.plans = [];
+
+                let para = {
+                    maintainId: maintainId,
+                };
+
+                jQuery.ajax({
+                    async: true,
+                    type: 'GET',
+                    dataType: 'jsonp',
+                    jsonp: 'jsoncallback',
+                    data: para,
+                    timeout: 5000,
+                    url: base.baseUrl + "/MaintainService.svc/GetMaintainPlan",
+                    success: function (res) {
+                        let index1 = res.indexOf("]");
+                        let plans = JSON.parse(res.substr(0, index1 + 1));
+
+                        let totalStr = res.substr(index1 + 2, res.length - 1);
+                        let index2 = totalStr.indexOf(":");
+                        totalStr = totalStr.substr(index2 + 2, totalStr.length - index2 - 3)
+                        _this.total_plan = parseInt(totalStr);
+                        console.log("plans _this.total: " + JSON.stringify(_this.total));
+                        if(_this.total_plan > 0){
+                            _this.$confirm('该维护项正在被使用，不能删除！', '提示', {
+                                type: 'warning'
+                            }).then(() => {
+                            }).catch(() => {
+                            });
+                        }else {
+                            _this.$confirm('确认删除该记录吗?', '提示', {
+                                type: 'warning'
+                            }).then(() => {
+                                _this.listLoading = true;
+                                //NProgress.start();
+                                let para = {strMaintainId: maintainId};
+                                $.ajax({
+                                    async: true,
+                                    type: 'GET',
+                                    jsonp: 'jsoncallback',
+                                    data: para,
+                                    url: base.baseUrl + "/MaintainService.svc/DelMaintainItem",
+                                    success: this.deleteSuccess,
+                                    dataType: 'jsonp'
+                                });
+                            }).catch(() => {
+
+                            });
+                        }
+                    }
+                });
+            },
             //删除
             handleDel: function (index, row) {
-                this.$confirm('确认删除该记录吗?', '提示', {
-                    type: 'warning'
-                }).then(() => {
-                    this.listLoading = true;
-                    //NProgress.start();
-                    let para = {strMaintainId: row.strMaintainId};
-                    $.ajax({
-                        async: true,
-                        type: 'GET',
-                        jsonp: 'jsoncallback',
-                        data: para,
-                        url: base.baseUrl + "/MaintainService.svc/DelMaintainItem",
-                        success: this.deleteSuccess,
-                        dataType: 'jsonp'
-                    });
-                }).catch(() => {
-
-                });
+                this.getPlans(row.strMaintainId);
             },
             //显示编辑界面
             handleEdit: function (index, row) {
