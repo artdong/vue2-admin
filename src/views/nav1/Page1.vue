@@ -389,7 +389,7 @@
                     }
                 });
                 setTimeout(() => {
-                    this.listLoading = false;
+                    _this.listLoading = false;
                 }, 1000);
             },
             deleteSuccess: function (res, status) {
