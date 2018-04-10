@@ -325,7 +325,7 @@
 			border-bottom: 6px solid #c0c1e1;
 			.userinfo {
 				text-align: right;
-				padding-right: 35px;
+				padding-right: 120px;
 				float: right;
 				.userinfo-inner {
 					cursor: pointer;
