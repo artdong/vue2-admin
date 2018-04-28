@@ -454,7 +454,7 @@
                                     jsonp: 'jsoncallback',
                                     data: para,
                                     url: base.baseUrl + "/MaintainService.svc/DelMaintainItem",
-                                    success: this.deleteSuccess,
+                                    success: _this.deleteSuccess,
                                     dataType: 'jsonp'
                                 });
                             }).catch(() => {

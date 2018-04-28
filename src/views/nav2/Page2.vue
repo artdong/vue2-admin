@@ -1082,7 +1082,7 @@
                 this.getEquipmentCategories();
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
-                console.log('this.editForm.equipmentId: ' + this.editForm.equipmentId.length);
+                console.log('this.editForm: ' + JSON.stringify(this.editForm));
                 console.log('this.equipmentSource: ' + this.equipmentSource.length);
             },
             //显示设备详情界面
@@ -1168,6 +1168,7 @@
                             para.equipmentId = para.equipmentId.toString();
                             para.remindDay = para.remindDay.toString();
                             para.executeTime = para.executeTime ? util.formatDate.formatDate(new Date(this.editForm.executeTime)) : util.formatDate.formatDate(new Date());
+                            console.log('para.executeTime: ' + para.executeTime);
                             // if (this.editForm.equipmentCategory.length === this.categorySource.length) {
                             //     para.equipmentCategory = -1;
                             // } else {

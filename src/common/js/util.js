@@ -57,6 +57,7 @@ export default {
             return num > 9 ? (num + "") : ("0" + num);
         },
         formatDate : function (date) {
+            console.log('date: ' + date)
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
             var day = date.getDate();
