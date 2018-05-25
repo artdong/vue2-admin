@@ -7,19 +7,19 @@
                     <el-form :model="filters">
                         <el-row>
                             <el-col :xs="5" :sm="5" :md="5" :lg="5" style="margin-left: 12px;">
-                                <el-form-item>
+                                <el-form-item label="计划ID">
                                     <el-input v-model="filters.planId" placeholder="计划ID"
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
-                                <el-form-item>
+                                <el-form-item label="维护项ID">
                                     <el-input v-model="filters.maintainId" placeholder="维护项ID"
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
-                                <el-form-item>
+                                <el-form-item label="计划描述">
                                     <el-input v-model="filters.description" placeholder="计划描述"
                                               style="width: 160px;"></el-input>
                                 </el-form-item>
@@ -113,7 +113,7 @@
                     <el-table-column prop="executeTime" label="执行时间" width="110">
                     </el-table-column>
                     <el-table-column label="操作" width="190">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                             <el-button type="info" size="small" icon="information"
                                        @click="handleDetail(scope.$index, scope.row)">
@@ -531,9 +531,9 @@
                     maintainId: [
                         {required: true, message: '请选择维护项', trigger: 'blur'}
                     ],
-                   // executeTime: [
-                   //     {required: true, message: '请选择执行时间', trigger: 'blur'}
-                   // ],
+                   executeTime: [
+                       {required: true, message: '请选择执行时间', trigger: 'blur'}
+                   ],
                     equipmentCategory: [
                         {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
                     ],
@@ -565,9 +565,9 @@
                     maintainId: [
                         {required: true, message: '请选择护项', trigger: 'blur'}
                     ],
-                   // executeTime: [
-                   //     {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-                   // ],
+                   executeTime: [
+                       {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                   ],
                     equipmentCategory: [
                         {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
                     ],
@@ -595,15 +595,15 @@
                 if (!value) {
                     return callback(new Error('执行时间不能为空'));
                 }
-                setTimeout(() => {
-                    const now = new Date();
-                    console.log("Math.abs(value - now) < 0 : " + Math.abs(value - now) < 60);
-                    if (Math.abs(value - now) < 0) {
-                        callback(new Error('执行时间必须大于当前时间'));
-                    } else {
-                        callback();
-                    }
-                }, 500);
+                // setTimeout(() => {
+                //     const now = new Date();
+                //     console.log("Math.abs(value - now) < 0 : " + Math.abs(value - now) < 60);
+                //     if (Math.abs(value - now) < 0) {
+                //         callback(new Error('执行时间必须大于当前时间'));
+                //     } else {
+                //         callback();
+                //     }
+                // }, 500);
             },
             checkEquipmentCategory: (rule, value, callback) => {
                 console.log('checkEquipmentCategory value: ' + value);

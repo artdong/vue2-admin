@@ -101,7 +101,7 @@
 					<!--<el-table-column prop="cycleDay" label="执行周期（天）" width="150">-->
 					<!--</el-table-column>-->
 					<el-table-column label="操作" width="120">
-						<template scope="scope">
+						<template slot-scope="scope">
 							<el-button type="info" size="small" icon="information" @click="handleDetail(scope.$index, scope.row)">
 							</el-button>
 						</template>
