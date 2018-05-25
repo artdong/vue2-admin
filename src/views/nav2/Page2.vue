@@ -594,6 +594,8 @@
             checkExecuteTime: (rule, value, callback) => {
                 if (!value) {
                     return callback(new Error('执行时间不能为空'));
+                }else {
+                    callback();
                 }
                 // setTimeout(() => {
                 //     const now = new Date();
