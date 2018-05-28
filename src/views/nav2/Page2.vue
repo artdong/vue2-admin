@@ -13,10 +13,20 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
-                                <el-form-item label="维护项ID">
-                                    <el-input v-model="filters.maintainId" placeholder="维护项ID"
-                                              style="width: 160px;"></el-input>
+                                <el-form-item label="维护项">
+                                    <el-select v-model="filters.maintainId" placeholder="请选择维护项">
+                                        <el-option
+                                                v-for="item in maintainOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
+                                <!--<el-form-item label="维护项ID">-->
+                                    <!--<el-input v-model="filters.maintainId" placeholder="维护项ID"-->
+                                              <!--style="width: 160px;"></el-input>-->
+                                <!--</el-form-item>-->
                             </el-col>
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
                                 <el-form-item label="计划描述">
@@ -532,7 +542,7 @@
                         {required: true, message: '请选择维护项', trigger: 'blur'}
                     ],
                    executeTime: [
-                       {required: true, message: '请选择执行时间', trigger: 'blur'}
+                       {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
                    ],
                     equipmentCategory: [
                         {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
