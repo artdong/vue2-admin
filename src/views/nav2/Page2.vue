@@ -6,12 +6,12 @@
                 <el-form ref="form" :model="form" @submit.prevent="onSubmit" style="margin:10px;">
                     <el-form :model="filters">
                         <el-row>
-                            <el-col :xs="5" :sm="5" :md="5" :lg="5" style="margin-left: 12px;">
-                                <el-form-item label="计划ID">
-                                    <el-input v-model="filters.planId" placeholder="计划ID"
-                                              style="width: 160px;"></el-input>
-                                </el-form-item>
-                            </el-col>
+                            <!--<el-col :xs="5" :sm="5" :md="5" :lg="5" style="margin-left: 12px;">-->
+                                <!--<el-form-item label="计划ID">-->
+                                    <!--<el-input v-model="filters.planId" placeholder="计划ID"-->
+                                              <!--style="width: 160px;"></el-input>-->
+                                <!--</el-form-item>-->
+                            <!--</el-col>-->
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
                                 <el-form-item label="维护项">
                                     <el-select v-model="filters.maintainId" placeholder="请选择维护项">
@@ -716,7 +716,7 @@
                 let para = {
                     pageNo: _this.listQuery.curPage,
                     pageSize: _this.listQuery.pageSize,
-                    planId: _this.filters.planId,
+                    // planId: _this.filters.planId,
                     maintainId: _this.filters.maintainId,
                     cTime: _this.filters.cTime[0] && _this.filters.cTime[1] ? util.formatDate.formatDate(_this.filters.cTime[0]) + ',' + util.formatDate.formatDate(_this.filters.cTime[1]) : '',
                     eTime: _this.filters.eTime[0] && _this.filters.eTime[1] ? util.formatDate.formatDate(_this.filters.eTime[0]) + ',' + util.formatDate.formatDate(_this.filters.eTime[1]) : '',
