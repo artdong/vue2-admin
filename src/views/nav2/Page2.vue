@@ -7,12 +7,12 @@
                     <el-form :model="filters">
                         <el-row>
                             <!--<el-col :xs="5" :sm="5" :md="5" :lg="5" style="margin-left: 12px;">-->
-                                <!--<el-form-item label="计划ID">-->
-                                    <!--<el-input v-model="filters.planId" placeholder="计划ID"-->
-                                              <!--style="width: 160px;"></el-input>-->
-                                <!--</el-form-item>-->
+                            <!--<el-form-item label="计划ID">-->
+                            <!--<el-input v-model="filters.planId" placeholder="计划ID"-->
+                            <!--style="width: 160px;"></el-input>-->
+                            <!--</el-form-item>-->
                             <!--</el-col>-->
-                            <el-col :xs="5" :sm="5" :md="5" :lg="6">
+                            <el-col :xs="5" :sm="5" :md="5" :lg="6" style="margin-left: 12px;">
                                 <el-form-item label="维护项">
                                     <el-select v-model="filters.maintainId" placeholder="请选择维护项">
                                         <el-option
@@ -24,8 +24,8 @@
                                     </el-select>
                                 </el-form-item>
                                 <!--<el-form-item label="维护项ID">-->
-                                    <!--<el-input v-model="filters.maintainId" placeholder="维护项ID"-->
-                                              <!--style="width: 160px;"></el-input>-->
+                                <!--<el-input v-model="filters.maintainId" placeholder="维护项ID"-->
+                                <!--style="width: 160px;"></el-input>-->
                                 <!--</el-form-item>-->
                             </el-col>
                             <el-col :xs="5" :sm="5" :md="5" :lg="6">
@@ -42,6 +42,8 @@
                                     </el-radio-group>
                                 </el-form-item>
                             </el-col>
+                        </el-row>
+                        <el-row>
                             <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                 <el-form-item label-width="80px" label="创建时间" class="postInfo-container-item">
                                     <el-date-picker
@@ -64,25 +66,26 @@
                                     </el-date-picker>
                                 </el-form-item>
                             </el-col>
+                        </el-row>
 
-                            <!--<el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle"-->
-                            <!--style="margin-left: 12px;">-->
-                            <!--<el-form-item label="执行周期(天)">-->
-                            <!--<el-select v-model="filters.cycleDay" multiple placeholder="请选择">-->
-                            <!--<el-option-->
-                            <!--v-for="item in cycleDays"-->
-                            <!--:key="item.value"-->
-                            <!--:label="item.label"-->
-                            <!--:value="item.value">-->
-                            <!--</el-option>-->
-                            <!--</el-select>-->
-                            <!--</el-form-item>-->
-                            <!--</el-col>-->
-                            <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                                <el-form-item style="margin-left: 10px;">
-                                    <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
-                                </el-form-item>
-                            </el-col>
+                        <!--<el-col :xs="12" :sm="12" :md="12" :lg="8" v-if="filters.isCycle"-->
+                        <!--style="margin-left: 12px;">-->
+                        <!--<el-form-item label="执行周期(天)">-->
+                        <!--<el-select v-model="filters.cycleDay" multiple placeholder="请选择">-->
+                        <!--<el-option-->
+                        <!--v-for="item in cycleDays"-->
+                        <!--:key="item.value"-->
+                        <!--:label="item.label"-->
+                        <!--:value="item.value">-->
+                        <!--</el-option>-->
+                        <!--</el-select>-->
+                        <!--</el-form-item>-->
+                        <!--</el-col>-->
+                        <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                            <el-form-item style="margin-left: 10px;">
+                                <el-button type="primary" v-on:click="getPlans" icon="search">查询</el-button>
+                            </el-form-item>
+                        </el-col>
                         </el-row>
                     </el-form>
                 </el-form>
@@ -541,9 +544,9 @@
                     maintainId: [
                         {required: true, message: '请选择维护项', trigger: 'blur'}
                     ],
-                   executeTime: [
-                       {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-                   ],
+                    executeTime: [
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                    ],
                     equipmentCategory: [
                         {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
                     ],
@@ -575,15 +578,15 @@
                     maintainId: [
                         {required: true, message: '请选择护项', trigger: 'blur'}
                     ],
-                   executeTime: [
-                       {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
-                   ],
+                    executeTime: [
+                        {required: true, validator: this.checkExecuteTime, trigger: 'blur'}
+                    ],
                     equipmentCategory: [
                         {required: true, validator: this.checkEquipmentCategory, trigger: 'blur'}
                     ],
                     equipmentId: [
-                       {required: true, validator: this.checkEquipmentId, trigger: 'blur'}
-                   ]
+                        {required: true, validator: this.checkEquipmentId, trigger: 'blur'}
+                    ]
                 },
                 //新增界面数据
                 addForm: {
@@ -604,7 +607,7 @@
             checkExecuteTime: (rule, value, callback) => {
                 if (!value) {
                     return callback(new Error('执行时间不能为空'));
-                }else {
+                } else {
                     callback();
                 }
                 // setTimeout(() => {
@@ -619,20 +622,20 @@
             },
             checkEquipmentCategory: (rule, value, callback) => {
                 console.log('checkEquipmentCategory value: ' + value);
-                if (value.length<=0) {
+                if (value.length <= 0) {
                     return callback(new Error('请选择设备类型'));
-                }else {
+                } else {
                     callback();
                 }
             },
             checkEquipmentId: (rule, value, callback) => {
                 console.log('checkEquipmentId value: ' + value);
-                if (value.length<=0) {
+                if (value.length <= 0) {
                     return callback(new Error('请选择设备'));
-                }else {
+                } else {
                     callback();
                 }
-             },
+            },
             //状态显示转换
             formatCycle: function (row, column) {
                 return row.isCycle === false ? '否' : row.isCycle === true ? '是' : '未知';
@@ -959,35 +962,35 @@
                             //         _this.getEquipments(-1);
                             //     }
                             // } else {
-                                for (let maintainEquipment of maintainEquipments) {
-                                    let equipmentCategoryItem = {
-                                        EquipmentCategoryId: '',
-                                        EquipmentCategoryName: ''
-                                    };
-                                    equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
-                                    equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
+                            for (let maintainEquipment of maintainEquipments) {
+                                let equipmentCategoryItem = {
+                                    EquipmentCategoryId: '',
+                                    EquipmentCategoryName: ''
+                                };
+                                equipmentCategoryItem.EquipmentCategoryId = maintainEquipment.EquipmentCategoryId;
+                                equipmentCategoryItem.EquipmentCategoryName = maintainEquipment.EquipmentCategoryName;
 
-                                    if (_this.editForm.equipmentCategory.indexOf(equipmentCategoryItem.EquipmentCategoryId) == -1) {
-                                        _this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
-                                    }
-
-                                    let equipmentItem = {
-                                        EquipmentId: '',
-                                        EquipmentName: ''
-                                    };
-                                    equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
-                                    equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
-                                    if (_this.editForm.equipmentId.indexOf(equipmentItem.EquipmentId) == -1) {
-                                        _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
-                                    }
+                                if (_this.editForm.equipmentCategory.indexOf(equipmentCategoryItem.EquipmentCategoryId) == -1) {
+                                    _this.editForm.equipmentCategory.push(equipmentCategoryItem.EquipmentCategoryId);
                                 }
-                                // if (maintainEquipments[0].EquipmentId == -1) {
-                                //     localStorage.setItem('editEquipmentId', '-1')
-                                //     // _this.getEquipments(_this.editForm.equipmentCategory.toString());
-                                // }
-                                _this.getEquipments(_this.editForm.equipmentCategory.toString());
-                                console.log('_this.editForm.equipmentId: ' + _this.editForm.equipmentId);
+
+                                let equipmentItem = {
+                                    EquipmentId: '',
+                                    EquipmentName: ''
+                                };
+                                equipmentItem.EquipmentId = maintainEquipment.EquipmentId;
+                                equipmentItem.EquipmentName = maintainEquipment.EquipmentName;
+                                if (_this.editForm.equipmentId.indexOf(equipmentItem.EquipmentId) == -1) {
+                                    _this.editForm.equipmentId.push(equipmentItem.EquipmentId);
+                                }
                             }
+                            // if (maintainEquipments[0].EquipmentId == -1) {
+                            //     localStorage.setItem('editEquipmentId', '-1')
+                            //     // _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                            // }
+                            _this.getEquipments(_this.editForm.equipmentCategory.toString());
+                            console.log('_this.editForm.equipmentId: ' + _this.editForm.equipmentId);
+                        }
                         // }
                     }
                 });
@@ -1090,7 +1093,7 @@
                     equipmentId: row.equipmentId
                 },
 
-                this.getMaintains();
+                    this.getMaintains();
                 this.getEquipmentCategories();
                 this.getMaintainEquipments(row.planId);
                 this.getMaintainRemindInfo(row.planId);
@@ -1142,7 +1145,6 @@
                         equipmentCategory: [],
                         equipmentId: []
                     };
-                this.getMaintains();
                 this.getEquipmentCategories();
                 this.getEquipments(this.addForm.equipmentCategory.toString());
             }
@@ -1184,12 +1186,12 @@
                             // if (this.editForm.equipmentCategory.length === this.categorySource.length) {
                             //     para.equipmentCategory = -1;
                             // } else {
-                                para.equipmentCategory = this.editForm.equipmentCategory.toString();
+                            para.equipmentCategory = this.editForm.equipmentCategory.toString();
                             // }
                             // if (this.editForm.equipmentId.length === this.equipmentSource.length) {
                             //     para.equipmentId = -1;
                             // } else {
-                                para.equipmentId = this.editForm.equipmentId.toString();
+                            para.equipmentId = this.editForm.equipmentId.toString();
                             // }
                             $.ajax({
                                 async: true,
@@ -1255,12 +1257,12 @@
                             // if (this.addForm.equipmentCategory.length === this.categorySource.length) {
                             //     para1.equipmentCategory = -1;
                             // } else {
-                                para1.equipmentCategory = this.addForm.equipmentCategory.toString();
+                            para1.equipmentCategory = this.addForm.equipmentCategory.toString();
                             // }
                             // if (this.addForm.equipmentId.length === this.equipmentSource.length) {
                             //     para1.equipmentId = -1;
                             // } else {
-                                para1.equipmentId = this.addForm.equipmentId.toString();
+                            para1.equipmentId = this.addForm.equipmentId.toString();
                             // }
 
                             $.ajax({
@@ -1305,6 +1307,7 @@
             }
         },
         mounted() {
+            this.getMaintains();
             this.getPlans();
         }
     }

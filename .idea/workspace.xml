@@ -16,26 +16,27 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Page2.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/nav2/Page2.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-425">
-              <caret line="719" column="46" lean-forward="false" selection-start-line="719" selection-start-column="46" selection-end-line="719" selection-end-column="46" />
+            <state relative-caret-position="-1075">
+              <caret line="14" column="86" lean-forward="false" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="86" />
               <folding>
-                <element signature="e#38933#40656#0" expanded="false" />
-                <element signature="e#40717#43448#0" expanded="false" />
-                <element signature="e#43521#47300#0" expanded="false" />
-                <element signature="e#47371#49111#0" expanded="false" />
-                <element signature="e#49163#49625#0" expanded="false" />
-                <element signature="e#51629#52476#0" expanded="false" />
-                <element signature="e#52534#53523#0" expanded="false" />
-                <element signature="e#53586#54190#0" expanded="false" />
-                <element signature="e#57114#57714#0" expanded="false" />
-                <element signature="e#57781#59906#0" expanded="false" />
-                <element signature="e#60081#60867#0" expanded="false" />
-                <marker date="1527923169232" expanded="false" signature="399:417" ph="..." />
-                <marker date="1527923169232" expanded="false" signature="644:657" ph="..." />
+                <element signature="e#32142#33021#0" expanded="false" />
+                <element signature="e#33444#37610#0" expanded="false" />
+                <element signature="e#38951#40674#0" expanded="false" />
+                <element signature="e#40735#43466#0" expanded="false" />
+                <element signature="e#43539#47210#0" expanded="false" />
+                <element signature="e#47281#49021#0" expanded="false" />
+                <element signature="e#49073#49535#0" expanded="false" />
+                <element signature="e#51543#52390#0" expanded="false" />
+                <element signature="e#53463#54067#0" expanded="false" />
+                <element signature="e#56983#57583#0" expanded="false" />
+                <element signature="e#57650#59767#0" expanded="false" />
+                <element signature="e#59942#60728#0" expanded="false" />
+                <marker date="1528424396513" expanded="false" signature="399:417" ph="..." />
+                <marker date="1528424396513" expanded="false" signature="614:627" ph="..." />
               </folding>
             </state>
           </provider>
@@ -45,8 +46,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>total</find>
-      <find>listLoading</find>
       <find>this</find>
       <find>m</find>
       <find>equipmentCategory</find>
@@ -75,6 +74,8 @@
       <find>checkExecuteTime</find>
       <find>maintainId</find>
       <find>maintainOptions</find>
+      <find>add</find>
+      <find>handleAdd</find>
     </findStrings>
     <replaceStrings>
       <replace>ImagePath</replace>
@@ -153,7 +154,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -184,6 +184,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -350,12 +351,13 @@
       <workItem from="1527225139822" duration="546000" />
       <workItem from="1527235503235" duration="750000" />
       <workItem from="1527585321751" duration="504000" />
-      <workItem from="1527909035982" duration="1230000" />
+      <workItem from="1527909035982" duration="1309000" />
+      <workItem from="1528421665733" duration="2490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127203000" />
+    <option name="totallyTimeSpent" value="129772000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -369,7 +371,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13645943" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1380597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293979" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -377,6 +379,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293979" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2498671" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Translate" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2564935" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39905548" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -725,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/nav1/Page1.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="357" column="36" lean-forward="false" selection-start-line="357" selection-start-column="31" selection-end-line="357" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/nav3/Page3.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1150">
@@ -746,24 +742,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/nav1/Page1.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8900">
+          <caret line="357" column="36" lean-forward="false" selection-start-line="357" selection-start-column="31" selection-end-line="357" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/nav2/Page2.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-425">
-          <caret line="719" column="46" lean-forward="false" selection-start-line="719" selection-start-column="46" selection-end-line="719" selection-end-column="46" />
+        <state relative-caret-position="-1075">
+          <caret line="14" column="86" lean-forward="false" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="86" />
           <folding>
-            <element signature="e#38933#40656#0" expanded="false" />
-            <element signature="e#40717#43448#0" expanded="false" />
-            <element signature="e#43521#47300#0" expanded="false" />
-            <element signature="e#47371#49111#0" expanded="false" />
-            <element signature="e#49163#49625#0" expanded="false" />
-            <element signature="e#51629#52476#0" expanded="false" />
-            <element signature="e#52534#53523#0" expanded="false" />
-            <element signature="e#53586#54190#0" expanded="false" />
-            <element signature="e#57114#57714#0" expanded="false" />
-            <element signature="e#57781#59906#0" expanded="false" />
-            <element signature="e#60081#60867#0" expanded="false" />
-            <marker date="1527923169232" expanded="false" signature="399:417" ph="..." />
-            <marker date="1527923169232" expanded="false" signature="644:657" ph="..." />
+            <element signature="e#32142#33021#0" expanded="false" />
+            <element signature="e#33444#37610#0" expanded="false" />
+            <element signature="e#38951#40674#0" expanded="false" />
+            <element signature="e#40735#43466#0" expanded="false" />
+            <element signature="e#43539#47210#0" expanded="false" />
+            <element signature="e#47281#49021#0" expanded="false" />
+            <element signature="e#49073#49535#0" expanded="false" />
+            <element signature="e#51543#52390#0" expanded="false" />
+            <element signature="e#53463#54067#0" expanded="false" />
+            <element signature="e#56983#57583#0" expanded="false" />
+            <element signature="e#57650#59767#0" expanded="false" />
+            <element signature="e#59942#60728#0" expanded="false" />
+            <marker date="1528424396513" expanded="false" signature="399:417" ph="..." />
+            <marker date="1528424396513" expanded="false" signature="614:627" ph="..." />
           </folding>
         </state>
       </provider>
