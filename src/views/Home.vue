@@ -106,6 +106,8 @@
             </el-table-column>
             <el-table-column prop="RemindMsg" label="提示消息">
             </el-table-column>
+            <el-table-column prop="MaintainTitle" label="维护名称">
+            </el-table-column>
             <el-table-column prop="PlanExeTime" label="过期时间">
             </el-table-column>
             <el-table-column prop="Description" label="计划描述">

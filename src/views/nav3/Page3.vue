@@ -366,11 +366,11 @@
             handleDetail: function (index, row) {
                 let _this = this;
                 _this.detailFormVisible = true;
-                _this.equipmentNameList = [];
                 if (_this.historyPlans.length > 0) {
                     for (let historyPlan of _this.historyPlans) {
                         if(historyPlan.equipmentNameList.length > 0) {
                             for (let equipment of historyPlan.equipmentNameList) {
+                                _this.equipmentNameList = [];
                                 if (row.planId == equipment.planId) {
                                     if("" != equipment.equipmentName){
                                         _this.equipmentNameList.push({equipmentName: equipment.equipmentName});
