@@ -39,9 +39,11 @@ npm run build (打包发布)
 
 ```
 
-## 在线效果演示
+## 在线演示
 
-[点我吧 :smiley:](https://alex-0407.github.io/vue2-admin-grace)
+[本地在线演示 :smiley:](https://alex-0407.github.io/vue2-admin-grace)
+
+[新浪云在线演示 :smiley:](http://phpsite.applinzi.com/vue2-admin-grace)
 
 ## 部分截图
 
