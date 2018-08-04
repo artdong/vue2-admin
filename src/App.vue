@@ -11,10 +11,10 @@
                  data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"
             >
         </a>
-        <div id="alipay-adv" class="alipay-adv" v-if="visible">
-            <img src="../static/img/alipay1.jpg">
-            <a class="close-adv" href="javascript:;" v-on:click="close()">关闭</a>
-        </div>
+        <!--<div id="alipay-adv" class="alipay-adv" v-if="visible">-->
+            <!--<img src="../static/img/alipay1.jpg">-->
+            <!--<a class="close-adv" href="javascript:;" v-on:click="close()">关闭</a>-->
+        <!--</div>-->
     </div>
 </template>
 

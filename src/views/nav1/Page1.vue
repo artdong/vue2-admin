@@ -62,9 +62,19 @@
                     </el-table-column>
                     <el-table-column type="index" width="60">
                     </el-table-column>
-                    <el-table-column prop="strTitle" label="维护项名称">
+                    <!--<el-table-column prop="strTitle" label="维护项名称">-->
+                    <!--</el-table-column>-->
+                    <el-table-column label="维护项名称">
+                        <template slot-scope="scope">
+                            <span v-html="brightenKeyword(scope.row.strTitle, filters.strTitle)" ></span>
+                        </template>
                     </el-table-column>
-                    <el-table-column prop="strContent" label="维护内容">
+                    <!--<el-table-column prop="strContent" label="维护内容">-->
+                    <!--</el-table-column>-->
+                    <el-table-column label="维护内容">
+                        <template slot-scope="scope">
+                            <span v-html="brightenKeyword(scope.row.strContent, filters.strContent)" ></span>
+                        </template>
                     </el-table-column>
                     <el-table-column prop="createTime" label="创建时间">
                     </el-table-column>
@@ -272,6 +282,15 @@
             //状态显示转换
             formatState: function (row, column) {
                 return row.state == 0 ? '未启用' : row.state == 1 ? '已启用' : '未知';
+            },
+            // 筛选变色
+            brightenKeyword(val, keyword) {
+                val = val + '';
+                if (val.indexOf(keyword) !== -1 && keyword !== '') {
+                    return val.replace(keyword, '<font color="#409EFF">' + keyword + '</font>')
+                } else {
+                    return val
+                }
             },
             //操作分页
             handleSizeChange(val) {
