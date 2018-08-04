@@ -45,13 +45,9 @@ npm run build (打包发布)
 
 [新浪云在线演示 :smiley:](http://phpsite.applinzi.com/vue2-admin-grace)
 
-## 部分截图
+### 效果预览
 
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/1.PNG" style="display:inline;">
-    
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/2.PNG" style="display:inline;">
-
-<img src="https://github.com/Alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/3.PNG" width="500px" style="display:inline;">
+![动态图](https://github.com/alex-0407/vue2-admin-grace/blob/develop/assets/screenshot/vue2-admin-grace-v1.1.gif?raw=true)
 
 #### 欢迎关注我的微信公众号或头条号`全栈弄潮儿` ，获取更多学习资源及技术文章等
 
