@@ -69,8 +69,7 @@
                 this.chartBar = echarts.init(document.getElementById('chartBar'));
                 this.chartBar.setOption({
                     title: {
-                        text: 'Bar Chart',
-                        subtext: '数据来自网络'
+                        text: 'Bar Chart'
                     },
                     tooltip: {
                         trigger: 'axis',
