@@ -13,8 +13,8 @@
 
 >  如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR 👍
 
->  传送门：[angulat4后台管理系统](https://github.com/Alex-0407/ng4-grace)
-
+>  传送门1：[angulat4后台管理系统](https://github.com/Alex-0407/ng4-grace)
+>  传送门2：[ionic3-awesome集成了常用组件及例子](https://github.com/alex-0407/ionic3-awesome）
 
 ## 技术栈
 
