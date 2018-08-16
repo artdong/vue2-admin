@@ -15,7 +15,7 @@
 
 >  传送门1：[angulat4后台管理系统](https://github.com/Alex-0407/ng4-grace)
 
->  传送门2：[ionic3-awesome集成了常用组件及例子](https://github.com/alex-0407/ionic3-awesome）
+>  传送门2：[ionic3-awesome集成了常用组件及例子](https://github.com/alex-0407/ionic3-awesome)
 
 ## 技术栈
 
