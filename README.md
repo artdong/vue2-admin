@@ -17,6 +17,9 @@
 
 >  传送门2：[ionic3自定义组件及常用例子](https://github.com/alex-0407/ionic3-awesome)
 
+>  传送门3：[微信小程序——前端排行榜](https://github.com/Alex-0407/weapp-web-rank)
+
+
 ## 技术栈
 
 vue2 + vuex + vue-router + axios + element-ui + webpack + ES6/7 + sass
