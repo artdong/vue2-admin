@@ -185,12 +185,12 @@
                         left: 'left',
                         data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
                     },
-                    label : {
-                        normal : {
+                    label: {
+                        normal: {
                             formatter: '{b}:{c}: ({d}%)',
-                            textStyle : {
-                                fontWeight : 'normal',
-                                fontSize : 15
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 15
                             }
                         }
                     },
@@ -238,7 +238,14 @@
         },
 
         mounted: function () {
-            this.drawCharts()
+            const that = this;
+            that.drawCharts();
+            window.onresize = function() {
+                that.chartColumn.resize();
+                that.chartBar.resize();
+                that.chartLine.resize();
+                that.chartPie.resize();
+            };
         },
         updated: function () {
             this.drawCharts()
