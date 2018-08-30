@@ -285,11 +285,17 @@
             },
             // 筛选变色
             brightenKeyword(val, keyword) {
-                val = val + '';
-                if (val.indexOf(keyword) !== -1 && keyword !== '') {
-                    return val.replace(keyword, '<font color="#409EFF">' + keyword + '</font>')
-                } else {
-                    return val
+                // val = val + '';
+                // if (val.indexOf(keyword) !== -1 && keyword !== '') {
+                //     return val.replace(keyword, '<font color="#409EFF">' + keyword + '</font>')
+                // } else {
+                //     return val
+                // }
+                const Reg = new RegExp(keyword, 'i');
+                if (val) {
+                    const res = val.replace(Reg, `<span style="color: #409EFF;">${keyword}</span>`);
+                    console.log(res);
+                    return res;
                 }
             },
             //操作分页
