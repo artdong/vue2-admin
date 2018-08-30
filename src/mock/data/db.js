@@ -36,7 +36,7 @@ for (let i = 0; i < 5; i++) {
 
 for (let i = 0; i < 20; i++) {
     Maintains.push(Mock.mock({
-        strMaintainId: Mock.Random.guid(),
+        strMaintainId: Mock.Random.id(),
         'strTitle|1': ['空调新风设备维护', 'ups设备维护', '油机维护', '配电设备维护', '机架设备维护', '消防设备维护'],
         'strContent|1': ['定期对设备进行维护', '定期对设备进行维护', '定期对设备进行维护', '定期对设备进行维护', '定期对设备进行维护', '定期对设备进行维护'],
         createTime: Mock.Random.date(),

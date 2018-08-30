@@ -1,19 +1,25 @@
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
-import Main from './views/Main.vue'
+// import Main from './views/Main.vue'
 import Page1 from './views/nav1/Page1.vue'
 import Page2 from './views/nav2/Page2.vue'
 import Page3 from './views/nav3/Page3.vue'
 import Page4 from './views/nav4/Page4.vue'
-import Page5 from './views/nav4/Page5.vue'
-import Page6 from './views/nav4/backToTop.vue'
 import echarts from './views/charts/echarts.vue'
 import threejs from './views/3d/threejs.vue'
-import vedio from './views/3d/vedio.vue'
+// import vedio from './views/3d/vedio.vue'
 import babylonjs from './views/3d/babylonjs.vue'
+import exportExcel from './views/excel/export.vue'
+import uploadExcel from './views/excel/uploadExcel.vue'
 
 let routes = [
+    {
+        path: '/',
+        component: Login,
+        name: '',
+        hidden: true
+    },
     {
         path: '/login',
         component: Login,
@@ -68,7 +74,7 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '综合实例',
+        name: 'seed',
         iconCls: 'fa fa-star',
         leaf: false,//不只一个节点
         hidden: false,
@@ -80,19 +86,26 @@ let routes = [
                 meta: {
                     title: "列表"
                 }
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: 'excel',
+        iconCls: 'fa fa-file-excel-o',
+        leaf: false,//不只一个节点
+        hidden: false,
+        children: [
+            {
+                path: '/exportExcel',
+                component: exportExcel,
+                name: 'exportExcel'
             },
             {
-                path: '/page5',
-                component: Page5,
-                name: 'table',
-                meta: {
-                    title: "列表"
-                }
-            },
-            {
-                path: '/page6',
-                component: Page6,
-                name: 'backToTop'
+                path: '/uploadExcel',
+                component: uploadExcel,
+                name: 'uploadExcel'
             }
         ]
     },
