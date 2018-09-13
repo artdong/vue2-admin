@@ -19,6 +19,10 @@
 
 >  传送门3：[微信小程序——前端排行榜](https://github.com/Alex-0407/weapp-web-rank)
 
+>  传送门4：[ionic2-janalytics(ionic native插件)](https://github.com/Alex-0407/ionic2-janalytics)
+
+>  传送门5：[ionic2-wechat(ionic native插件)](https://github.com/Alex-0407/ionic2-wechat)
+
 
 ## 技术栈
 
@@ -57,7 +61,7 @@ npm run build (打包发布)
 
 * 微信公众号二维码，扫一扫或者搜索"全栈弄潮儿"即可关注
 
-<img src="https://github.com/Alex-0407/sinacloud-node/blob/master/fullstack-8cm.jpg" width="320px" style="display:inline;">
+<img src="https://github.com/alex-0407/weapp-web-rank/blob/master/images/qrcode.png" width="320px" style="display:inline;">
 
 #### 前端最火框架排行榜——小程序二维码
 
