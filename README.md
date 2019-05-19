@@ -1,4 +1,4 @@
-# vue2-admin-grace
+# vue-admin
 
 ## About
 
@@ -32,9 +32,9 @@ vue2 + vuex + vue-router + axios + element-ui + webpack + ES6/7 + sass
 ## 项目运行
 
 ```
-git clone https://github.com/Alex-0407/vue2-admin-grace  
+git clone https://github.com/Alex-0407/vue-admin
 
-cd vue2-admin-grace 
+cd vue-admin
 
 npm install
 
@@ -49,7 +49,7 @@ npm run build (打包发布)
 
 ## 在线演示
 
-[本地在线演示 :smiley:](https://alex-0407.github.io/vue2-admin-grace)
+[本地在线演示 :smiley:](https://dxbin008.github.io/vue2-admin-grace)
 
 [新浪云在线演示 :smiley:](http://phpsite.applinzi.com/vue2-admin-grace)
 
