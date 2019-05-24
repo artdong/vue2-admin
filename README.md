@@ -55,7 +55,7 @@ npm run build (打包发布)
 
 ### 效果预览
 
-![动态图](https://github.com/artdong/vue2-admin-grace/blob/develop/assets/screenshot/vue2-admin-grace-v1.1.gif?raw=true)
+![动态图](https://github.com/artdong/vue-admin/blob/develop/assets/screenshot/vue2-admin-grace-v1.1.gif?raw=true)
 
 #### 欢迎关注我的微信公众号或头条号`全栈弄潮儿` ，获取更多学习资源及技术文章等
 
