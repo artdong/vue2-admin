@@ -1,6 +1,6 @@
 # vue-admin
 
-[![GitHub stars](https://img.shields.io/github/stars/iampawan/FlutterExampleApps.svg?style=social&label=Star)](https://github.com/iampawan/FlutterExampleApps) [![GitHub forks](https://img.shields.io/github/forks/iampawan/FlutterExampleApps.svg?style=social&label=Fork)](https://github.com/iampawan/FlutterExampleApps/fork) [![GitHub watchers](https://img.shields.io/github/watchers/iampawan/FlutterExampleApps.svg?style=social&label=Watch)](https://github.com/iampawan/FlutterExampleApps) [![GitHub followers](https://img.shields.io/github/followers/iampawan.svg?style=social&label=Follow)](https://github.com/artdong/vue-admin)  
+[![GitHub stars](https://img.shields.io/github/stars/iampawan/FlutterExampleApps.svg?style=social&label=Star)](https://github.com/artdong/vue-admin) [![GitHub forks](https://img.shields.io/github/forks/iampawan/FlutterExampleApps.svg?style=social&label=Fork)](https://github.com/artdong/vue-admin/fork) [![GitHub watchers](https://img.shields.io/github/watchers/iampawan/FlutterExampleApps.svg?style=social&label=Watch)](https://github.com/artdong/vue-admin) [![GitHub followers](https://img.shields.io/github/followers/iampawan.svg?style=social&label=Follow)](https://github.com/artdong/vue-admin)  
 
 ## About
 
