@@ -1,7 +1,5 @@
 # vue-admin
 
-[![GitHub stars](https://img.shields.io/github/stars/iampawan/FlutterExampleApps.svg?style=social&label=Star)](https://github.com/artdong/vue-admin) [![GitHub forks](https://img.shields.io/github/forks/iampawan/FlutterExampleApps.svg?style=social&label=Fork)](https://github.com/artdong/vue-admin/fork) [![GitHub watchers](https://img.shields.io/github/watchers/iampawan/FlutterExampleApps.svg?style=social&label=Watch)](https://github.com/artdong/vue-admin) [![GitHub followers](https://img.shields.io/github/followers/iampawan.svg?style=social&label=Follow)](https://github.com/artdong/vue-admin)  
-
 ## About
 
 此项目是 vue2 + element-ui + axios 构建的后台管理系统，自适应多种屏幕大小，所有数据都是mock server处理的，所以只需下载即可运行，非常方便就可以替换自己的rest api接口。
