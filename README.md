@@ -4,7 +4,6 @@
 
 此项目是 vue2 + element-ui + axios 构建的后台管理系统，自适应多种屏幕大小，所有数据都是mock server处理的，所以只需下载即可运行，非常方便就可以替换自己的rest api接口。
 
-[![Read the Docs](https://img.shields.io/readthedocs/pip/stable.svg)](https://github.com/artdong/vue-admin/blob/develop/README.md)
 [![mnt-image](https://img.shields.io/maintenance/yes/2019.svg)](../../commits/develop)
 [![GitHub stars](https://img.shields.io/github/stars/artdong/vue-admin.svg)](https://github.com/artdong/vue-admin/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/artdong/vue-admin.svg)](https://github.com/artdong/vue-admin/network)
