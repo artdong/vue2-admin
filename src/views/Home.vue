@@ -56,7 +56,7 @@
 										首页
 									</el-dropdown-item>
 								</router-link>
-								<a target='_blank' href="https://github.com/alex-0407/vue2-admin-grace" style="text-decoration:none; color: black;">
+								<a target='_blank' href="https://github.com/artdong/vue-admin" style="text-decoration:none; color: black;">
 									<el-dropdown-item>
 										开源项目地址
 									</el-dropdown-item>
