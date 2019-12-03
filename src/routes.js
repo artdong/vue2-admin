@@ -12,6 +12,7 @@ import threejs from './views/3d/threejs.vue'
 import babylonjs from './views/3d/babylonjs.vue'
 import exportExcel from './views/excel/export.vue'
 import uploadExcel from './views/excel/uploadExcel.vue'
+import tinymceEditor from './components/Tinymce/index.vue'
 
 let routes = [
     {
@@ -86,6 +87,21 @@ let routes = [
                 meta: {
                     title: "列表"
                 }
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '富文本编辑器',
+        iconCls: 'fa fa-pencil-square-o',
+        leaf: false,//不只一个节点
+        hidden: false,
+        children: [
+            {
+                path: '/tinymce',
+                component: tinymceEditor,
+                name: 'tinymce'
             }
         ]
     },
