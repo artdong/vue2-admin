@@ -263,6 +263,25 @@ $bgcolor-pager: #1F394F;
     overflow-y: hidden;
 }
 
+.el-table__body-wrapper { // IE滚动条样式
+    /*三角箭头的颜色*/
+    scrollbar-arrow-color: #02adf7;
+    /*滚动条滑块按钮的颜色*/
+    scrollbar-face-color: #02adf7;
+    /*滚动条整体颜色*/
+    scrollbar-highlight-color: #0099dd;
+    /*滚动条阴影*/
+    scrollbar-shadow-color: #1F394F;
+    /*滚动条轨道颜色*/
+    scrollbar-track-color: #1F394F;
+    /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+    scrollbar-3dlight-color:#1F394F;
+    /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+    scrollbar-darkshadow-color: #1F394F;
+    /*滚动条基准颜色*/
+    scrollbar-base-color: #0099dd;
+}
+
 .el-table__body-wrapper::-webkit-scrollbar {
     /*滚动条整体样式*/
     width: 10px;
