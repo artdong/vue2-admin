@@ -391,6 +391,10 @@
 
 <style scoped lang="scss">
     @import '~scss_vars';
+    $bgcolor: #1F2A41;
+    $bgcolor-aside: #151E31;
+    $bgcolor-menu-item-hover: #18233B;
+    $font-color: #D0DCE3;
 
     .container {
         position: absolute;
@@ -398,15 +402,15 @@
         bottom: 0px;
         width: 100%;
         height: 100%;
+        background: $bgcolor;
         .header {
             height: 60px;
             line-height: 60px;
-            background: #eeeeee;
-            border-left: 1px solid white;
-            border-bottom: 6px solid #c0c1e1;
+            //border-left: 1px solid white;
+            //border-bottom: 6px solid #c0c1e1;
             .userinfo {
                 text-align: right;
-                padding-right: 35px;
+                padding-right: 120px;
                 float: right;
                 .userinfo-inner {
                     cursor: pointer;
@@ -472,7 +476,7 @@
                 // bottom: 0px;
                 .el-menu {
                     height: 100%;
-                    background-color: #2c2f43;
+                    background: $bgcolor-aside;
                 }
                 .collapsed {
                     width: 60px;
@@ -499,29 +503,24 @@
             }
             .el-menu-item {
                 min-width: 60px;
-                color: #f1f1f1;
+                color: $font-color;
                 &:hover {
-                    background-color: #e6f1fe;
-                    color: #3877db;
+                    background-color: $bgcolor-menu-item-hover !important;
+                    color: $color-primary;
                 }
                 &.is-active {
-                    /*background-color: #353f4f !important;*/
-                    border-left: 4px solid #3877db;
-                    color: #3877db;
+                    background-color: #353f4f !important;
+                    border-right: 4px solid $color-primary;
+                    color: $color-primary;
                 }
             }
             .menu-list {
                 height: 45px;
                 line-height: 45px;
-                color: #f1f1f1;
-                &:hover {
-                    background-color:#e6f1fe;
-                    color: #3877db;
-                }
                 &.is-active {
-                    /*background-color: #353f4f !important;*/
-                    border-left: 4px solid #3877db;
-                    color: #3877db;
+                    background-color: #353f4f !important;
+                    border-right: 4px solid $color-primary;
+                    color: $color-primary;
                 }
             }
             .content-container {
@@ -532,36 +531,28 @@
                 // top: 0px;
                 // bottom: 0px;
                 // left: 230px;
-                overflow-y: scroll;
+                overflow-y: hidden;
                 //padding: 20px;
                 .breadcrumb-container {
                     //margin-bottom: 15px;
                     .title {
                         width: 200px;
                         float: left;
-                        color: #686868;
+                        color: $font-color;
                     }
                     .breadcrumb-inner {
                         float: right;
                     }
                 }
                 .content-wrapper {
-                    background-color: #fff;
+                    background-color: $bgcolor;
                     box-sizing: border-box;
                 }
             }
         }
     }
 
-    .toolbar {
-        background-color: #f8f8f8 !important;
-    }
-
     .hand {
         cursor: pointer;
-    }
-
-    @media screen and (max-width: 1200px) {
-        //
     }
 </style>

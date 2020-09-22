@@ -1,3 +1,7 @@
+$color-background: #111625;
+$bgcolor-pannel: #171E32;
+$color-pannel-title: #ffffff;
+
 .body-warp {
   animation: fadeIn .5s ease;
 }
@@ -10,18 +14,15 @@
   width: 220px;
   height: 100%;
   overflow-y: auto;
-  background-color: #424f63;
   .logo {
     margin: 10px auto;
     text-align: center;
   }
   .menu-box {
-    background-color: #424f63;
     .menu-list, .el-submenu__title {
       height: 45px;
       line-height: 45px;
       color: #fff;
-      background-color: #424f63;
       .icon {
         width: 16px;
         font-size: 14px;
@@ -39,12 +40,11 @@
 
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
   .panel-title {
     padding: 0 15px;
-    color: #535351;
+    color: $color-pannel-title;
     height: 45px;
     line-height: 45px;
     font-size: 14px;

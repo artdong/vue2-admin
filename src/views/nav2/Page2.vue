@@ -1315,7 +1315,4 @@
 </script>
 
 <style scoped>
-    .toolbar {
-        background-color: #f8f8f8 !important;
-    }
 </style>

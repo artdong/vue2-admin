@@ -17,6 +17,8 @@ export default {
 </script>
 
 <style lang="scss">
+$color-background: #111625; 
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -46,7 +48,7 @@ body {
 }
 
 .toolbar {
-	background: #f2f2f2;
+	background: $color-background;
 	padding: 10px;
 	//border:1px solid #dfe6ec;
 	margin: 10px 0px;
