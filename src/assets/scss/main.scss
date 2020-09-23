@@ -164,11 +164,6 @@ $bgcolor-pager: #1F394F;
     background: $color-background;
 }
 
-.el-textarea__inner {
-    background: $color-background;
-    color: $font-color;
-}
-
 .el-button {
     color: black;
 }
@@ -202,7 +197,13 @@ $bgcolor-pager: #1F394F;
 }
 
 .el-select-dropdown {
-    background-color: $color-background;
+    background-color: $bgcolor-input;
+    border: 1px solid $color-background;
+    color: $font-color;
+}
+
+.el-select-dropdown__item {
+    color: $font-color;
 }
 
 .el-select-dropdown__item.selected {
@@ -250,12 +251,10 @@ $bgcolor-pager: #1F394F;
     color: black;
 }
 
-.el-select-dropdown {
-    border: 1px solid $font-color-input;
-}
-
 .el-textarea__inner {
-    border: 1px solid $font-color-input;
+    background: $bgcolor-input;
+    color: $font-color-input;
+    border: 1px solid $color-background;
 }
 
 .el-table__body-wrapper {
