@@ -49,14 +49,14 @@
     <el-col :span="24" class="header">
         <el-col :xs="2" :sm="2" :md="2" :lg="2">
             <div class="tools" @click.prevent="collapse" style="margin-bottom: 64px;">
-                <i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
+                <i class="fa fa-align-justify" style="vertical-align:middle; color: #D0DCE3;"></i>
             </div>
         </el-col>
         <el-col :xs="19" :sm="19" :md="19" :lg="20" class="breadcrumb-container">
             <strong class="title">{{$route.name}}</strong>
         </el-col>
         <el-col :xs="2" :sm="2" :md="2" :lg="2">
-            <i class="fa fa-bell fa-lg" style="color: #353f4f" @click="dialogVisible = true"></i>
+            <i class="fa fa-bell fa-lg" style="color: #D0DCE3" @click="dialogVisible = true"></i>
             <el-badge :value="total" :max="10">
             </el-badge>
         </el-col>
