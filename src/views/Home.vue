@@ -531,7 +531,7 @@
                 // top: 0px;
                 // bottom: 0px;
                 // left: 230px;
-                overflow: hidden;
+                overflow: auto;
                 //padding: 20px;
                 .breadcrumb-container {
                     //margin-bottom: 15px;
