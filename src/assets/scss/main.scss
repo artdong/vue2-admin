@@ -164,11 +164,6 @@ $bgcolor-pager: #1F394F;
     background: $color-background;
 }
 
-.el-textarea__inner {
-    background: $color-background;
-    color: $font-color;
-}
-
 .el-button {
     color: black;
 }
@@ -202,7 +197,13 @@ $bgcolor-pager: #1F394F;
 }
 
 .el-select-dropdown {
-    background-color: $color-background;
+    background-color: $bgcolor-input;
+    border: 1px solid $color-background;
+    color: $font-color;
+}
+
+.el-select-dropdown__item {
+    color: $font-color;
 }
 
 .el-select-dropdown__item.selected {
@@ -250,17 +251,34 @@ $bgcolor-pager: #1F394F;
     color: black;
 }
 
-.el-select-dropdown {
-    border: 1px solid $font-color-input;
-}
-
 .el-textarea__inner {
-    border: 1px solid $font-color-input;
+    background: $bgcolor-input;
+    color: $font-color-input;
+    border: 1px solid $color-background;
 }
 
 .el-table__body-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.el-table__body-wrapper { // IE滚动条样式
+    /*三角箭头的颜色*/
+    scrollbar-arrow-color: #02adf7;
+    /*滚动条滑块按钮的颜色*/
+    scrollbar-face-color: #02adf7;
+    /*滚动条整体颜色*/
+    scrollbar-highlight-color: #0099dd;
+    /*滚动条阴影*/
+    scrollbar-shadow-color: #1F394F;
+    /*滚动条轨道颜色*/
+    scrollbar-track-color: #1F394F;
+    /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+    scrollbar-3dlight-color:#1F394F;
+    /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+    scrollbar-darkshadow-color: #1F394F;
+    /*滚动条基准颜色*/
+    scrollbar-base-color: #0099dd;
 }
 
 .el-table__body-wrapper::-webkit-scrollbar {
@@ -301,5 +319,9 @@ $bgcolor-pager: #1F394F;
 
 .el-transfer-panel .el-transfer-panel__footer {
     background: $color-background;
+}
+
+.el-radio {
+    color: $font-color-input;
 }
 
