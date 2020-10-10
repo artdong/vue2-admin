@@ -8,6 +8,7 @@
 
 <script>
   import screenfull from 'screenfull';
+  
   export default {
     name: 'hamburger',
     props: {
@@ -21,7 +22,7 @@
       },
       fill: {
         type: String,
-        default: '#48576a'
+        default: '#D0DCE3'
       }
     },
     data() {

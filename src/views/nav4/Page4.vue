@@ -3,9 +3,9 @@
 		<!--工具条-->
 		<el-collapse v-model="activeNames">
 			<el-collapse-item title="查询条件" name="1">
-                <el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;width:60%;min-width:600px;">
+                <el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:10px;">
                     <el-row>
-                        <el-col :span="12">
+                        <el-col :xs="12" :sm="12" :md="12" :lg="12">
                             <el-form-item label="设备编号">
                                 <el-select v-model="form.deviceNo" placeholder="全部">
                                     <!--<el-option label="全部" value="all"></el-option>-->
@@ -13,45 +13,35 @@
                                     <!--<el-option label="蓄电池二" value="2"></el-option>-->
                                     <el-option v-for="item in form.deviceNoItems" :key="item" v-bind:value="item.value">{{item.text}}</el-option>
                                 </el-select>
-                                <p>已选:{{form.deviceNo}}</p>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :xs="12" :sm="12" :md="12" :lg="12">
                             <el-form-item label-width="80px" label="开始时间">
                                 <el-date-picker v-model="form.startTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间">
                                 </el-date-picker>
                             </el-form-item>
                         </el-col>
-                    </el-row>
-                    <el-form-item label="重复设置">
-                        <el-checkbox-group v-model="form.repeat">
-                            <el-checkbox label="一次" name="repeat"></el-checkbox>
-                            <el-checkbox label="每天" name="repeat"></el-checkbox>
-                            <el-checkbox label="每周" name="repeat"></el-checkbox>
-                            <el-checkbox label="每季" name="repeat"></el-checkbox>
-                            <el-checkbox label="每年" name="repeat"></el-checkbox>
-                            <p>已选：{{form.repeat.join('|')}}</p>
-                        </el-checkbox-group>
-                    </el-form-item>
-                    <el-row>
-                        <el-col :span="12">
+                        <el-col :xs="12" :sm="12" :md="12" :lg="12">
+                            <el-form-item label="重复设置">
+                                <el-checkbox-group v-model="form.repeat">
+                                    <el-checkbox label="一次" name="repeat"></el-checkbox>
+                                    <el-checkbox label="每天" name="repeat"></el-checkbox>
+                                    <el-checkbox label="每周" name="repeat"></el-checkbox>
+                                    <el-checkbox label="每季" name="repeat"></el-checkbox>
+                                    <el-checkbox label="每年" name="repeat"></el-checkbox>
+                                </el-checkbox-group>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :xs="12" :sm="12" :md="12" :lg="12">
                             <el-form-item label="类型选择">
                                 <el-checkbox-group v-model="form.type">
                                     <el-checkbox label="充电" name="type"></el-checkbox>
                                     <el-checkbox label="放电" name="type"></el-checkbox>
                                     <el-checkbox label="内阻" name="type"></el-checkbox>
                                 </el-checkbox-group>
-                                <p>已选：{{form.type.join('|')}}</p>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
-                            <!--<el-form-item label="启用状态">-->
-                            <!--<el-checkbox-group v-model="form.state">-->
-                            <!--<el-checkbox label="已启用" name="type"></el-checkbox>-->
-                            <!--<el-checkbox label="未启用" name="type"></el-checkbox>-->
-                            <!--</el-checkbox-group>-->
-                            <!--<p>已选：{{form.state.join('|')}}</p>-->
-                            <!--</el-form-item>-->
+                        <el-col :xs="12" :sm="12" :md="12" :lg="12">
                             <el-form-item label="启用状态">
                                 <el-radio-group v-model="form.state">
                                     <el-radio class="radio" :label="1">已启用</el-radio>
@@ -59,19 +49,17 @@
                                 </el-radio-group>
                             </el-form-item>
                         </el-col>
-                    </el-row>
-                    <el-form :model="filters">
-                        <el-col :span="6">
-                            <el-form-item style="margin-left: 10px;">
+                        <el-col :xs="6" :sm="6" :md="6" :lg="6">
+                            <el-form-item label="设备名称">
                                 <el-input v-model="filters.siteName" placeholder="设备名称"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item style="margin-left: 30px;">
+                        <el-col :xs="4" :sm="4" :md="4" :lg="4">
+                            <el-form-item>
                                 <el-button type="primary" v-on:click="getUsers">查询</el-button>
                             </el-form-item>
                         </el-col>
-                    </el-form>
+                    </el-row>
                 </el-form>
 			</el-collapse-item>
 		</el-collapse>
@@ -146,7 +134,6 @@
 						<el-checkbox label="每年" name="repeat"></el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
-				<el-row>
 					<el-col :span="12">
 						<el-form-item label="类型选择">
 							<el-checkbox-group v-model="editForm.type">
@@ -199,7 +186,6 @@
 						<el-checkbox label="每年" name="repeat"></el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
-				<el-row>
 					<el-col :span="12">
 						<el-form-item label="类型选择">
 							<el-checkbox-group v-model="addForm.type">

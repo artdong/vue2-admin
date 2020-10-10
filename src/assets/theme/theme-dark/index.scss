@@ -1,0 +1,311 @@
+$color-background: #1F2A41; 
+$bgcolor-input: #151E31;
+$font-color: #ffffff;
+$font-color-input-placeholder: #4E6675;
+$font-color-input: #0998B6;
+$color-select-icon: #24C9D1;
+$bgcolor-button: #24C9D1;
+$bgcolor-th: #111826;
+$bgcolor-tr: #151E31;
+$bgcolor-tr-striped: #18233B;
+$bgcolor-pager: #1F394F;
+
+.el-form--inline .el-form-item__label {
+    color: white !important;
+}
+
+.el-form-item__label {
+    color: white !important;
+}
+
+.el-input__inner {
+    background: $bgcolor-input;
+    color: $font-color-input;
+    border: none;
+
+    &::placeholder {
+        color: $font-color-input-placeholder;
+    }
+
+    &::-webkit-input-placeholder {
+        /* WebKit browsers 适配谷歌 */
+        color: $font-color-input-placeholder;
+    }
+
+    &:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 适配火狐 */
+        color: $font-color-input-placeholder;
+    }
+
+    &::-moz-placeholder {
+        /* Mozilla Firefox 19+ 适配火狐 */
+        color: $font-color-input-placeholder;
+    }
+
+    &:-ms-input-placeholder {
+        /* Internet Explorer 10+  适配ie*/
+        color: $font-color-input-placeholder;
+    }
+}
+
+.el-input.is-disabled .el-input__inner {
+    background: $color-background;
+    color: $font-color;
+}
+
+.el-input__icon {
+    color: $color-select-icon;
+}
+
+.el-select .el-input .el-input__icon {
+    color: $color-select-icon;
+}
+
+.el-collapse {
+    border: none;
+}
+
+.el-collapse-item__header {
+    background: $color-background;
+    color: white;
+    border-bottom: none;
+}
+
+.el-collapse-item__wrap {
+    background: $color-background;
+    border-bottom: none;
+}
+
+.el-table__footer-wrapper thead div, .el-table__header-wrapper thead div {
+    background-color: $bgcolor-th;
+    color: $font-color-input;
+}
+
+.el-table {
+    border: none;
+    background-color: $bgcolor-th;
+    th {
+        background-color: $bgcolor-th;
+    }
+    tr {
+        color: white;
+        background: $bgcolor-tr;
+    }
+}
+
+.el-table td, .el-table th.is-leaf {
+    border-bottom: none;
+}
+
+.el-table::after, .el-table::before {
+    background: $color-background;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+    color: white;
+    background: $color-background;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+    color: white;
+    background: $bgcolor-tr-striped;
+}
+
+.el-table__body tr.current-row>td {
+    background: transparent;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td {
+    background: transparent;
+}
+
+.el-pagination .btn-next, .el-pagination .btn-prev {
+    border: none;
+}
+
+.el-pagination button.disabled {
+    background: $bgcolor-input;
+}
+
+.el-pagination__editor {
+    background: $bgcolor-input;
+    color: $font-color-input;
+    border: none;
+}
+
+.el-dialog {
+    background: $color-background;
+}
+
+.el-message-box {
+    background: $color-background;
+}
+
+.el-loading-mask {
+    background: $color-background;
+}
+
+.el-button {
+    color: black;
+}
+
+.el-button--primary {
+    background-color: $bgcolor-button;
+    border-color: $bgcolor-button;
+}
+
+.el-pager li {
+    border-color: $bgcolor-pager;
+    background-color: $bgcolor-pager;
+    color: $font-color-input;
+    &.active {
+        border-color: $color-select-icon;
+        background-color: $color-select-icon;
+        color: black;
+    }
+}
+
+.el-pagination .btn-next, .el-pagination .btn-prev {
+    background-color: $color-background;
+}
+
+.el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
+    background-color: $color-background;
+}
+
+.el-pager li:last-child {
+    border-right: none;
+}
+
+.el-select-dropdown {
+    background-color: $bgcolor-input;
+    border: 1px solid $color-background;
+    color: $font-color;
+}
+
+.el-select-dropdown__item {
+    color: $font-color;
+}
+
+.el-select-dropdown__item.selected {
+    background-color: $color-select-icon;
+}
+
+.el-select-dropdown__item.selected.hover {
+    background-color: $color-select-icon;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover, .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: $font-color-input-placeholder;
+}
+
+.el-picker-panel {
+    background-color: $bgcolor-input;
+}
+
+.el-picker-panel__footer {
+    background-color: $bgcolor-input;
+}
+
+.el-picker-panel [slot=sidebar], .el-picker-panel__sidebar {
+    background-color: $bgcolor-input;
+}
+
+.el-date-table td.current:not(.disabled), .el-date-table td.end-date, .el-date-table td.start-date {
+    background-color: $color-select-icon !important;
+}
+
+.el-date-table td.in-range {
+    background-color: $font-color-input;
+}
+
+.el-date-table td.disabled {
+    background-color: $font-color-input-placeholder;
+}
+
+.el-picker-panel__btn {
+    background-color: $color-select-icon;
+    color: black;
+}
+
+.el-picker-panel__btn[disabled] {
+    color: black;
+}
+
+.el-textarea__inner {
+    background: $bgcolor-input;
+    color: $font-color-input;
+    border: 1px solid $color-background;
+}
+
+.el-table__body-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.el-table__body-wrapper { // IE滚动条样式
+    /*三角箭头的颜色*/
+    scrollbar-arrow-color: #02adf7;
+    /*滚动条滑块按钮的颜色*/
+    scrollbar-face-color: #02adf7;
+    /*滚动条整体颜色*/
+    scrollbar-highlight-color: #0099dd;
+    /*滚动条阴影*/
+    scrollbar-shadow-color: #1F394F;
+    /*滚动条轨道颜色*/
+    scrollbar-track-color: #1F394F;
+    /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+    scrollbar-3dlight-color:#1F394F;
+    /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+    scrollbar-darkshadow-color: #1F394F;
+    /*滚动条基准颜色*/
+    scrollbar-base-color: #0099dd;
+}
+
+.el-table__body-wrapper::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 10px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 6px;
+}
+
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 10px;
+    background-color: #02adf7;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+}
+
+.el-table__body-wrapper::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #1b5aa9;
+}
+.el-message-box__title {
+    color: white;
+}
+
+.el-message-box__content {
+    color: white;
+}
+
+.el-transfer-panel {
+    background: $color-background;
+}
+
+.el-transfer-panel .el-transfer-panel__header {
+    background: $color-background;
+    color: white;
+}
+
+.el-transfer-panel .el-transfer-panel__footer {
+    background: $color-background;
+}
+
+.el-radio {
+    color: $font-color-input;
+}
+
+.el-checkbox {
+    color: $font-color-input;
+}

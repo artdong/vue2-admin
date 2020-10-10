@@ -77,6 +77,9 @@
 </script>
 
 <style lang="scss" scoped>
+  $color-background: #111625; 
+  $bgcolor: #1F2A41;
+
   .login-container {
     /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
     -webkit-border-radius: 5px;
@@ -86,13 +89,16 @@
     margin: 180px auto;
     width: 350px;
     padding: 35px 35px 15px 35px;
-    background: #fff;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
+    background: $color-background;
+    border: 1px solid $bgcolor;
+    box-shadow: 0 0 25px $bgcolor;
     .title {
       margin: 0px auto 40px auto;
       text-align: center;
-      color: #505458;
+      color: #fff;
+    }
+    .el-checkbox {
+      color: #fff;
     }
     .remember {
       margin: 0px 0px 35px 0px;

@@ -37,6 +37,9 @@
 </script>
 
 <style lang="scss">
+    $color-background: #111625; 
+    $bgcolor: #1F2A41;
+
     body {
         margin: 0px;
         padding: 0px;
@@ -53,6 +56,7 @@
         top: 0px;
         bottom: 0px;
         width: 100%;
+        background: $bgcolor;
     }
 
     .el-submenu [class^=fa] {
@@ -66,7 +70,7 @@
     }
 
     .toolbar {
-        background: #f2f2f2;
+        background: $color-background;
         padding: 10px;
         //border:1px solid #dfe6ec;
         margin: 10px 0px;

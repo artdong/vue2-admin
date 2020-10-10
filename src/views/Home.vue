@@ -33,14 +33,14 @@
 				<el-col :span="24" class="header">
 					<el-col :xs="2" :sm="2" :md="2" :lg="2">
 						<div class="tools" @click.prevent="collapse" style="margin-bottom: 64px;">
-							<i class="fa fa-align-justify" style="vertical-align:middle; color: #353f4f;"></i>
+							<i class="fa fa-align-justify" style="vertical-align:middle; color: #D0DCE3;"></i>
 						</div>
 					</el-col>
 					<el-col :xs="16" :sm="16" :md="16" :lg="16" class="breadcrumb-container">
 						<strong class="title">{{$route.name}}</strong>
 					</el-col>
 					<el-col :xs="2" :sm="2" :md="2" :lg="2">
-						<i class="fa fa-bell fa-lg" style="color: #353f4f" @click="dialogVisible = true"></i>
+						<i class="fa fa-bell fa-lg" style="color: #D0DCE3" @click="dialogVisible = true"></i>
 						<el-badge :value="12" :max="10">
 						</el-badge>
 					</el-col>
@@ -309,164 +309,170 @@
 </script>
 
 <style scoped lang="scss">
-	@import '~scss_vars';
+    @import '~scss_vars';
+    $bgcolor: #1F2A41;
+    $bgcolor-aside: #151E31;
+    $bgcolor-menu-item-hover: #18233B;
+    $font-color: #D0DCE3;
 
-	.container {
-		position: absolute;
-		top: 0px;
-		bottom: 0px;
-		width: 100%;
-		height: 100%;
-		.header {
-			height: 60px;
-			line-height: 60px;
-			background: #eeeeee;
-			border-left: 1px solid white;
-			border-bottom: 6px solid #c0c1e1;
-			.userinfo {
-				text-align: right;
-				padding-right: 120px;
-				float: right;
-				.userinfo-inner {
-					cursor: pointer;
-					color: black;
-					img {
-						width: 40px;
-						height: 40px;
-						border-radius: 20px;
-						margin: 10px 0px 10px 10px;
-						float: right;
-					}
-				}
-			}
-			.logo {
-				//width:230px;
-				height: 60px;
-				font-size: 22px;
-				padding-left: 20px;
-				padding-right: 20px;
-				border-color: rgba(238, 241, 146, 0.3);
-				border-right-width: 0px;
-				border-right-style: solid;
-				img {
-					width: 40px;
-					float: left;
-					margin: 10px 10px 10px 18px;
-				}
-				.txt {
-					color: #fff;
-				}
-			}
-			.logo-width {
-				width: 350px;
-			}
-			.logo-collapse-width {
-				width: 60px
-			}
-			.tools {
-				padding: 0px 23px;
-				width: 14px;
-				height: 60px;
-				line-height: 60px;
-				cursor: pointer;
-			}
-			.screenfull {
-				vertical-align: middle;
-				height: 60px;
-				color: red;
-			}
-		}
-		.main {
-			display: flex;
-			// background: #324057;
-			position: absolute;
-			top: 0px;
-			bottom: 0px;
-			overflow: hidden;
-			aside {
-				flex: 0 0 230px;
-				width: 230px;
-				height: 100%;
-				// position: absolute;
-				// top: 0px;
-				// bottom: 0px;
-				.el-menu {
-					height: 100%;
-				}
-				.collapsed {
-					width: 60px;
-					.item {
-						position: relative;
-					}
-					.submenu {
-						position: absolute;
-						top: 0px;
-						left: 60px;
-						z-index: 99999;
-						height: auto;
-						display: none;
-					}
-				}
-			}
-			.menu-collapsed {
-				flex: 0 0 60px;
-				width: 60px;
-			}
-			.menu-expanded {
-				flex: 0 0 230px;
-				width: 230px;
-			}
-			.el-menu-item {
-				min-width: 60px;
-				&.is-active {
-					background-color: #353f4f !important;
-					border-right: 4px solid $color-primary;
-					color: $color-primary;
-				}
-			}
-			.menu-list {
-				height: 45px;
-				line-height: 45px;
-				&.is-active {
-					background-color: #353f4f !important;
-					border-right: 4px solid $color-primary;
-					color: $color-primary;
-				}
-			}
-			.content-container {
-				// background: #f1f2f7;
-				flex: 1;
-				// position: absolute;
-				// right: 0px;
-				// top: 0px;
-				// bottom: 0px;
-				// left: 230px;
-				overflow-y: scroll;
-				//padding: 20px;
-				.breadcrumb-container {
-					//margin-bottom: 15px;
-					.title {
-						width: 200px;
-						float: left;
-						color: #475669;
-					}
-					.breadcrumb-inner {
-						float: right;
-					}
-				}
-				.content-wrapper {
-					background-color: #fff;
-					box-sizing: border-box;
-				}
-			}
-		}
-	}
+    .container {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: 100%;
+        background: $bgcolor;
+        .header {
+            height: 60px;
+            line-height: 60px;
+            //border-left: 1px solid white;
+            //border-bottom: 6px solid #c0c1e1;
+            .userinfo {
+                text-align: right;
+                padding-right: 120px;
+                float: right;
+                .userinfo-inner {
+                    cursor: pointer;
+                    color: $font-color;
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 20px;
+                        margin: 10px 0px 10px 10px;
+                        float: right;
+                    }
+                }
+            }
+            .logo {
+                //width:230px;
+                height: 60px;
+                font-size: 22px;
+                padding-left: 20px;
+                padding-right: 20px;
+                border-color: rgba(238, 241, 146, 0.3);
+                border-right-width: 0px;
+                border-right-style: solid;
+                img {
+                    width: 40px;
+                    float: left;
+                    margin: 10px 10px 10px 18px;
+                }
+                .txt {
+                    color: #fff;
+                }
+            }
+            .logo-width {
+                width: 350px;
+            }
+            .logo-collapse-width {
+                width: 60px
+            }
+            .tools {
+                padding: 0px 23px;
+                width: 14px;
+                height: 60px;
+                line-height: 60px;
+                cursor: pointer;
+            }
+            .screenfull {
+                vertical-align: middle;
+                height: 60px;
+                color: red;
+            }
+        }
+        .main {
+            display: flex;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            overflow: hidden;
+            aside {
+                flex: 0 0 230px;
+                width: 230px;
+                height: 100%;
+                // position: absolute;
+                // top: 0px;
+                // bottom: 0px;
+                .el-menu {
+                    height: 100%;
+                    background-color: $bgcolor-aside;
+                }
+                .collapsed {
+                    width: 60px;
+                    .item {
+                        position: relative;
+                    }
+                    .submenu {
+                        position: absolute;
+                        top: 0px;
+                        left: 60px;
+                        z-index: 99999;
+                        height: auto;
+                        display: none;
+                        background-color: $bgcolor-aside;
+                    }
+                }
+            }
+            .menu-collapsed {
+                flex: 0 0 60px;
+                width: 60px;
+            }
+            .menu-expanded {
+                flex: 0 0 230px;
+                width: 230px;
+            }
+            .el-menu-item {
+                min-width: 60px;
+                color: $font-color;
+                &:hover {
+                    background-color: $bgcolor-menu-item-hover !important;
+                    color: $color-primary;
+                }
+                &.is-active {
+                    background-color: $bgcolor-menu-item-hover !important;
+                    border-right: 4px solid $color-primary;
+                    color: $color-primary;
+                }
+            }
+            .menu-list {
+                height: 45px;
+                line-height: 45px;
+                &.is-active {
+                    background-color: $bgcolor-menu-item-hover !important;
+                    border-right: 4px solid $color-primary;
+                    color: $color-primary;
+                }
+            }
+            .content-container {
+                // background: #f1f2f7;
+                flex: 1;
+                // position: absolute;
+                // right: 0px;
+                // top: 0px;
+                // bottom: 0px;
+                // left: 230px;
+                overflow: auto;
+                //padding: 20px;
+                .breadcrumb-container {
+                    //margin-bottom: 15px;
+                    .title {
+                        width: 200px;
+                        float: left;
+                        color: $font-color;
+                    }
+                    .breadcrumb-inner {
+                        float: right;
+                    }
+                }
+                .content-wrapper {
+                    background-color: $bgcolor;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    }
 
-	.toolbar {
-		background-color: #f8f8f8 !important;
-	}
-
-	.hand {
-		cursor: pointer;
-	}
+    .hand {
+        cursor: pointer;
+    }
 </style>
