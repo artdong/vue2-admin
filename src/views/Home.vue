@@ -88,7 +88,7 @@
 						<el-table-column prop="strContent" label="维护内容">
 						</el-table-column>
 						<el-table-column label="操作" width="160">
-							<template scope="scope">
+							<template slot-scope="scope">
 								<el-button size="small" @click="handleConfirm(scope.$index, scope.row)">确认</el-button>
 								<el-dropdown style="margin-left: 5px;">
 									 <span class="el-dropdown-link">
