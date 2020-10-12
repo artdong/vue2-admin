@@ -98,10 +98,10 @@
         </div>
 
         <!--编辑界面-->
-        <el-dialog title="编辑维护项" v-model="editFormVisible" :close-on-click-modal="false">
+        <el-dialog title="编辑维护项" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="名称" prop="strTitle" style="width: 450px;">
-                    <el-input v-model="editForm.strTitle" auto-complete="off"></el-input>
+                    <el-input v-model="editForm.strTitle" auto-complete="off" placeholder="请输入名称"></el-input>
                 </el-form-item>
                 <el-form-item label="维护内容" prop="strContent" style="width: 450px;">
                     <el-input
@@ -119,12 +119,12 @@
         </el-dialog>
 
         <!--新增界面-->
-        <el-dialog title="新增维护项" v-model="addFormVisible" :close-on-click-modal="false" size="small">
+        <el-dialog title="新增维护项" :visible.sync="addFormVisible" :close-on-click-modal="false" size="small">
             <el-form ref="addForm" :model="addForm" label-width="80px" :rules="addFormRules">
                 <!--<el-row :gutter="2">-->
                 <!--<el-col :xs="8" :sm="6" :md="5" :lg="5">-->
                 <el-form-item label="名称" prop="strTitle" style="width: 450px;">
-                    <el-input v-model="addForm.strTitle" auto-complete="off"></el-input>
+                    <el-input v-model="addForm.strTitle" auto-complete="off" placeholder="请输入名称"></el-input>
                 </el-form-item>
                  <!--</el-col>-->
                  <!--</el-row>-->
@@ -294,7 +294,6 @@
                 const Reg = new RegExp(keyword, 'i');
                 if (val) {
                     const res = val.replace(Reg, `<span style="color: #409EFF;">${keyword}</span>`);
-                    console.log(res);
                     return res;
                 }
             },
