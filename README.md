@@ -67,10 +67,13 @@ npm run build (打包发布)
 
 * 微信公众号二维码，扫一扫或者搜索"全栈弄潮儿"即可关注
 
-<img src="https://upload-images.jianshu.io/upload_images/3100736-ddcf3f57a7be2ad1.jpg" width="260px" style="display:inline;">
+<p align='center'>
+  <img src="https://upload-images.jianshu.io/upload_images/3100736-ddcf3f57a7be2ad1.jpg" width="260px" style="display:inline;">
+</p>
 
 #### 脑筋急转弯（微信小程序）
 
-<img src="https://upload-images.jianshu.io/upload_images/3100736-8679464618a2cd66.jpg" width="260px" style="display:inline;">
-
+<p align='center'>
+  <img src="https://upload-images.jianshu.io/upload_images/3100736-8679464618a2cd66.jpg" width="260px" style="display:inline;">
+</p>
 
