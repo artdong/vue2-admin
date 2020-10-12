@@ -59,6 +59,10 @@ npm run build (打包发布)
 
 ![动态图](https://upload-images.jianshu.io/upload_images/3100736-41a17e53122c0609.gif?raw=true)
 
+### 深色主题效果预览
+
+![动态图](https://upload-images.jianshu.io/upload_images/3100736-b0f8985f5dd5f4c7.gif?raw=true)
+
 #### 欢迎关注我的微信公众号`全栈弄潮儿` ，获取更多学习资源及技术文章等
 
 * 微信公众号二维码，扫一扫或者搜索"全栈弄潮儿"即可关注
