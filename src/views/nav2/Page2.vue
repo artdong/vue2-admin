@@ -118,7 +118,7 @@
         </div>
 
         <!--编辑界面-->
-        <el-dialog title="编辑维护计划" v-model="editFormVisible" :close-on-click-modal="false">
+        <el-dialog title="编辑维护计划" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="计划ID" prop="strPlanId" style="width: 292px;">
                     <el-input v-model="editForm.strPlanId" auto-complete="off" disabled></el-input>
@@ -167,7 +167,7 @@
         </el-dialog>
 
         <!--新增界面-->
-        <el-dialog title="新增维护计划" v-model="addFormVisible" :close-on-click-modal="false">
+        <el-dialog title="新增维护计划" :visible.sync="addFormVisible" :close-on-click-modal="false">
             <el-form ref="addForm" :model="addForm" label-width="100px" :rules="addFormRules">
                 <el-row>
                     <el-col :xs="12" :sm="12" :md="12" :lg="12">
