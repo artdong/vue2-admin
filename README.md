@@ -51,9 +51,7 @@ npm run build (打包发布)
 
 ## 在线演示
 
-[本地在线演示 :smiley:](https://artdong.github.io/vue2-admin-grace)
-
-[新浪云在线演示 :smiley:](http://phpsite.applinzi.com/vue2-admin-grace)
+[本地在线演示 :smiley:](https://artdong.gitee.io/vue-admin)
 
 ### 效果预览
 
