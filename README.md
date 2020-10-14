@@ -49,9 +49,13 @@ npm run build (打包发布)
 
 ```
 
+## gitee地址
+
+[点我 :smiley:](https://gitee.com/artdong/vue-admin)
+
 ## 在线演示
 
-[本地在线演示 :smiley:](https://artdong.gitee.io/vue-admin)
+[点我 :smiley:](https://artdong.gitee.io/vue-admin)
 
 ### 效果预览
 
