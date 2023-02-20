@@ -55,7 +55,7 @@ npm run build (打包发布)
 
 ## 在线演示
 
-[点我 :smiley:](https://artdong.gitee.io/vue-admin](http://blog.artdong.top/vue2-admin)
+[点我 :smiley:](http://blog.artdong.top/vue2-admin)
 
 ### 效果预览
 
