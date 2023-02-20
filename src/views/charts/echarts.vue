@@ -36,7 +36,7 @@
         methods: {
             drawColumnChart() {
                 this.chartColumn = echarts.init(document.getElementById('chartColumn'));
-                this.chartColumn.setOption({
+                const option = {
                     title: {text: 'Column Chart'},
                     tooltip: {},
                     xAxis: {
@@ -50,7 +50,7 @@
                     }],
                     label: {
                         normal: {
-                            show: true,
+                            show: false,
                             position: 'top'
                         }
                     },
@@ -63,11 +63,13 @@
                             }
                         }
                     }
-                });
+                };
+                this.chartColumn.setOption(option);
+                this.handleChartLoop(option, this.chartColumn);
             },
             drawBarChart() {
                 this.chartBar = echarts.init(document.getElementById('chartBar'));
-                this.chartBar.setOption({
+                const option = {
                     title: {
                         text: 'Bar Chart'
                     },
@@ -112,11 +114,13 @@
                             data: [19325, 23438, 31000, 121594, 134141, 681807]
                         }
                     ]
-                });
+                }
+                this.chartBar.setOption(option);
+                this.handleChartLoop(option, this.chartBar);
             },
             drawLineChart() {
                 this.chartLine = echarts.init(document.getElementById('chartLine'));
-                this.chartLine.setOption({
+                const option = {
                     title: {
                         text: 'Line Chart'
                     },
@@ -166,11 +170,13 @@
                             data: [820, 932, 901, 934, 1290, 1330, 1320]
                         }
                     ]
-                });
+                };
+                this.chartLine.setOption(option);
+                this.handleChartLoop(option, this.chartLine);
             },
             drawPieChart() {
                 this.chartPie = echarts.init(document.getElementById('chartPie'));
-                this.chartPie.setOption({
+                const option = {
                     title: {
                         text: 'Pie Chart',
                         subtext: '纯属虚构',
@@ -227,7 +233,69 @@
                             }
                         }
                     ]
-                });
+                };
+                this.chartPie.setOption(option);
+                this.handleChartLoop(option, this.chartPie);
+            },
+            // 饼图自动轮播
+            handleChartLoop: function (option, myChart) {
+                if (!myChart) {
+                    return
+                }
+                let currentIndex = -1 // 当前高亮图形在饼图数据中的下标
+                let changePieInterval = setInterval(selectPie, 1000) // 设置自动切换高亮图形的定时器
+
+                // 取消所有高亮并高亮当前图形
+                function highlightPie() {
+                    // 遍历饼图数据，取消所有图形的高亮效果
+                    for (let idx in option.series[0].data) {
+                        myChart.dispatchAction({
+                            type: 'downplay',
+                            seriesIndex: 0,
+                            dataIndex: idx
+                        })
+                        // showTip
+                        myChart.dispatchAction({
+                            type: 'showTip',
+                            seriesIndex: 0,
+                            dataIndex: idx
+                        });
+                    }
+                    // 高亮当前图形
+                    myChart.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: currentIndex
+                    })
+                    // showTip
+                    myChart.dispatchAction({
+                        type: 'showTip',
+                        seriesIndex: 0,
+                        dataIndex: currentIndex
+                    });
+                }
+
+                // 用户鼠标悬浮到某一图形时，停止自动切换并高亮鼠标悬浮的图形
+                myChart.on('mouseover', (params) => {
+                    clearInterval(changePieInterval)
+                    currentIndex = params.dataIndex
+                    highlightPie()
+                })
+
+                // 用户鼠标移出时，重新开始自动切换
+                myChart.on('mouseout', (params) => {
+                    if (changePieInterval) {
+                        clearInterval(changePieInterval)
+                    }
+                    changePieInterval = setInterval(selectPie, 1000)
+                })
+
+                // 高亮效果切换到下一个图形
+                function selectPie() {
+                    const dataLen = option.series[0].data.length
+                    currentIndex = (currentIndex + 1) % dataLen
+                    highlightPie()
+                }
             },
             drawCharts() {
                 this.drawColumnChart()
@@ -249,7 +317,7 @@
         },
         updated: function () {
             this.drawCharts()
-        }
+        },
     }
 </script>
 
