@@ -73,10 +73,10 @@ npm run build (打包发布)
   <img src="https://upload-images.jianshu.io/upload_images/3100736-ddcf3f57a7be2ad1.jpg" width="260px" style="display:inline;">
 </p>
 
-#### 脑筋急转弯（微信小程序）
+#### 程序员专属工具箱（微信小程序）
 
 <p align='center'>
-  <img src="https://upload-images.jianshu.io/upload_images/3100736-8679464618a2cd66.jpg" width="260px" style="display:inline;">
+  <img src="https://upload-images.jianshu.io/upload_images/3100736-1e77a35235e4531b.jpg" width="260px" style="display:inline;">
 </p>
 
 #### 薅羊毛，大额红包码
